@@ -4,6 +4,12 @@
 
 ```text
 Bootstrap / Debug Start
+├── 新游戏：prologue.tscn
+│   ├── 古堡水晶球警报 / 巫师登场
+│   ├── 小呆猪包装礼物 / Joy Particle
+│   ├── 巫师锁定“白菜”触发点 / 遗忘之咒
+│   ├── 猪猪山庄熄灯 / 小呆猪呼喊
+│   └── 标题卡 → 自动进入第一幕（Esc 可跳过）
 ├── 白白菜篇：cabbage_home.tscn
 │   ├── 醒来对白
 │   ├── 咖啡机
@@ -27,23 +33,23 @@ Bootstrap / Debug Start
 - `BreakfastPuzzleController`：只判断持有物与餐位是否匹配。
 - `HealthComponent` / `HitBox2D` / `HurtBox2D`：玩家和敌人共享的战斗组件。
 - `ForestSlime`：只负责自身战斗并发出 `defeated`，不知道剧情。
+- `Prologue`：场景自有 CutsceneDirector，使用自动对白、镜头震动、白闪、魔法阵、雾、窗灯与标题转场。
 
 ## 使用的素材
 
-- 已使用：`white_cabbage.png`、`little_pig.png`。
-- 已导入、等待后续章节：`evil_wizard.png`、`cabbage_creature.png`、`big_idea_painting.png`。
+- 已使用：`white_cabbage.png`、`little_pig.png`、`evil_wizard.png`、`crystal_ball.png`、`joy_particles.png`、蘑菇屋内外景与猪猪山庄背景。
+- 已导入、等待后续章节：`cabbage_creature.png`、`big_idea_painting.png`。
 - 当前程序化 placeholder：住宅和森林底图、家具、杯子/餐具、史莱姆、礼物碎片、雾和快乐粒子。
-- 当前缺失：正式 tileset、史莱姆 spritesheet、完整动作帧、BGM、环境音与 SFX。
+- 当前缺失：正式古堡背景、正式 tileset、史莱姆 spritesheet、完整动作帧、BGM、环境音与 SFX。
 
 ## 验证
 
 - Godot 版本：`4.7.2.stable.official.ed1daf0bf`。
-- 主菜单、白白菜场景、小呆猪场景均能独立实例化。
+- 主菜单、完整序章、白白菜场景、小呆猪场景均能独立实例化。
 - `tests/smoke_test.gd` 通过。
-- `tests/gameplay_test.gd` 通过：移动、玩家攻击、敌人伤害、错误/正确餐位、重复碎片保护、状态序列化。
-- OpenGL Compatibility（Apple M1）真实渲染帧通过。
+- `tests/gameplay_test.gd` 通过：移动、玩家攻击、敌人伤害、错误/正确餐位、自动对白、重复碎片保护、状态序列化。
+- OpenGL Compatibility（Apple M1）完整序章 210 帧低帧率时间线视觉验收通过。
 
 ## 下一阶段建议
 
-先在用户本机进行 10–15 分钟手感试玩，记录移动速度、攻击距离、史莱姆前摇和对白速度，再进入第二阶段：补 BIG IDEA、猪猪抱枕、红色包装纸和白白菜出门；之后再接完整序章。这样可避免在基础手感尚未确认时铺开大量剧情场景。
-
+先在用户本机完整观看一次序章，记录对白速度、镜头节奏和紫色诅咒强度。确认后进入第二阶段：补 BIG IDEA、猪猪抱枕、红色包装纸和白白菜出门；同时等待正式古堡背景与音频素材。

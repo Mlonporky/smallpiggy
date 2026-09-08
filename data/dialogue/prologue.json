@@ -1,0 +1,61 @@
+{
+  "castle_opening": [
+    {"speaker": "坏巫师", "text": "……", "auto_advance": true, "auto_duration": 0.7},
+    {"speaker": "坏巫师", "text": "又来了。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "这股令人作呕的力量……", "auto_advance": true},
+    {"speaker": "水晶球", "text": "欢乐能量异常。", "auto_advance": true, "auto_duration": 1.0},
+    {"speaker": "水晶球", "text": "能量等级：■■■■■■■■□", "auto_advance": true, "auto_duration": 1.2},
+    {"speaker": "坏巫师", "text": "八级？", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "昨天还只有六级。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "到底是谁……每天都在散发这种烦人的力量？", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "……猪猪山庄。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "又是那里。", "auto_advance": true}
+  ],
+  "gift_wrapping": [
+    {"speaker": "小呆猪", "text": "唔……", "auto_advance": true, "auto_duration": 0.8},
+    {"speaker": "小呆猪", "text": "好像还是有一点歪。", "auto_advance": true},
+    {"speaker": "小呆猪", "text": "这样呢？", "auto_advance": true, "auto_duration": 1.0},
+    {"speaker": "小呆猪", "text": "……", "auto_advance": true, "auto_duration": 0.9},
+    {"speaker": "小呆猪", "text": "更歪了。", "auto_advance": true},
+    {"speaker": "小呆猪", "text": "没关系！", "auto_advance": true},
+    {"speaker": "小呆猪", "text": "白菜才不会嫌弃我包得丑呢。", "auto_advance": true},
+    {"speaker": "小呆猪", "text": "而且……", "auto_advance": true},
+    {"speaker": "小呆猪", "text": "他拆开的时候，一定会很开心吧。", "auto_advance": true, "auto_duration": 1.8},
+    {"speaker": "小呆猪", "text": "嘿嘿。", "auto_advance": true, "auto_duration": 0.9},
+    {"speaker": "小呆猪", "text": "不知道白菜会是什么表情。", "auto_advance": true, "auto_duration": 1.7}
+  ],
+  "wizard_discovery": [
+    {"speaker": "坏巫师", "text": "……又是这只猪。", "auto_advance": true},
+    {"speaker": "回放中的小呆猪", "text": "白菜看到一定会很开心吧。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "等等。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "刚刚她说了什么？", "auto_advance": true},
+    {"speaker": "回放中的小呆猪", "text": "白菜……", "auto_advance": true, "auto_duration": 1.4},
+    {"speaker": "坏巫师", "text": "……白菜。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "原来如此。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "不是猪猪山庄。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "也不是那间可笑的蘑菇屋。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "真正制造这些欢乐的……", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "是你想到他的那一瞬间。", "auto_advance": true, "auto_duration": 1.8},
+    {"speaker": "坏巫师", "text": "真讨厌。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "快乐。", "auto_advance": true, "auto_duration": 0.8},
+    {"speaker": "坏巫师", "text": "期待。", "auto_advance": true, "auto_duration": 0.8},
+    {"speaker": "坏巫师", "text": "思念。", "auto_advance": true, "auto_duration": 0.8},
+    {"speaker": "坏巫师", "text": "还有那些自以为永远不会消失的回忆。", "auto_advance": true, "auto_duration": 1.8}
+  ],
+  "curse": [
+    {"speaker": "坏巫师", "text": "既然如此……", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "只要把它们拿走就好了。", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "以黑夜为幕——", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "以遗忘为名——", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "让所有关于那只猪的痕迹……", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "从这个世界消失！", "auto_advance": true},
+    {"speaker": "坏巫师", "text": "遗忘之咒！", "auto_advance": true, "auto_duration": 1.0}
+  ],
+  "curse_hits": [
+    {"speaker": "小呆猪", "text": "好了！", "auto_advance": true},
+    {"speaker": "小呆猪", "text": "明天就可以送给白菜啦。", "auto_advance": true},
+    {"speaker": "小呆猪", "text": "……？", "auto_advance": true, "auto_duration": 0.8},
+    {"speaker": "小呆猪", "text": "白菜——！", "auto_advance": true, "auto_duration": 0.65}
+  ]
+}
+

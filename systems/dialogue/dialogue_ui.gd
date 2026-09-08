@@ -26,7 +26,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		_advance_requested = true
 
 
-func say(speaker: String, text: String, pause_before := 0.0, pause_after := 0.0) -> void:
+func say(
+	speaker: String,
+	text: String,
+	pause_before := 0.0,
+	pause_after := 0.0,
+	auto_advance := false,
+	auto_duration := 1.5
+) -> void:
 	if pause_before > 0.0:
 		await get_tree().create_timer(pause_before).timeout
 	var line := {"speaker": speaker, "text": text}
@@ -51,8 +58,13 @@ func say(speaker: String, text: String, pause_before := 0.0, pause_after := 0.0)
 	_advance_requested = false
 	hint_label.visible = true
 
+	var auto_elapsed := 0.0
 	while not _advance_requested:
 		await get_tree().process_frame
+		if auto_advance:
+			auto_elapsed += get_process_delta_time()
+			if auto_elapsed >= auto_duration:
+				break
 	_advance_requested = false
 	if pause_after > 0.0:
 		await get_tree().create_timer(pause_after).timeout
@@ -67,6 +79,7 @@ func say_lines(lines: Array) -> void:
 			str(entry.get("speaker", "")),
 			str(entry.get("text", "")),
 			float(entry.get("pause_before", 0.0)),
-			float(entry.get("pause_after", 0.0))
+			float(entry.get("pause_after", 0.0)),
+			bool(entry.get("auto_advance", false)),
+			float(entry.get("auto_duration", 1.5))
 		)
-

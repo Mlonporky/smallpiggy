@@ -7,7 +7,12 @@ extends Control
 func _ready() -> void:
 	continue_button.disabled = not SaveManager.has_save()
 	save_note.text = "找到存档，可以继续。" if SaveManager.has_save() else "还没有存档；先选择一个玩法样板。"
-	%ChapterOneButton.grab_focus()
+	%NewGameButton.grab_focus()
+
+
+func _on_new_game_pressed() -> void:
+	GameState.reset()
+	SceneRouter.change_scene("res://scenes/prologue/prologue.tscn")
 
 
 func _on_chapter_one_pressed() -> void:
@@ -28,4 +33,3 @@ func _on_continue_pressed() -> void:
 		save_note.text = "存档中的场景不可用，请选择玩法样板。"
 		return
 	SceneRouter.change_scene(path)
-

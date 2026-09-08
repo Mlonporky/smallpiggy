@@ -11,6 +11,7 @@ func _run() -> void:
 	await process_frame
 	await _test_player_movement_and_combat()
 	await _test_breakfast_puzzle()
+	await _test_dialogue_auto_advance()
 	_test_persistent_state()
 	if failures.is_empty():
 		print("GAMEPLAY_TEST_OK: movement, combat, puzzle, and persistent state")
@@ -92,6 +93,18 @@ func _test_breakfast_puzzle() -> void:
 	puzzle._on_slot(true)
 	_check(puzzle.completed, "breakfast puzzle completes after both correct placements")
 	holder.queue_free()
+	await process_frame
+
+
+func _test_dialogue_auto_advance() -> void:
+	var packed := load("res://systems/dialogue/dialogue_ui.tscn") as PackedScene
+	var dialogue := packed.instantiate() as DialogueUI
+	root.add_child(dialogue)
+	await process_frame
+	var started_at := Time.get_ticks_msec()
+	await dialogue.say("测试", "自动对白", 0.0, 0.0, true, 0.02)
+	_check(Time.get_ticks_msec() - started_at < 1000, "cinematic dialogue advances without manual input")
+	dialogue.queue_free()
 	await process_frame
 
 

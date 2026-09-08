@@ -73,18 +73,25 @@ text = "—— 被遗忘的快乐 ——"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="Panel/VBox"]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
+
+[node name="NewGameButton" type="Button" parent="Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "新游戏 · 从序章开始"
 
 [node name="ChapterOneButton" type="Button" parent="Panel/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "白白菜篇 · 复原双人早餐位"
 
 [node name="ChapterTwoButton" type="Button" parent="Panel/VBox"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "小呆猪篇 · 森林史莱姆"
@@ -111,7 +118,7 @@ theme_override_font_sizes/font_size = 15
 text = "WASD 移动  ·  E 调查  ·  J 攻击  ·  Esc 返回"
 horizontal_alignment = 1
 
+[connection signal="pressed" from="Panel/VBox/NewGameButton" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Panel/VBox/ChapterOneButton" to="." method="_on_chapter_one_pressed"]
 [connection signal="pressed" from="Panel/VBox/ChapterTwoButton" to="." method="_on_chapter_two_pressed"]
 [connection signal="pressed" from="Panel/VBox/ContinueButton" to="." method="_on_continue_pressed"]
-
