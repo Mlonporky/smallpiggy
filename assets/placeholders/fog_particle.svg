@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="64" viewBox="0 0 128 64">
+  <!-- TODO_ASSET: replace placeholder with authored fog texture. -->
+  <defs><radialGradient id="g"><stop offset="0" stop-color="#a66bd1" stop-opacity=".42"/><stop offset="1" stop-color="#7e4ba8" stop-opacity="0"/></radialGradient></defs>
+  <ellipse cx="64" cy="32" rx="62" ry="29" fill="url(#g)"/>
+</svg>
+

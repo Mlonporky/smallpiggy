@@ -1,0 +1,156 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scenes/chapter_01_hollow_heart/cabbage_home.gd" id="1"]
+[ext_resource type="Script" path="res://systems/vfx/world_art.gd" id="2"]
+[ext_resource type="PackedScene" path="res://actors/shared/player.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://systems/interaction/prop_interactable.tscn" id="4"]
+[ext_resource type="Script" path="res://systems/puzzles/breakfast_puzzle_controller.gd" id="5"]
+[ext_resource type="PackedScene" path="res://ui/game_ui.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://systems/dialogue/dialogue_ui.tscn" id="7"]
+[ext_resource type="Script" path="res://systems/vfx/memory_echo.gd" id="8"]
+
+[sub_resource type="RectangleShape2D" id="WallHorizontal"]
+size = Vector2(1150, 28)
+
+[sub_resource type="RectangleShape2D" id="WallVertical"]
+size = Vector2(28, 650)
+
+[sub_resource type="RectangleShape2D" id="TableCollider"]
+size = Vector2(205, 170)
+
+[sub_resource type="StyleBoxFlat" id="RoomLabel"]
+bg_color = Color(0.08, 0.07, 0.08, 0.46)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_left = 8
+corner_radius_bottom_right = 8
+
+[node name="CabbageHome" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("2")
+theme = "home"
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Bounds" type="StaticBody2D" parent="World"]
+collision_layer = 1
+collision_mask = 1
+
+[node name="Top" type="CollisionShape2D" parent="World/Bounds"]
+position = Vector2(0, -318)
+shape = SubResource("WallHorizontal")
+
+[node name="Bottom" type="CollisionShape2D" parent="World/Bounds"]
+position = Vector2(0, 318)
+shape = SubResource("WallHorizontal")
+
+[node name="Left" type="CollisionShape2D" parent="World/Bounds"]
+position = Vector2(-558, 0)
+shape = SubResource("WallVertical")
+
+[node name="Right" type="CollisionShape2D" parent="World/Bounds"]
+position = Vector2(558, 0)
+shape = SubResource("WallVertical")
+
+[node name="Table" type="StaticBody2D" parent="World"]
+position = Vector2(215, -25)
+collision_layer = 1
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Table"]
+shape = SubResource("TableCollider")
+
+[node name="Props" type="Node2D" parent="World"]
+
+[node name="CoffeeMachine" parent="World/Props" instance=ExtResource("4")]
+position = Vector2(442, -154)
+interaction_id = "coffee_machine"
+prompt_text = "使用咖啡机"
+visual_kind = "coffee"
+display_label = "咖啡机"
+
+[node name="PigCup" parent="World/Props" instance=ExtResource("4")]
+position = Vector2(430, 16)
+interaction_id = "pig_cup"
+prompt_text = "调查粉色猪猪杯"
+visual_kind = "cup"
+accent = Color(0.95, 0.55, 0.64, 1)
+display_label = "猪猪杯"
+
+[node name="PinkTableware" parent="World/Props" instance=ExtResource("4")]
+position = Vector2(422, 113)
+interaction_id = "pink_tableware"
+prompt_text = "调查双人餐具"
+visual_kind = "tableware"
+accent = Color(0.95, 0.55, 0.64, 1)
+display_label = "粉色餐具"
+
+[node name="GreenSlot" parent="World/Props" instance=ExtResource("4")]
+position = Vector2(142, -25)
+unique_name_in_owner = true
+interaction_id = "green_breakfast_slot"
+prompt_text = "查看这边的位置"
+visual_kind = "slot"
+accent = Color(0.43, 0.58, 0.43, 1)
+
+[node name="PinkSlot" parent="World/Props" instance=ExtResource("4")]
+position = Vector2(288, -25)
+unique_name_in_owner = true
+interaction_id = "pink_breakfast_slot"
+prompt_text = "查看对面的使用痕迹"
+visual_kind = "slot"
+accent = Color(0.95, 0.55, 0.64, 1)
+
+[node name="PlacedCup" parent="World/Props" instance=ExtResource("4")]
+position = Vector2(278, -48)
+unique_name_in_owner = true
+monitorable = false
+interaction_id = "placed_cup"
+visual_kind = "cup"
+accent = Color(0.95, 0.55, 0.64, 1)
+
+[node name="PlacedTableware" parent="World/Props" instance=ExtResource("4")]
+position = Vector2(302, 12)
+unique_name_in_owner = true
+monitorable = false
+interaction_id = "placed_tableware"
+visual_kind = "tableware"
+accent = Color(0.95, 0.55, 0.64, 1)
+
+[node name="Characters" type="Node2D" parent="."]
+
+[node name="Player" parent="Characters" instance=ExtResource("3")]
+unique_name_in_owner = true
+position = Vector2(-310, 70)
+character_id = "white_cabbage"
+
+[node name="VFX" type="Node2D" parent="."]
+
+[node name="MemoryEcho" type="Node2D" parent="VFX"]
+unique_name_in_owner = true
+position = Vector2(292, -120)
+script = ExtResource("8")
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[node name="BottomOcclusion" type="Polygon2D" parent="Foreground"]
+polygon = PackedVector2Array(-576, 250, 576, 250, 576, 324, -576, 324)
+color = Color(0.23, 0.31, 0.25, 0.68)
+z_index = 20
+
+[node name="BreakfastPuzzle" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5")
+coffee_path = NodePath("../World/Props/CoffeeMachine")
+cup_path = NodePath("../World/Props/PigCup")
+tableware_path = NodePath("../World/Props/PinkTableware")
+green_slot_path = NodePath("../World/Props/GreenSlot")
+pink_slot_path = NodePath("../World/Props/PinkSlot")
+
+[node name="GameUI" parent="." instance=ExtResource("6")]
+unique_name_in_owner = true
+
+[node name="DialogueUI" parent="." instance=ExtResource("7")]
+unique_name_in_owner = true

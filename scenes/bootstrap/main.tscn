@@ -1,0 +1,117 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/bootstrap/bootstrap.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.09, 0.075, 0.12, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.65, 0.42, 0.8)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+content_margin_left = 48.0
+content_margin_top = 38.0
+content_margin_right = 48.0
+content_margin_bottom = 38.0
+
+[node name="Bootstrap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.105, 0.145, 0.16, 1)
+mouse_filter = 2
+
+[node name="Glow" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 85.0
+offset_right = 1062.0
+offset_bottom = 574.0
+color = Color(0.87, 0.67, 0.35, 0.08)
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 273.0
+offset_top = 78.0
+offset_right = 879.0
+offset_bottom = 582.0
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.87, 0.61, 1)
+theme_override_font_sizes/font_size = 38
+text = "猪猪山庄"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.84, 0.84, 1)
+theme_override_font_sizes/font_size = 22
+text = "—— 被遗忘的快乐 ——"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Panel/VBox"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="ChapterOneButton" type="Button" parent="Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "白白菜篇 · 复原双人早餐位"
+
+[node name="ChapterTwoButton" type="Button" parent="Panel/VBox"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "小呆猪篇 · 森林史莱姆"
+
+[node name="ContinueButton" type="Button" parent="Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "继续存档"
+
+[node name="SaveNote" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.72, 0.76, 1)
+theme_override_font_sizes/font_size = 15
+text = "Debug Start"
+horizontal_alignment = 1
+
+[node name="Controls" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.78, 0.75, 1)
+theme_override_font_sizes/font_size = 15
+text = "WASD 移动  ·  E 调查  ·  J 攻击  ·  Esc 返回"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Panel/VBox/ChapterOneButton" to="." method="_on_chapter_one_pressed"]
+[connection signal="pressed" from="Panel/VBox/ChapterTwoButton" to="." method="_on_chapter_two_pressed"]
+[connection signal="pressed" from="Panel/VBox/ContinueButton" to="." method="_on_continue_pressed"]
+

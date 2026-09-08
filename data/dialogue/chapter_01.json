@@ -1,0 +1,29 @@
+{
+  "wake_up": [
+    {"speaker": "白白菜", "text": "好安静。"},
+    {"speaker": "白白菜", "text": "胸口……怎么空空的。", "pause_after": 0.25}
+  ],
+  "coffee": [
+    {"speaker": "白白菜", "text": "咖啡……"},
+    {"speaker": "白白菜", "text": "希望有用。"},
+    {"speaker": "旁白", "text": "你习惯性地伸手去拿自己的杯子。"}
+  ],
+  "pig_cup": [
+    {"speaker": "白白菜", "text": "这是谁的？"},
+    {"speaker": "白白菜", "text": "不是新的。"},
+    {"speaker": "白白菜", "text": "以前真的有人用过。"},
+    {"speaker": "白白菜", "text": "不知道为什么……"},
+    {"speaker": "白白菜", "text": "我不太想把它扔掉。"}
+  ],
+  "tableware": [
+    {"speaker": "白白菜", "text": "绿色的餐具……还有一套粉色的。"},
+    {"speaker": "白白菜", "text": "这个猪鼻子一样的勺柄，是谁挑的？"}
+  ],
+  "memory_echo": [
+    {"speaker": "？？？", "text": "烫——！"},
+    {"speaker": "另一个声音", "text": "都叫你慢一点喝了。"},
+    {"speaker": "白白菜", "text": "刚才……"},
+    {"speaker": "白白菜", "text": "胸口好像……有一点暖。"}
+  ]
+}
+
