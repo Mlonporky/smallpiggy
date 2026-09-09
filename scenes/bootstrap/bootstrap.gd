@@ -18,7 +18,7 @@ func _on_new_game_pressed() -> void:
 func _on_chapter_one_pressed() -> void:
 	GameState.reset()
 	GameState.story_phase = GameState.StoryPhase.CABBAGE_HOLLOW_HEART
-	SceneRouter.change_scene("res://scenes/chapter_01_hollow_heart/cabbage_home.tscn")
+	SceneRouter.change_scene("res://scenes/chapter1/bedroom.tscn")
 
 
 func _on_chapter_two_pressed() -> void:

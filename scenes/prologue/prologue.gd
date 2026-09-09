@@ -1,4 +1,5 @@
 extends Node2D
+# Legacy v1 controller retained as reference. prologue.tscn now uses opening.gd.
 
 @onready var stage: Control = %Stage
 @onready var castle_panel: Control = %CastlePanel

@@ -1,0 +1,296 @@
+{
+  "version": 3,
+  "format": "illustrated_cinematic",
+  "shots": [
+    {
+      "id": "castle",
+      "image": "castle_exterior",
+      "duration": 3.5,
+      "location": "远处 · 巫师的古堡",
+      "cues": []
+    },
+    {
+      "id": "alarm",
+      "image": "castle_interior",
+      "duration": 4.5,
+      "location": "古堡 · 快乐警报",
+      "anchor": [
+        0.405,
+        0.44
+      ],
+      "zoom_end": 1.06,
+      "cues": [
+        [
+          0.7,
+          "水晶球",
+          "滴……滴滴滴！快乐能量异常。"
+        ]
+      ]
+    },
+    {
+      "id": "discovery",
+      "image": "castle_wizard",
+      "duration": 14,
+      "location": "古堡 · 水晶球前",
+      "cues": [
+        [
+          0.8,
+          "坏巫师",
+          "又响了……让我看看是谁。"
+        ],
+        [
+          3,
+          "水晶球",
+          "快乐来源已锁定：呆呆猪。"
+        ],
+        [
+          6,
+          "坏巫师",
+          "……是她。正忙着给白菜准备礼物。"
+        ],
+        [
+          10,
+          "坏巫师",
+          "只要让白菜忘记她，这股力量就会消失。"
+        ]
+      ]
+    },
+    {
+      "id": "gift",
+      "image": "gift_wrapping",
+      "duration": 18,
+      "location": "水晶球锁定的此刻 · 蘑菇屋",
+      "anchor": [
+        0.46,
+        0.5
+      ],
+      "zoom_end": 1.07,
+      "cues": [
+        [
+          1,
+          "小呆猪",
+          "唔……蝴蝶结好像还是有一点歪。"
+        ],
+        [
+          5,
+          "小呆猪",
+          "这样呢？……更歪了。"
+        ],
+        [
+          9,
+          "小呆猪",
+          "没关系！白菜才不会嫌弃我包得丑呢。"
+        ],
+        [
+          13,
+          "小呆猪",
+          "他拆开的时候，一定会很开心吧。嘿嘿。"
+        ]
+      ]
+    },
+    {
+      "id": "arrival",
+      "image": "wizard_arrival",
+      "duration": 9,
+      "location": "猪猪山庄 · 蘑菇屋外",
+      "anchor": [
+        0.45,
+        0.5
+      ],
+      "zoom_end": 1.045,
+      "cues": [
+        [
+          1,
+          "坏巫师",
+          "以黑夜为幕，以遗忘为名——"
+        ],
+        [
+          4,
+          "坏巫师",
+          "让白菜忘记呆呆猪！遗忘之咒！"
+        ]
+      ]
+    },
+    {
+      "id": "bedroom",
+      "image": "bedroom_cabbage",
+      "duration": 4,
+      "location": "与此同时 · 主别墅的卧室",
+      "anchor": [
+        0.31,
+        0.46
+      ],
+      "zoom_end": 1.02,
+      "cues": [
+        [
+          0.8,
+          "",
+          "白白菜正睡在自己的床上。"
+        ]
+      ],
+      "painting": "before"
+    },
+    {
+      "id": "transform",
+      "image": "bedroom_cabbage",
+      "after": "bedroom_boy",
+      "duration": 8,
+      "location": "主别墅 · 记忆被夺走",
+      "anchor": [
+        0.31,
+        0.46
+      ],
+      "zoom_start": 1.02,
+      "zoom_end": 1.045,
+      "focus": [
+        0.31,
+        0.45
+      ],
+      "radius": [
+        0.15,
+        0.18
+      ],
+      "change_start": 2,
+      "change_end": 5.5,
+      "cues": [
+        [
+          0.8,
+          "",
+          "与呆呆猪有关的记忆，渐渐远去。"
+        ],
+        [
+          5.6,
+          "",
+          "失去那份幸福的连接，白白菜变回了小男孩。"
+        ]
+      ],
+      "painting": "changing"
+    },
+    {
+      "id": "pig_panic",
+      "image": "gift_wrapping",
+      "duration": 5,
+      "location": "蘑菇屋 · 另一端的诅咒",
+      "anchor": [
+        0.45,
+        0.5
+      ],
+      "zoom_end": 1.04,
+      "cues": [
+        [
+          0.8,
+          "小呆猪",
+          "……怎么突然这么冷？"
+        ],
+        [
+          3,
+          "小呆猪",
+          "白菜——！"
+        ]
+      ]
+    },
+    {
+      "id": "teleport",
+      "image": "gift_wrapping",
+      "after": "gift_empty_v3",
+      "duration": 6,
+      "location": "蘑菇屋 · 被迫分离",
+      "anchor": [
+        0.45,
+        0.5
+      ],
+      "zoom_start": 1.04,
+      "zoom_end": 1.04,
+      "focus": [
+        0.45,
+        0.5
+      ],
+      "radius": [
+        0.14,
+        0.25
+      ],
+      "change_start": 1.4,
+      "change_end": 4.5,
+      "cues": [
+        [
+          0.7,
+          "小呆猪",
+          "不行……这是给白菜的礼物！"
+        ],
+        [
+          3.2,
+          "",
+          "呆呆猪和礼物一起被紫光卷走。"
+        ]
+      ],
+      "focus2": [
+        0.595,
+        0.565
+      ],
+      "radius2": [
+        0.14,
+        0.22
+      ]
+    },
+    {
+      "id": "gift_torn",
+      "image": "gift_torn_v3",
+      "duration": 7,
+      "location": "巫师 · 被撕碎的心意",
+      "anchor": [
+        0.52,
+        0.55
+      ],
+      "zoom_start": 1,
+      "zoom_end": 1.06,
+      "cues": [
+        [
+          0.8,
+          "坏巫师",
+          "这份礼物，也别想留下！"
+        ],
+        [
+          3,
+          "",
+          "巫师将礼物撕碎，碎片随魔法散向森林。"
+        ],
+        [
+          5,
+          "小呆猪",
+          "我会把它们找回来……一定。"
+        ]
+      ]
+    },
+    {
+      "id": "empty",
+      "image": "gift_empty_v3",
+      "duration": 3.5,
+      "location": "蘑菇屋 · 人和礼物都不见了",
+      "zoom_start": 1.04,
+      "zoom_end": 1.02,
+      "cues": [
+        [
+          0.7,
+          "",
+          "桌上的多肉还在，呆呆猪和礼物却消失了。"
+        ]
+      ]
+    },
+    {
+      "id": "title",
+      "image": "bedroom_boy",
+      "duration": 6,
+      "location": "",
+      "zoom_start": 1.04,
+      "zoom_end": 1.04,
+      "cues": [
+        [
+          1,
+          "第一幕 · 空掉的心",
+          "天亮以后，故事将从白白菜的调查开始。"
+        ]
+      ],
+      "painting": "after"
+    }
+  ]
+}

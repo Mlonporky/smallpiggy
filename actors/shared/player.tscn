@@ -50,6 +50,7 @@ frame = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
 
@@ -87,4 +88,3 @@ shape = SubResource("HitShape")
 unique_name_in_owner = true
 script = ExtResource("2")
 max_health = 3
-

@@ -11,6 +11,10 @@ signal attack_started
 @export var move_speed := 205.0
 @export var acceleration := 1150.0
 @export var deceleration := 1450.0
+@export var handpainted_room := false
+@export var sheet_override: Texture2D
+@export var sheet_row_edges: PackedInt32Array = []
+@export var visible_height := 150.0
 
 @onready var visual_root: Node2D = %VisualRoot
 @onready var sprite: Sprite2D = %Sprite
@@ -25,6 +29,11 @@ var _attacking := false
 var _invulnerable := false
 var _animation_clock := 0.0
 var _nearest_interactable: Interactable
+var walk_phase := 0.0
+var _travelled := 0.0
+var _frame_bounds: Array[Rect2] = []
+var _script_walking := false
+var _walk_target := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -33,6 +42,25 @@ func _ready() -> void:
 		sprite.texture = load("res://assets/sprites/characters/little_pig.png")
 	else:
 		sprite.texture = load("res://assets/sprites/characters/white_cabbage.png")
+	if sheet_override:
+		sprite.texture = sheet_override
+	if handpainted_room:
+		_frame_bounds = SpriteAtlas.bounds(sprite.texture, 3, 4, sheet_row_edges, 0.01)
+		sprite.hframes = 1
+		sprite.vframes = 1
+		sprite.region_enabled = true
+		sprite.centered = false
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		sprite.modulate = Color(0.94, 0.9, 0.82, 1)
+		visual_root.position = Vector2.ZERO
+		var shadow := visual_root.get_node("Shadow") as Polygon2D
+		shadow.position = Vector2.ZERO
+		var body := $CollisionShape2D as CollisionShape2D
+		body.position = Vector2.ZERO
+		var feet := CircleShape2D.new()
+		feet.radius = 15.0
+		body.shape = feet
+		_update_visual(0.0)
 	hurt_box.team = "player"
 	hit_box.team = "player"
 	hurt_box.damaged.connect(_on_damaged)
@@ -43,21 +71,28 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var direction := Vector2.ZERO
-	if input_enabled and not _attacking:
+	if _script_walking:
+		direction = global_position.direction_to(_walk_target)
+		if global_position.distance_to(_walk_target) < 5.0:
+			_script_walking = false
+			direction = Vector2.ZERO
+	elif input_enabled and not _attacking:
 		direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction.length_squared() > 0.0:
 		_facing = _cardinal_facing(direction)
 		velocity = velocity.move_toward(direction * move_speed, acceleration * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
+	var previous_position := global_position
 	move_and_slide()
+	_travelled = global_position.distance_to(previous_position)
 	_update_visual(delta)
 	_update_interaction()
 	if input_enabled and Input.is_action_just_pressed("interact") and _nearest_interactable:
 		_nearest_interactable.interact(self)
 	if combat_enabled and input_enabled and Input.is_action_just_pressed("attack"):
 		attack()
-	if Input.is_action_just_pressed("quick_save"):
+	if input_enabled and Input.is_action_just_pressed("quick_save"):
 		var save_manager := get_node_or_null("/root/SaveManager")
 		if save_manager:
 			save_manager.save_game()
@@ -72,6 +107,18 @@ func set_input_enabled(value: bool) -> void:
 func face(direction: Vector2) -> void:
 	if direction.length_squared() > 0.0:
 		_facing = _cardinal_facing(direction)
+
+
+func walk_to(target: Vector2, timeout := 8.0) -> bool:
+	_walk_target = target
+	_script_walking = true
+	var elapsed := 0.0
+	while _script_walking and elapsed < timeout:
+		await get_tree().physics_frame
+		elapsed += get_physics_process_delta_time()
+	_script_walking = false
+	velocity = Vector2.ZERO
+	return global_position.distance_to(target) < 8.0
 
 
 func attack() -> void:
@@ -108,7 +155,9 @@ func _update_interaction() -> void:
 
 func _update_visual(delta: float) -> void:
 	_animation_clock += delta
-	var moving := velocity.length() > 18.0
+	var moving := _travelled > 0.05
+	# Integrated distance preserves phase through acceleration and collisions.
+	walk_phase = fposmod(walk_phase + _travelled / (95.0 if handpainted_room else 72.0), 1.0)
 	var row := 0
 	if _facing == Vector2.LEFT:
 		row = 1
@@ -117,14 +166,25 @@ func _update_visual(delta: float) -> void:
 	elif _facing == Vector2.UP:
 		row = 3
 	if moving:
-		var walk_phase := int(_animation_clock * (6.0 + velocity.length() / move_speed * 2.0)) % 2
-		sprite.frame = row * 3 + (0 if walk_phase == 0 else 2)
-		visual_root.position.y = sin(_animation_clock * 13.0) * 1.8
-	else:
-		sprite.frame = row * 3 + 1
-		visual_root.position.y = sin(_animation_clock * 2.2) * 1.3
+		var cycle := [0, 1, 2, 1]
+		_show_frame(row * 3 + cycle[int(walk_phase * 4.0) % 4])
 		if not _attacking:
-			visual_root.scale = Vector2(1.0 + sin(_animation_clock * 2.2) * 0.012, 1.0 - sin(_animation_clock * 2.2) * 0.012)
+			visual_root.scale = visual_root.scale.lerp(Vector2.ONE, minf(1.0, delta * 15.0))
+	else:
+		_show_frame(row * 3 + 1)
+		if not _attacking:
+			visual_root.scale = Vector2(1.0 + sin(_animation_clock * 2.2) * 0.003, 1.0 - sin(_animation_clock * 2.2) * 0.003)
+
+
+func _show_frame(index: int) -> void:
+	if not handpainted_room:
+		sprite.frame = index
+		return
+	var rect := _frame_bounds[index]
+	sprite.region_rect = rect
+	var factor := visible_height / rect.size.y
+	sprite.scale = Vector2.ONE * factor
+	sprite.position = Vector2(-rect.size.x * factor * 0.5, -visible_height)
 
 
 func _on_damaged(source: HitBox2D) -> void:
