@@ -8,6 +8,7 @@ func _initialize() -> void:
 func room(id: String) -> Node:
 	var instance = load("res://scenes/chapter1/%s.tscn" % id).instantiate()
 	instance.test_mode = true
+	instance.auto_exit_enabled = false
 	instance.route_on_exit = false
 	root.add_child(instance)
 	await process_frame
@@ -22,13 +23,13 @@ func _run() -> void:
 	while scene.busy: await process_frame
 	check(state.has_flag("ch1_opening_done"),"one-time wake intro completed")
 	check(state.heart_progress == 0,"empty heart on waking")
-	await scene.interact("door")
+	await scene.travel({"bedroom":"kitchen","kitchen":"bedroom","living":"outside"}[scene.room_id])
 	check(scene.last_route.is_empty(),"bedroom exit locked before memory")
 	await scene.interact("painting")
 	check(state.heart_progress == 1,"first painting memory gives one heart stage")
 	await scene.interact("painting")
 	check(state.heart_progress == 1,"repeated painting cannot farm heart")
-	await scene.interact("door")
+	await scene.travel({"bedroom":"kitchen","kitchen":"bedroom","living":"outside"}[scene.room_id])
 	check(scene.last_route.ends_with("kitchen.tscn"),"bedroom exits into kitchen")
 	var actor = scene.player
 	actor.position = Vector2(810,730)
@@ -49,6 +50,12 @@ func _run() -> void:
 	scene.queue_free()
 	await process_frame
 	scene = await room("kitchen")
+	await scene.travel("living")
+	check(scene.last_route.is_empty(),"visible living exit keeps kitchen story gate")
+	check(scene.exit_locks().has("living"),"locked exit explains required clues")
+	await scene.travel({"bedroom":"kitchen","kitchen":"bedroom","living":"outside"}[scene.room_id])
+	check(scene.last_route.ends_with("bedroom.tscn"),"kitchen has independent bedroom exit")
+	scene.last_route = ""
 	await scene.interact("cup")
 	check(not state.has_flag("pig_cup_checked"),"cup unavailable before coffee")
 	await scene.interact("tableware")
@@ -59,9 +66,12 @@ func _run() -> void:
 	check(state.heart_progress == 2 and state.has_flag("kitchen_memory_complete"),"cup and tableware trigger memory")
 	await scene.interact("cup")
 	check(state.heart_progress == 2,"repeat cup does not advance heart")
+	await scene.travel("living")
+	check(scene.last_route.ends_with("living.tscn"),"second kitchen exit routes directly to living")
+	check(not scene.exit_locks().has("living"),"exit sign unlocks after memory")
 	# Furniture blocks the feet; walking into it must not animate a stationary actor.
 	actor = scene.player
-	actor.position = Vector2(710,840)
+	actor.position = Vector2(710,940)
 	actor.reset_physics_interpolation()
 	Input.action_press("move_up")
 	for i in 45: await physics_frame
@@ -70,10 +80,14 @@ func _run() -> void:
 	scene.queue_free()
 	await process_frame
 	scene = await room("living")
+	await scene.travel("kitchen")
+	check(scene.last_route.ends_with("kitchen.tscn"),"living has separate return to kitchen")
+	check(scene.entry_position("kitchen") == Vector2(1140,565),"return arrives beside matching kitchen exit")
+	scene.last_route = ""
 	for id in ["blanket","basket","window"]:
 		await scene.interact(id)
 	check(state.heart_progress == 2,"ordinary household objects do not advance heart")
-	await scene.interact("door")
+	await scene.travel({"bedroom":"kitchen","kitchen":"bedroom","living":"outside"}[scene.room_id])
 	check(scene.last_route.is_empty(),"home exit locked before paper")
 	await scene.interact("pillow")
 	check(state.heart_progress == 3,"third memory gives only third stage, not a full heart")
@@ -92,7 +106,7 @@ func _run() -> void:
 	await process_frame
 	scene = await room("living")
 	check(scene.paper.visible and scene.hotspots.paper.enabled and not scene.busy,"room reload restores physical paper without replaying memory")
-	await scene.interact("door")
+	await scene.travel({"bedroom":"kitchen","kitchen":"bedroom","living":"outside"}[scene.room_id])
 	check(scene.last_route.ends_with("forest_clearing.tscn") and state.story_phase == 2,"confirmed exit hands off to pig, not cabbage exterior")
 	scene.queue_free()
 	await process_frame

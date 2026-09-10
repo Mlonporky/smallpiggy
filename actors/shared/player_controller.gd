@@ -148,6 +148,8 @@ func _update_interaction() -> void:
 			if distance < shortest:
 				shortest = distance
 				next = area
+	if handpainted_room and get_parent().get_parent().has_method("nearest_reachable"):
+		next = get_parent().get_parent().nearest_reachable(global_position)
 	if next != _nearest_interactable:
 		_nearest_interactable = next
 		prompt_changed.emit(_nearest_interactable.prompt_text if _nearest_interactable else "")

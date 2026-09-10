@@ -5,15 +5,17 @@ var heart: TextureRect
 var prompt: Label
 var room_name: Label
 var shade: ColorRect
+var companion: TextureRect
 var closeup: TextureRect
 var close_hint: Label
 var menu: VBoxContainer
 var inspecting := false
 var choice := ""
 var test_mode := false
+var choosing := false
 var heart_frames: Array[Rect2]
 var heart_sheet := preload("res://assets/chapter1/heart.png")
-const HELP := "WASD / 方向键\n移动\n\nE / 空格 调查\nF5 保存"
+const HELP := "WASD / 方向键\n移动\n\n靠近后点击物品\nE / 空格 调查\nF5 保存\n\n微光标记\n值得调查的物品\n\n走近门口微光处\n选择目的地"
 
 func _ready() -> void:
 	layer = 20
@@ -43,8 +45,10 @@ func _ready() -> void:
 	closeup.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	closeup.visible = false
 	add_child(closeup)
+	companion = closeup.duplicate()
+	add_child(companion)
 	close_hint = label(Vector2.ZERO,18)
-	close_hint.text = "E / 空格　收起"
+	close_hint.text = "点击 / E / 空格　收起"
 	close_hint.visible = false
 	menu = VBoxContainer.new()
 	menu.add_theme_constant_override("separation",12)
@@ -69,8 +73,14 @@ func layout() -> void:
 	var size := get_viewport().get_visible_rect().size
 	closeup.position = Vector2(size.x * 0.2,30)
 	closeup.size = Vector2(size.x * 0.6,size.y-110)
+	if companion and companion.visible:
+		closeup.position = Vector2(size.x*0.08,40)
+		closeup.size = Vector2(size.x*0.41,size.y-130)
+		companion.position = Vector2(size.x*0.51,40)
+		companion.size = closeup.size
 	close_hint.position = Vector2(size.x*0.5-70,size.y-56)
-	menu.position = size*0.5-Vector2(130,90)
+	menu.size.x = minf(480.0,size.x-48.0)
+	menu.position = Vector2((size.x-menu.size.x)*0.5,maxf(24.0,(size.y-menu.get_combined_minimum_size().y)*0.5))
 
 func update_heart(value: int) -> void:
 	heart.texture = SpriteAtlas.frame(heart_sheet,heart_frames[clampi(value,0,3)])
@@ -81,13 +91,26 @@ func update_heart(value: int) -> void:
 	tween.chain().tween_property(heart,"modulate",Color.WHITE,0.65)
 	tween.tween_property(heart,"scale",Vector2.ONE,0.65)
 
+func _input(event: InputEvent) -> void:
+	if inspecting and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		inspecting = false
+		get_viewport().set_input_as_handled()
+
 func _unhandled_input(event: InputEvent) -> void:
+	if choosing and event.is_action_pressed("ui_cancel"):
+		choice = "cancel"
+		get_viewport().set_input_as_handled()
+		return
 	if inspecting and (event.is_action_pressed("interact") or event.is_action_pressed("ui_accept")):
 		inspecting = false
 		get_viewport().set_input_as_handled()
 
-func inspect(texture: Texture2D) -> void:
+func inspect(texture: Texture2D, paired: Texture2D = null) -> void:
 	show_closeup(texture)
+	if paired:
+		companion.texture = paired
+		companion.visible = true
+		layout()
 	close_hint.visible = true
 	inspecting = true
 	if test_mode:
@@ -99,11 +122,14 @@ func inspect(texture: Texture2D) -> void:
 	hide_closeup()
 
 func show_closeup(texture: Texture2D) -> void:
+	companion.visible = false
+	layout()
 	shade.visible = true
 	closeup.texture = texture
 	closeup.visible = true
 
 func hide_closeup() -> void:
+	companion.visible = false
 	shade.visible = false
 	closeup.visible = false
 	close_hint.visible = false
@@ -131,20 +157,36 @@ func fade_from_black(fast: bool) -> void:
 	await tween.finished
 	black.queue_free()
 
-func choose(options: Dictionary) -> String:
+func choose(options: Dictionary, disabled: Dictionary = {}, title := "") -> String:
 	choice = ""
+	choosing = true
 	shade.visible = true
+	if not title.is_empty():
+		var heading := Label.new()
+		heading.text = title
+		heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		heading.add_theme_font_size_override("font_size",26)
+		menu.add_child(heading)
+	var first: Button
 	for key in options:
 		var button := Button.new()
+		button.name = key
 		button.text = options[key]
-		button.custom_minimum_size = Vector2(260,50)
-		button.add_theme_font_size_override("font_size",22)
+		button.disabled = disabled.has(key)
+		if button.disabled: button.text += "\n"+disabled[key]
+		button.custom_minimum_size = Vector2(0,76 if button.disabled else 56)
+		button.add_theme_font_size_override("font_size",20)
+		button.add_theme_color_override("font_disabled_color",Color("aaa5a0"))
 		button.pressed.connect(func(): choice = key)
 		menu.add_child(button)
-	menu.get_child(0).grab_focus()
+		if not first and not button.disabled: first = button
+	if first: first.grab_focus()
+	layout()
 	while choice.is_empty():
 		await get_tree().process_frame
 	for child in menu.get_children():
+		menu.remove_child(child)
 		child.queue_free()
+	choosing = false
 	shade.visible = false
 	return choice

@@ -13,6 +13,7 @@ func _run() -> void:
 	for id in ["bedroom","kitchen","living"]:
 		var scene = load("res://scenes/chapter1/%s.tscn" % id).instantiate()
 		scene.route_on_exit = false
+		scene.auto_exit_enabled = false
 		root.add_child(scene)
 		await process_frame
 		scene.player.position = {"bedroom":Vector2(620,565),"kitchen":Vector2(1040,470),"living":Vector2(390,555)}[id]

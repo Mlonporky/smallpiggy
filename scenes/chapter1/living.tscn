@@ -1,5 +1,33 @@
-[gd_scene load_steps=2 format=3]
-[ext_resource type="Script" path="res://scenes/chapter1/chapter_room.gd" id="1"]
-[node name="LivingRoom" type="Node2D"]
+[gd_scene format=3 uid="uid://vxv13tdpfjwb"]
+
+[ext_resource type="Script" uid="uid://b3bpndwgbhhcm" path="res://scenes/chapter1/chapter_room.gd" id="1"]
+[ext_resource type="Script" uid="uid://dlf43qgp12dfw" path="res://scenes/chapter1/editor_preview.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://sd25tnkdr3u0" path="res://assets/chapter1/living_v2.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://dmm20oq5okuvk" path="res://assets/chapter1/memory_03.png" id="4"]
+[ext_resource type="Shader" uid="uid://dtisyojga5aeh" path="res://scenes/chapter1/memory_soften.gdshader" id="5"]
+
+[sub_resource type="ShaderMaterial" id="MemoryPreviewMaterial"]
+shader = ExtResource("5")
+shader_parameter/blur = 0.003
+
+[node name="Living" type="Node2D" unique_id=1894006264]
 script = ExtResource("1")
 room_id = "living"
+
+[node name="EditorBackground" type="Sprite2D" parent="." unique_id=100518680]
+modulate = Color(0.55, 0.55, 0.58, 1)
+z_index = -10
+texture = ExtResource("3")
+centered = false
+script = ExtResource("2")
+metadata/_edit_lock_ = true
+
+[node name="MemoryAnchor" type="Sprite2D" parent="." unique_id=242249838]
+modulate = Color(0.98, 0.80, 0.86, 0.68)
+z_index = 22
+texture_filter = 2
+material = SubResource("MemoryPreviewMaterial")
+position = Vector2(713.98724, 916)
+scale = Vector2(0.18362355, 0.15406564)
+texture = ExtResource("4")
+script = ExtResource("2")

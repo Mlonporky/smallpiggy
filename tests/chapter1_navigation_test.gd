@@ -10,12 +10,13 @@ func _run() -> void:
 	state.set_flag("ch1_opening_done")
 	state.set_flag("coffee_made")
 	var routes := {
-		"bedroom":[[Vector2(710,800),""],[Vector2(600,565),"painting"],[Vector2(710,800),""],[Vector2(715,960),"door"]],
-		"kitchen":[[Vector2(710,860),"tableware"],[Vector2(1090,860),""],[Vector2(1090,470),"coffee"],[Vector2(1000,465),"cup"],[Vector2(1090,465),""],[Vector2(1090,860),""],[Vector2(710,880),""],[Vector2(710,985),"door"]],
-		"living":[[Vector2(385,865),""],[Vector2(385,545),"pillow"],[Vector2(385,865),""],[Vector2(655,865),""],[Vector2(655,980),"door"]]
+		"bedroom":[[Vector2(600,465),"painting"],[Vector2(610,570),""],[Vector2(1120,610),""]],
+		"kitchen":[[Vector2(285,940),""],[Vector2(725,940),"tableware"],[Vector2(1120,940),""],[Vector2(1120,535),"coffee"],[Vector2(1010,535),"cup"],[Vector2(1120,560),""],[Vector2(1250,600),""]],
+		"living":[[Vector2(410,570),"pillow"],[Vector2(410,875),""],[Vector2(710,875),""],[Vector2(710,945),""]]
 	}
 	for id in routes:
 		var scene = load("res://scenes/chapter1/%s.tscn" % id).instantiate()
+		scene.auto_exit_enabled = false
 		root.add_child(scene)
 		await process_frame
 		scene.player.set_input_enabled(false)
