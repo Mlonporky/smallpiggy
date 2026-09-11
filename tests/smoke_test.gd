@@ -16,7 +16,7 @@ func _run() -> void:
 	await _check_scene("res://scenes/bootstrap/main.tscn", ["NewGameButton", "ChapterOneButton", "ContinueButton"])
 	await _check_scene("res://scenes/prologue/prologue.tscn", ["Stage", "Picture", "StoryEffects", "Caption", "SkipButton", "AlarmAudio"])
 	await _check_scene("res://scenes/chapter_01_hollow_heart/cabbage_home.tscn", ["Player", "BreakfastPuzzle", "MemoryEcho", "DialogueUI"])
-	await _check_scene("res://scenes/chapter_02_dark_forest/forest_clearing.tscn", ["Player", "ForestSlime", "GiftFragment", "PurpleFog", "JoyBurst"])
+	await _check_scene("res://scenes/chapter_02_dark_forest/forest_clearing.tscn", ["Player", "DialogueUI", "RedWrappingPaper", "EvilWizard"])
 	_check_json("res://data/dialogue/chapter_01.json")
 	_check_json("res://data/dialogue/chapter_02.json")
 	_check_json("res://data/dialogue/prologue.json")

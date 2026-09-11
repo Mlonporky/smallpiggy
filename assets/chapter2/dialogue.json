@@ -1,0 +1,501 @@
+{
+  "11": [
+    {
+      "speaker": "小呆猪",
+      "text": "……白菜？",
+      "pause_after": 0.5
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "白菜？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "这里是……",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "我的礼物呢？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "这是礼物的包装纸……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "我明明已经快包好了。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "白菜还没有看到呢。",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "……礼物呢？",
+      "pause_after": 0.18
+    }
+  ],
+  "13": [
+    {
+      "speaker": "小呆猪",
+      "text": "这是礼物的包装纸……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "礼物应该是在被传送的时候散开了。",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "白菜还没有看到呢……",
+      "pause_after": 0.18
+    }
+  ],
+  "15": [
+    {
+      "speaker": "坏巫师",
+      "text": "呆呆猪。",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你醒了。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "你是谁？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "你对白菜做了什么？",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "还有——",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "我的礼物去哪里了？！",
+      "pause_after": 0.18
+    }
+  ],
+  "16": [
+    {
+      "speaker": "坏巫师",
+      "text": "礼物？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你现在还有心情担心那个东西？",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你应该先担心一下……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "白白菜还记不记得你。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "……什么意思？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "我已经把关于你的记忆，从他那里全部拿走了。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你的名字。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你们一起吃过的饭。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你们一起说过的话。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "那些无聊的礼物。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "那些更加无聊的快乐。",
+      "pause_after": 0.5
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "全部——",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "消失了。",
+      "pause_after": 0.18
+    }
+  ],
+  "17": [
+    {
+      "speaker": "坏巫师",
+      "text": "现在的他，就算站在你面前——",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "也不会知道你是谁。",
+      "pause_after": 0.18
+    }
+  ],
+  "18": [
+    {
+      "speaker": "小呆猪",
+      "text": "……他真的……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "忘记我了吗？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "当然。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "所以你还有什么理由回去？",
+      "pause_after": 0.18
+    }
+  ],
+  "19": [
+    {
+      "speaker": "白白菜",
+      "text": "你藏什么啦？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "没有！",
+      "pause_after": 0.18
+    }
+  ],
+  "20": [
+    {
+      "speaker": "小呆猪",
+      "text": "……那我要去找他。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "什么？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "如果白菜忘记我了——",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "那我就重新认识他。",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "如果他忘记了我们做过的事情……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "我就陪他再做一次。",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "如果他连我的名字都忘记了……",
+      "pause_after": 0.5
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "那我就再告诉他一次。",
+      "pause_after": 0.18
+    }
+  ],
+  "22": [
+    {
+      "speaker": "坏巫师",
+      "text": "你以为你回得去？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "看看你周围。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "这里是黑暗森林的最深处。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "而猪猪山庄——",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "在森林的另一端。",
+      "pause_after": 0.18
+    }
+  ],
+  "23": [
+    {
+      "speaker": "小呆猪",
+      "text": "……",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "黑、黑暗森林？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "怎么？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "害怕了？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你不是最怕这里吗？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "那些没有灯的地方。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "那些奇怪的声音。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "那些藏在树后面的东西……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你连晚上一个人走出蘑菇房子都不敢。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你真的觉得——",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你能穿过整片黑暗森林？",
+      "pause_after": 0.18
+    }
+  ],
+  "24": [
+    {
+      "speaker": "小呆猪",
+      "text": "……我怕。",
+      "pause_after": 0.67
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "我真的很怕。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "这里这么黑。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "我也不知道里面有什么。",
+      "pause_after": 0.67
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "可是白菜一个人在那边。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "他醒过来的时候……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "如果发现所有事情都变得奇奇怪怪的……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "他一定也会害怕。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "所以我要回去。",
+      "pause_after": 0.18
+    }
+  ],
+  "25": [
+    {
+      "speaker": "坏巫师",
+      "text": "就算他已经忘记你？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "嗯。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "就算他不认识你？",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "嗯。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "就算他根本不相信你？",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "那我就想办法让他相信。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "就算你要穿过你最害怕的地方？",
+      "pause_after": 0.67
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "……嗯。",
+      "pause_after": 0.5
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "因为我要去找白菜。",
+      "pause_after": 0.18
+    }
+  ],
+  "26": [
+    {
+      "speaker": "坏巫师",
+      "text": "你——！",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "诶？",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "刚才是什么？",
+      "pause_after": 0.18
+    }
+  ],
+  "27": [
+    {
+      "speaker": "坏巫师",
+      "text": "那就去吧。",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "让我看看……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "坏巫师",
+      "text": "你的勇气究竟能坚持多久。",
+      "pause_after": 0.18
+    }
+  ],
+  "28": [
+    {
+      "speaker": "小呆猪",
+      "text": "……",
+      "pause_after": 0.67
+    }
+  ],
+  "29": [
+    {
+      "speaker": "小呆猪",
+      "text": "……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "这边不是白菜的方向。",
+      "pause_after": 0.18
+    }
+  ],
+  "31": [
+    {
+      "speaker": "小呆猪",
+      "text": "……",
+      "pause_after": 0.18
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "我还是很害怕。",
+      "pause_after": 0.67
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "但是——",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "害怕也可以往前走。",
+      "pause_after": 0.18
+    }
+  ]
+}

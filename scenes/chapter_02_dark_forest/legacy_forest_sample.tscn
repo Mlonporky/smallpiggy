@@ -1,0 +1,129 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://scenes/chapter_02_dark_forest/forest_clearing.gd" id="1"]
+[ext_resource type="Script" path="res://systems/vfx/world_art.gd" id="2"]
+[ext_resource type="PackedScene" path="res://actors/shared/player.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://actors/slime/forest_slime.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://systems/interaction/prop_interactable.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://ui/game_ui.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://systems/dialogue/dialogue_ui.tscn" id="7"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/fog_particle.svg" id="8"]
+[ext_resource type="Texture2D" path="res://assets/placeholders/joy_particle.svg" id="9"]
+
+[sub_resource type="RectangleShape2D" id="WallHorizontal"]
+size = Vector2(1600, 36)
+
+[sub_resource type="RectangleShape2D" id="WallVertical"]
+size = Vector2(36, 1000)
+
+[sub_resource type="ParticleProcessMaterial" id="FogMaterial"]
+emission_shape = 3
+emission_box_extents = Vector3(720, 400, 1)
+direction = Vector3(1, 0, 0)
+spread = 25.0
+initial_velocity_min = 7.0
+initial_velocity_max = 16.0
+gravity = Vector3(0, -1, 0)
+scale_min = 1.2
+scale_max = 3.2
+color = Color(0.55, 0.33, 0.69, 0.24)
+
+[sub_resource type="ParticleProcessMaterial" id="JoyMaterial"]
+emission_shape = 1
+emission_sphere_radius = 24.0
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 75.0
+initial_velocity_max = 140.0
+gravity = Vector3(0, 55, 0)
+scale_min = 0.35
+scale_max = 0.85
+color = Color(1, 0.9, 0.48, 1)
+
+[node name="ForestClearing" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("2")
+theme = "forest"
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Bounds" type="StaticBody2D" parent="World"]
+collision_layer = 1
+collision_mask = 1
+
+[node name="Top" type="CollisionShape2D" parent="World/Bounds"]
+position = Vector2(0, -482)
+shape = SubResource("WallHorizontal")
+
+[node name="Bottom" type="CollisionShape2D" parent="World/Bounds"]
+position = Vector2(0, 482)
+shape = SubResource("WallHorizontal")
+
+[node name="Left" type="CollisionShape2D" parent="World/Bounds"]
+position = Vector2(-782, 0)
+shape = SubResource("WallVertical")
+
+[node name="Right" type="CollisionShape2D" parent="World/Bounds"]
+position = Vector2(782, 0)
+shape = SubResource("WallVertical")
+
+[node name="GiftFragment" parent="World" instance=ExtResource("5")]
+unique_name_in_owner = true
+position = Vector2(390, -75)
+interaction_id = "fragment_red_wrap_01"
+prompt_text = "拾取红色礼物碎片"
+visual_kind = "fragment"
+accent = Color(0.86, 0.23, 0.31, 1)
+display_label = "礼物碎片"
+
+[node name="Characters" type="Node2D" parent="."]
+
+[node name="Player" parent="Characters" instance=ExtResource("3")]
+unique_name_in_owner = true
+position = Vector2(-510, 160)
+character_id = "little_pig"
+combat_enabled = true
+
+[node name="ForestSlime" parent="Characters" instance=ExtResource("4")]
+unique_name_in_owner = true
+position = Vector2(125, 5)
+
+[node name="Lighting" type="CanvasModulate" parent="."]
+color = Color(0.74, 0.8, 0.92, 1)
+
+[node name="VFX" type="Node2D" parent="."]
+
+[node name="PurpleFog" type="GPUParticles2D" parent="VFX"]
+position = Vector2(0, -80)
+amount = 42
+process_material = SubResource("FogMaterial")
+texture = ExtResource("8")
+lifetime = 10.0
+preprocess = 10.0
+visibility_rect = Rect2(-800, -500, 1600, 1000)
+
+[node name="JoyBurst" type="GPUParticles2D" parent="VFX"]
+unique_name_in_owner = true
+emitting = false
+amount = 34
+process_material = SubResource("JoyMaterial")
+texture = ExtResource("9")
+lifetime = 1.6
+one_shot = true
+explosiveness = 0.92
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[node name="Canopy" type="Polygon2D" parent="Foreground"]
+polygon = PackedVector2Array(-800, -500, 800, -500, 800, -395, 490, -430, 220, -390, -90, -430, -360, -390, -800, -410)
+color = Color(0.04, 0.1, 0.12, 0.74)
+z_index = 20
+
+[node name="GameUI" parent="." instance=ExtResource("6")]
+unique_name_in_owner = true
+
+[node name="DialogueUI" parent="." instance=ExtResource("7")]
+unique_name_in_owner = true
+

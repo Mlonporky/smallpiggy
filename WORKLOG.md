@@ -233,3 +233,27 @@
 交接记录当前门位、高清道具范围、靠近点击、垃圾桶文字与星光、柔和照明、三处用户保存的定位及渐进淡入淡出；明确冰箱尚无实现、森林已有旧战斗／碎片样板但未完成第二幕。下一步先确认冰箱内容与缺失对白，再开展森林分镜、素材与玩法接入；本轮未擅自实施这两项。
 
 最终复测：CHAPTER1_TEST_OK、CHAPTER1_NAVIGATION_OK、CHAPTER1_UI_OK、CHAPTER1_EXIT_ROUTING_OK、CHAPTER1_BOTTOM_EXIT_OK、PROP_CLICK_OK、POLISH_OK、MEMORY_ANCHOR_OK、BOY_ATLAS_TEST_OK、GAMEPLAY_TEST_OK，10 项均退出 0；Git diff --check 通过。再次核对三处 MemoryAnchor 的位置、缩放与文档一致。复用前述实机视觉检查，本轮交接未新增美术／动画验收。今日代码、资产、测试、用户定位和交接一并纳入本次授权的 commit/push；实际提交哈希与远端结果以 Git 和最终回复为准。
+
+## 2026-09-10 · 第二幕入口与山洞战斗
+
+用户要求：开始制作第二幕，小呆猪已被传送到森林另一端；使用02_pig的新披风sprite，不改之前完成的内容。用户进一步明确本次范围为「入口剧情＋木棍／史莱姆战斗」，以此覆盖附件原有“不做战斗”的范围限制。
+
+已实现：保留第一幕出门路由地址，森林入口从倒地六姿势苏醒开始；红纸调查、附件巫师对白、两段只读残影、分层Joy与巫师受冲击离场、输入锁、可关闭道路阻挡、一次性后退提示、主动迈步／章节标题、进入山洞。山洞有拾棍门槛、持棍新版sprite、现有三点生命与史莱姆蓄力冲撞／受击判定、掉落红色碎片、去重保存、失败后保留木棍重试。没有击败巫师、白菜正式见面或新增共鸣收集。
+
+复用映射：LittlePig→PiggyPlayer局部子类；Dialogue→DialogueUI；Objective／Health→GameUI；状态→GameState.flags；保存→SaveManager；转场→SceneRouter；交互→Interactable；史莱姆→ForestSlime局部子类。Heart只写解锁flag，不清空第一幕0–3心进度。没有新增全局系统。
+
+文件：assets/chapter2内原图和显式atlas／对白JSON；scenes/chapter2内入口、山洞与局部角色脚本；原forest_clearing.tscn路由改接入口，旧样板原样保存在legacy_forest_sample.tscn。序章、第一幕、共享角色脚本和用户保存的回忆定位未改。更新烟雾测试的森林节点约定，新增第二幕流程与实机渲染测试。玩法说明见docs/CHAPTER2_IMPLEMENTATION_ZH.md。
+
+验证进展：初版CHAPTER2_FLOW_OK，覆盖完整入口、重复调查、状态恢复、实际场景切换、三次真实HitBox攻击与碎片去重；CHAPTER1_EXIT_ROUTING_OK、GAMEPLAY_TEST_OK、SMOKE_TEST_OK通过。扩展木棍门槛测试时，测试角色传送至战斗区触发AI，导致“固定三击”断言不稳定；已在该判定测试中锁定剧情触发，保留真实HitBox，不改生产战斗逻辑。扩展后的失败重试验证结果续记。
+
+视觉：Apple M1实际OpenGL渲染检查森林、巫师、四方向披风、山洞、持棍；发现原Joy整图粒子形成方块后改用现有单颗粒子。正常时间运动采样p50约5.44ms／p95约13.74ms，仅说明该测试运行的帧间隔，不代替完整人工动画验收。测试截图/private/tmp/pig-*.png。
+
+缺项：没有提供音频，当前无声；紫雾／Joy沿用既有占位粒子；精确的猪杯失忆／背后藏礼物残影用既有图代替；没有专门攻击表，暂以持棍姿势的预备、旋转挥动、回收表示。可选停留提示未做，后续森林碎片、山庄汇合与结局不在本轮。未提交或推送。
+
+战斗断言进一步定位：真实命中已使史莱姆生命归零，失败来自测试在0.6秒固定等待后过早检查；死亡淡出完成才发出defeated。测试改等待战胜状态（有2.5秒截止），没有缩短生产动画。独立CHAPTER2_COMBAT_OK确认每击扣一点生命及淡出后开放碎片。七张02_pig原图SHA-256全部一致。最后镜头巡视加入轻微推近，避免全图机位平移露出上下黑边；结束恢复原zoom与offset。
+
+最终复测：扩展CHAPTER2_FLOW_OK通过（包含真实木棍门槛与死亡后场景重载、满生命、保留木棍和已完成入口状态）；CHAPTER2_COMBAT_OK通过；SMOKE_TEST_OK、CHAPTER1_EXIT_ROUTING_OK、GAMEPLAY_TEST_OK及CHAPTER2_VISUAL_OK通过。最终Git diff --check通过。headless沙箱启动有macOS系统证书读取提示，实机图形运行没有该提示；未出现本次场景脚本／节点错误。未将现有存档作为测试数据，未提交或推送。
+
+## 2026-09-10 · 第二幕handoff
+
+用户要求写handoff。新增docs/HANDOFF_2026-09-10_ACT2.md，记录用户确认范围、已被传送的开场与披风更新、保护第一幕、当前玩法、代码／资产入口、状态与存档边界、已通过的验证、素材缺项、后续建议及未提交状态。README更新最新交接入口与旧森林描述，旧第一幕交接加历史状态提示，避免下轮误认为第二幕尚未实现。本轮只改文档，未重跑游戏测试；检查链接目标及git diff --check。未提交／推送。
