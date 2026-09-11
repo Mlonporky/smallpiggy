@@ -293,3 +293,11 @@
 用户反馈第一幕厨房调查时白菜杯穿模。实机让男孩从(1070,520)向台面行走，碰撞停在(1070,495.0014)，复现白菜杯矩形补图盖住头发。根因是CorrectedCabbageCup作为根节点后添加的z=0图片绘制在Depth角色层之上；并非碰撞失效。
 
 修复：仅将杯子背景补图z_index设为-9，位于背景(-10)与角色(0)之间，保留杯子坐标、素材、台面碰撞与调查逻辑。相同站位实机截图确认头发完整、补图不再盖住人物；前后截图在docs/art_direction/kitchen_cup_fix。PROP_CLICK_OK通过（距离、剧情门槛、真实点击、朝向独立性与双餐具近景）；git diff --check通过。保留此前未提交修改，未提交／推送。
+
+## 2026-09-11 · 提交状态更正
+
+更正：上面2026-09-11四条（mipmap方案A、披风／持棍透明切帧、角色统一、厨房白菜杯）写的“未提交／推送”只反映各自写记录时的状态。四轮改动后来已合并进提交 `4457957 fix: unify character sprites and kitchen cup layering`（2026-09-11 14:41），并已推送到 origin/main；核对结果为本地 HEAD 与 origin/main 相同。原条目保留不改。
+
+用户曾要求撤回方案A的mipmap改动；由于该改动已被“角色统一”扩展为全部角色共用的 CharacterSpriteStyle 规则，并已推送，用户确认保持现状，不撤回。
+
+遗留：Godot自动生成、尚未纳入Git的8个文件——docs/art_direction/character_style_review 下五张截图的 .import、kitchen_cup_fix 下两张截图的 .import，以及 scripts/art/compare_character_style.gd.uid。不影响运行。按用户要求，这8个文件与本条记录一起提交；未推送。
