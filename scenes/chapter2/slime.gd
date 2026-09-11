@@ -10,6 +10,7 @@ func _ready() -> void:
 	art.region_enabled = true
 	art.centered = false
 	art.scale = Vector2.ONE * 0.47
+	art.texture_filter = CharacterSpriteStyle.FILTER
 	add_child(art)
 	$HurtBox/CollisionShape2D.position.y = -45
 func _process(delta: float) -> void:

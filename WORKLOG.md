@@ -257,3 +257,39 @@
 ## 2026-09-10 · 第二幕handoff
 
 用户要求写handoff。新增docs/HANDOFF_2026-09-10_ACT2.md，记录用户确认范围、已被传送的开场与披风更新、保护第一幕、当前玩法、代码／资产入口、状态与存档边界、已通过的验证、素材缺项、后续建议及未提交状态。README更新最新交接入口与旧森林描述，旧第一幕交接加历史状态提示，避免下轮误认为第二幕尚未实现。本轮只改文档，未重跑游戏测试；检查链接目标及git diff --check。未提交／推送。
+
+## 2026-09-11 · 第二幕角色 mipmap（方案A）
+
+用户反馈第二幕小呆猪与巫师清晰度不同。分析：主因是画风差异（巫师表为像素风硬边深描边，小呆猪为柔和手绘）；次因是缩小倍率不同（1152×648下巫师约源图1/2.6，披风小呆猪约1/3.2，持棍约1/4.4）且全部未开mipmap，缩小超过2倍出现锯齿与走路闪烁。用户选择先做方案A并出前后对比截图。
+
+已改：assets/chapter2 的 cape、armed、wake、wizard、slime 五张导入设置开启 mipmaps/generate；scenes/chapter2 的 pig.gd、entrance.gd（巫师）、slime.gd 为对应 Sprite 设置 TEXTURE_FILTER_LINEAR_WITH_MIPMAPS。只改第二幕局部脚本，共享 player_controller.gd、序章与第一幕未动；原图未改。stick 与背景未改。
+
+验证：强制重新导入后脚本确认五张纹理 has_mipmaps=true；CHAPTER2_FLOW_OK、CHAPTER2_COMBAT_OK、SMOKE_TEST_OK、GAMEPLAY_TEST_OK、CHAPTER1_EXIT_ROUTING_OK；改前／改后各跑一次 CHAPTER2_VISUAL_OK 实机渲染，局部放大对比。git diff --check 通过。
+
+观察：改后锯齿与像素噪点减少，两者观感更接近；但整体偏柔，巫师像素硬边变软。苏醒帧未在视觉检查中截图；静态截图无法证明闪烁改善，需正常速度试玩确认。画风不一致的根本问题（方案C）未处理。未提交或推送。
+
+## 2026-09-11 · 披风／持棍小呆猪透明切帧与开场替换
+
+用户要求：直接对已认可的两张像素预览透明化和切帧，替换游戏内小呆猪，并让共同开场使用披风形象。最新明确授权覆盖旧“只改第二幕”范围。开工已有上一轮mipmap与WORKLOG等未提交改动，本轮保留，只有新小猪局部切换Nearest。
+
+已实现：确定性脚本 `scripts/art/prepare_pig_pixel.py` 对原图低饱和亮色棋盘格做连通域去底、保留小眼睛高光，清理杂点；依实际内容边界切出16披风行走＋12持棍行走＋6表情，统一320×320画布、(160,300)脚底，导出独立帧与图集到 `assets/chapter2/pig_pixel/`。修正源标签左右相反。持棍固定0.72倍率协调角色大小；运行统一0.53倍率。修掉难过表情旁混入的惊讶黄色碎点。苏醒复用受伤／睡眠／坐姿／站立，保持既有六步时序和流程。旧图不覆盖。
+
+开场实际为整幅插画，单换Sprite文件不会生效。内置image_gen将gift_wrapping中的小猪换成认可的红披风像素造型，适配原包装礼物姿势，存为gift_wrapping_cape.png；更新当前opening_v2.json中包装、惊慌和传送前图及opening.gd水晶球纹理。角色／礼物传送终点、对白、镜头时序不变。提示词及截图在docs/art_direction/pig_pixel_review；素材说明在新素材目录README。
+
+验证：PIG_PIXEL_OK（实际导入纹理的28行走帧、alpha角点、可见脚底、切装锚点、六苏醒时序、开场／水晶球引用）；OPENING_TEST_OK、CHAPTER2_FLOW_OK、CHAPTER2_COMBAT_OK。Apple M1真实OpenGL运行CHAPTER2_VISUAL_OK，正常速度四方向移动采样p50=5.382ms、p95=13.624ms；另PIG_PIXEL_CAPTURE_OK截图复核开场包装、水晶球、传送中／结束和苏醒0/3/5。目视森林／持棍无棋盘格、角色无截断，开场显示新披风且传送后人和礼物消失。headless沿用已有macOS系统证书提示；首次受限图形进程退出134，授权图形运行成功，无脚本错误。未新增音频或攻击帧，苏醒为现有表情复用；没有把静态截图／时序采样等同于完整人工动态美术验收。未提交／推送。
+
+## 2026-09-11 · 角色颗粒差异诊断与统一修正
+
+用户要求检查小猪颗粒更重的问题，并让小猪、白菜、巫师、史莱姆sprite统一。确认两层根因：上轮小猪独用Nearest、无mipmap，白菜男孩用Linear、无mipmap，巫师／史莱姆用Linear with mipmaps；另小猪源图阶梯和描边本身较粗，单改滤镜不能消除。先用Godot做同尺寸混合／统一采样比较，证实源图差异仍在。
+
+修正：新增CharacterSpriteStyle统一角色过滤入口；共享玩家、小猪、巫师、史莱姆引用同一FILTER，男孩、白菜形态等角色表及新猪表统一mipmap导入。内置image_gen以男孩／巫师为参考细化两张小猪图，保留造型与姿势，移除大方块和粗阶梯。脚本增加--style unified，重新去底／切帧到pig_unified，保留pig_pixel历史版本；持棍改用高质量缩小，原脚底与显示尺度不变。开场同步新gift_wrapping_unified，原素材不覆盖。
+
+验证：CHARACTER_STYLE_OK检查男孩、白菜、小猪、巫师、史莱姆mipmap与实装统一过滤；PIG_PIXEL_OK检查新源28行走帧、alpha、脚底／装备锚点及开场引用；BOY_ATLAS_TEST_OK、OPENING_TEST_OK、GAMEPLAY_TEST_OK通过。Godot实际OpenGL CHAPTER2_VISUAL_OK四方向／持棍和正常速度运动采样p50=6.89ms、p95=12.815ms；同尺寸比较按alpha>0.1可见边界校准（避免源图低alpha杂点虚增高度），确认粗像素消除、渲染接近。图与可重复生成脚本分别为docs/art_direction/character_style_review/comparison.png、scripts/art/compare_character_style.gd。
+
+边界：严格统一的是渲染配置，源图风格向现有男孩／巫师靠拢，不宣称逐像素风格完全相同；角色本色、材质、身高不拉齐。未新增攻击／起身动画或音频。已有未提交改动保留，未提交／推送。headless仍有已知系统证书提示，无此次脚本加载错误。
+
+## 2026-09-11 · 厨房白菜杯遮挡修复
+
+用户反馈第一幕厨房调查时白菜杯穿模。实机让男孩从(1070,520)向台面行走，碰撞停在(1070,495.0014)，复现白菜杯矩形补图盖住头发。根因是CorrectedCabbageCup作为根节点后添加的z=0图片绘制在Depth角色层之上；并非碰撞失效。
+
+修复：仅将杯子背景补图z_index设为-9，位于背景(-10)与角色(0)之间，保留杯子坐标、素材、台面碰撞与调查逻辑。相同站位实机截图确认头发完整、补图不再盖住人物；前后截图在docs/art_direction/kitchen_cup_fix。PROP_CLICK_OK通过（距离、剧情门槛、真实点击、朝向独立性与双餐具近景）；git diff --check通过。保留此前未提交修改，未提交／推送。

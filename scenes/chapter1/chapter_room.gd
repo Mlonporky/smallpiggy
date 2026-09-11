@@ -70,6 +70,8 @@ func _ready() -> void:
 	elif room_id == "kitchen":
 		var corrected_cup := Sprite2D.new()
 		corrected_cup.name = "CorrectedCabbageCup"
+		# This opaque patch corrects the background; it must stay behind actors.
+		corrected_cup.z_index = -9
 		corrected_cup.texture = preload("res://assets/chapter1/kitchen_cabbage_cup_edit.png")
 		corrected_cup.region_enabled = true
 		corrected_cup.region_rect = Rect2(1032,310,76,66)

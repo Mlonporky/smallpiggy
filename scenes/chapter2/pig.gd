@@ -1,17 +1,19 @@
 extends PiggyPlayer
-## Local to Act II: the prologue and Act I keep their original actors.
+## Act II uses the fine-shaded cape/armed sheets; the opening has a matching plate.
 var atlas_data: Dictionary
 var armed := false
 var waking := false
 var wake_frame := 0
 
 func _ready() -> void:
-	atlas_data = JSON.parse_string(FileAccess.get_file_as_string("res://assets/chapter2/atlas.json"))
+	atlas_data = JSON.parse_string(FileAccess.get_file_as_string("res://assets/chapter2/pig_unified/atlas.json"))
 	character_id = "little_pig"
 	handpainted_room = true
 	visible_height = 115.0
-	sheet_override = preload("res://assets/chapter2/cape.png")
+	sheet_override = preload("res://assets/chapter2/pig_unified/cape.png")
 	super._ready()
+	# Use the same sampling policy as the boy, cabbage, wizard and slime.
+	sprite.texture_filter = CharacterSpriteStyle.FILTER
 	sprite.modulate = Color.WHITE
 	$HurtBox/CollisionShape2D.position = Vector2(0, -35)
 
@@ -30,12 +32,13 @@ func _show_frame(index: int) -> void:
 	if not is_instance_valid(sprite) or atlas_data.is_empty(): return
 	var key := "wake" if waking else ("armed" if armed else "cape")
 	var r: Array = atlas_data[key][wake_frame if waking else index]
-	sprite.texture = load("res://assets/chapter2/%s.png" % key)
+	sprite.texture = load("res://assets/chapter2/pig_unified/%s.png" % key)
 	sprite.region_rect = Rect2(r[0], r[1], r[2], r[3])
 	# Constant scale per sheet preserves volume through poses, with feet aligned.
-	var factor := 0.53 if key == "cape" else (0.38 if key == "armed" else 0.46)
+	var factor := 0.53
 	sprite.scale = Vector2.ONE * factor
-	sprite.position = Vector2(-float(r[2]) * factor / 2.0, -float(r[3]) * factor)
+	var pivot: Array = atlas_data["pivot"]
+	sprite.position = -Vector2(float(pivot[0]), float(pivot[1])) * factor
 
 func wake_up() -> void:
 	waking = true

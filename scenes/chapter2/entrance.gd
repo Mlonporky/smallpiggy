@@ -24,6 +24,7 @@ func _ready() -> void:
 	wizard.region_enabled = true
 	wizard.region_rect = Rect2(399,34,303,314)
 	wizard.scale = Vector2.ONE * 0.64
+	wizard.texture_filter = CharacterSpriteStyle.FILTER
 	wizard.offset.y = -157
 	wizard.position = Vector2(750,490)
 	wizard.visible = false

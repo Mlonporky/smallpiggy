@@ -44,13 +44,13 @@ func _ready() -> void:
 		sprite.texture = load("res://assets/sprites/characters/white_cabbage.png")
 	if sheet_override:
 		sprite.texture = sheet_override
+	sprite.texture_filter = CharacterSpriteStyle.FILTER
 	if handpainted_room:
 		_frame_bounds = SpriteAtlas.bounds(sprite.texture, 3, 4, sheet_row_edges, 0.01)
 		sprite.hframes = 1
 		sprite.vframes = 1
 		sprite.region_enabled = true
 		sprite.centered = false
-		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		sprite.modulate = Color(0.94, 0.9, 0.82, 1)
 		visual_root.position = Vector2.ZERO
 		var shadow := visual_root.get_node("Shadow") as Polygon2D

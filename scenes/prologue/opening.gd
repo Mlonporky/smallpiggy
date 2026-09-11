@@ -70,7 +70,7 @@ func _build_stage() -> void:
 	crystal_vision.position = Vector2(409, 229)
 	crystal_vision.size = Vector2(119, 120)
 	crystal_vision.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	crystal_vision.texture = textures["gift_wrapping"]
+	crystal_vision.texture = textures["gift_wrapping_unified"]
 	crystal_vision.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var vision_material := ShaderMaterial.new()
 	vision_material.shader = preload("res://scenes/prologue/crystal_vision.gdshader")

@@ -57,7 +57,7 @@
     },
     {
       "id": "gift",
-      "image": "gift_wrapping",
+      "image": "gift_wrapping_unified",
       "duration": 18,
       "location": "水晶球锁定的此刻 · 蘑菇屋",
       "anchor": [
@@ -168,7 +168,7 @@
     },
     {
       "id": "pig_panic",
-      "image": "gift_wrapping",
+      "image": "gift_wrapping_unified",
       "duration": 5,
       "location": "蘑菇屋 · 另一端的诅咒",
       "anchor": [
@@ -191,7 +191,7 @@
     },
     {
       "id": "teleport",
-      "image": "gift_wrapping",
+      "image": "gift_wrapping_unified",
       "after": "gift_empty_v3",
       "duration": 6,
       "location": "蘑菇屋 · 被迫分离",
