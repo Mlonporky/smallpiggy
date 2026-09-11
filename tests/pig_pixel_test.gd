@@ -12,7 +12,8 @@ func run() -> void:
 	await process_frame
 	var pig = scene.player
 	assert(pig.sprite.texture_filter == CharacterSpriteStyle.FILTER)
-	var origin: Vector2 = pig.sprite.position
+	var pivot := Vector2(160, 300)
+	var foot: Vector2 = pig.sprite.position + pivot * pig.sprite.scale
 	for armed in [false, true]:
 		pig.armed = armed
 		var count := 3 if armed else 4
@@ -23,7 +24,7 @@ func run() -> void:
 			for col in count:
 				pig._show_frame(row * count + col)
 				assert(pig.sprite.texture.resource_path.contains("pig_unified/"))
-				assert(pig.sprite.position == origin, "Equipment/animation must not move foot anchor")
+				assert((pig.sprite.position + pivot * pig.sprite.scale).is_equal_approx(foot), "Equipment/animation must not move foot anchor")
 				var image: Image = pig.sprite.texture.get_image().get_region(Rect2i(pig.sprite.region_rect))
 				var used := image.get_used_rect()
 				assert(used.end.y == 300, "Every frame lands at authored foot baseline")
@@ -34,7 +35,18 @@ func run() -> void:
 		pig.wake_frame = i
 		pig._show_frame(0)
 		assert(pig.sprite.texture.resource_path.ends_with("pig_unified/wake.png"))
-		assert(pig.sprite.position == origin)
+		assert((pig.sprite.position + pivot * pig.sprite.scale).is_equal_approx(foot))
+	pig.waking = false
+	# Recovery stands up on the walking sheet's own front pose, so the size cannot pop.
+	# She wakes before finding the stick; the loops above left armed = true.
+	pig.armed = false
+	pig.face(Vector2.LEFT)
+	pig.wake_up()
+	await create_timer(0.48 * 5 + 0.15).timeout
+	assert(not pig.waking and pig.wake_frame == 4, "Recovery skips the smaller authored standing pose")
+	assert(pig.sprite.texture.resource_path.ends_with("pig_unified/cape.png"))
+	assert(pig.sprite.region_rect.position == Vector2.ZERO, "Stands up on cape_down_00")
+	await create_timer(0.48).timeout
 	scene.queue_free()
 	await process_frame
 	var opening = load("res://scenes/prologue/prologue.tscn").instantiate()
@@ -48,5 +60,5 @@ func run() -> void:
 	assert(opening.crystal_vision.texture == opening.textures["gift_wrapping_unified"])
 	opening.queue_free()
 	await process_frame
-	print("PIG_PIXEL_OK: 28 walk frames, alpha, floor anchors, wake, opening/crystal replacement")
+	print("PIG_PIXEL_OK: 28 walk frames, alpha, floor anchors, wake handover to cape_down_00, opening/crystal replacement")
 	quit()

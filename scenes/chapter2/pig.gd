@@ -1,5 +1,8 @@
 extends PiggyPlayer
 ## Act II uses the fine-shaded cape/armed sheets; the opening has a matching plate.
+# wake reuses the source sheet's smaller expression row: its standing head is
+# 175 px wide against 195 px for cape_down_00, so its lying/sitting poses need 0.53 × 1.11.
+const SHEET_SCALE := {"cape": 0.53, "armed": 0.53, "wake": 0.59}
 var atlas_data: Dictionary
 var armed := false
 var waking := false
@@ -35,17 +38,21 @@ func _show_frame(index: int) -> void:
 	sprite.texture = load("res://assets/chapter2/pig_unified/%s.png" % key)
 	sprite.region_rect = Rect2(r[0], r[1], r[2], r[3])
 	# Constant scale per sheet preserves volume through poses, with feet aligned.
-	var factor := 0.53
+	var factor: float = SHEET_SCALE[key]
 	sprite.scale = Vector2.ONE * factor
 	var pivot: Array = atlas_data["pivot"]
 	sprite.position = -Vector2(float(pivot[0]), float(pivot[1])) * factor
 
 func wake_up() -> void:
 	waking = true
-	for i in 6:
+	for i in 5:
 		wake_frame = i
 		await get_tree().create_timer(0.48).timeout
+	# The authored standing pose (wake 5) has a narrower cape and arms than the
+	# walking sheet and still reads smaller; stand up on cape_down_00 instead.
 	waking = false
+	face(Vector2.DOWN)
+	await get_tree().create_timer(0.48).timeout
 
 func attack() -> void:
 	if _attacking or not combat_enabled: return

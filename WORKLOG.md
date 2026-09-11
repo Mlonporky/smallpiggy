@@ -301,3 +301,23 @@
 用户曾要求撤回方案A的mipmap改动；由于该改动已被“角色统一”扩展为全部角色共用的 CharacterSpriteStyle 规则，并已推送，用户确认保持现状，不撤回。
 
 遗留：Godot自动生成、尚未纳入Git的8个文件——docs/art_direction/character_style_review 下五张截图的 .import、kitchen_cup_fix 下两张截图的 .import，以及 scripts/art/compare_character_style.gd.uid。不影响运行。按用户要求，这8个文件与本条记录一起提交；未推送。
+
+## 2026-09-11 · 第二幕苏醒→站立尺寸跳变修正
+
+用户反馈：第二幕小呆猪醒来、站起后明显放大一圈。根因：wake 六帧取自源图下方的表情行（`prepare_pig_pixel.py` 第 97–102 行），这一行本身画得比披风行走行小；而 `pig.gd` 对所有图集都用同一个 0.53 倍。实测可见像素（alpha>0.1）：苏醒最后一帧站姿头宽 175px、高 196px，披风正面行走帧 `cape_down_00` 头宽 195px、高 208px。按眼距算约 1.15 倍，按眼睛离脚底的高度算约 1.04 倍，说明两套姿势比例本身略有不同；以头部视觉大小为准，取头宽比 1.11。
+
+已实现：`scenes/chapter2/pig.gd` 改为按图集固定倍率 `SHEET_SCALE`：cape／armed 仍为 0.53，wake 为 0.59（≈0.53×1.11）；脚底 pivot 同步按各自倍率计算，落点不变。wake 前五帧（倒地、睡、坐）来自同一行，统一放大同样倍率，保持彼此比例。未改任何 PNG、图集或生成脚本，也未改 bigidea。`tests/pig_pixel_test.gd`：锚点检查从“sprite.position 完全相同”改为“脚底世界坐标相同”（不同倍率下 position 本就不同）；新增回归检查：苏醒站姿与 cape_down_00 的屏幕头宽差距须小于 3%。README 同步倍率说明。
+
+验证：PIG_PIXEL_OK、CHARACTER_STYLE_OK、CHAPTER2_FLOW_OK、CHAPTER2_COMBAT_OK、SMOKE_TEST_OK、GAMEPLAY_TEST_OK。真实 OpenGL 渲染森林入口（1152×648），截取旧倍率苏醒站姿／新倍率苏醒站姿／行走正面三张对比：新倍率头部与行走帧一致、脚底同线。截图为会话临时文件，未存入仓库。
+
+限制与待确认：只做了静态截图对比，未在正常速度下动态播放整段苏醒并人工验收；倒地／坐姿帧放大后与行走帧的相对观感尚待用户试玩确认。苏醒仍是现有表情复用，不是真正的起身动画。竖直方向上，因耳朵上翘，站姿比行走帧高约 5 px（游戏内），属于姿势差异。未提交／推送。
+
+## 2026-09-11 · 苏醒最后站姿改用行走图正面帧
+
+用户反馈：上一条改完倍率后，站起时仍然会放大，要求把最后站直的姿势直接换成行走图里的小猪。判断：表情行站姿的披风、手臂比行走图收得窄（可见宽 177px 对 214px），头宽对齐后整体轮廓仍小一圈，只调倍率解决不了。
+
+已实现：`scenes/chapter2/pig.gd` 的 `wake_up()` 只播 wake 前 5 帧（倒地、睡、睡、坐、坐），第 6 步改为 `waking = false` 并面朝下，直接显示披风行走图正面帧 `cape_down_00`（0.53 倍），停留时长仍为 0.48 秒，总时长和 `entrance.gd` 的流程不变。wake 前五帧保留上一条的 0.59 倍。wake.png 第 6 帧保留在图集里但游戏内不再使用；未改任何 PNG、图集、生成脚本或 bigidea。`tests/pig_pixel_test.gd` 删去上一条的头宽比较，改为实际运行 `wake_up()`：检查 5 帧后已退出苏醒、最后显示的是 cape.png 的 (0,0) 帧。测试里先把前面循环留下的 `armed = true` 复位——第一次运行因此断言失败卡住，属测试写法问题，游戏里苏醒时不持棍。README 同步。
+
+验证：PIG_PIXEL_OK、CHARACTER_STYLE_OK、CHAPTER2_FLOW_OK、CHAPTER2_COMBAT_OK、SMOKE_TEST_OK、GAMEPLAY_TEST_OK。真实 OpenGL 渲染，按正常速度播放 `wake_up()` 并在约 0.2／2.0／2.6 秒截图：倒地（wake.png，0.59）→ 坐起（wake.png，0.59）→ 站立（cape.png 正面帧，0.53）。截图为会话临时文件，未存入仓库。
+
+限制与待确认：坐起到站立之间是直接换帧，没有中间起身动作，头部低垂的坐姿与站姿头宽相差约 6%，是否自然需用户试玩确认。只按时间点截图，未人工完整观看动态播放。未提交／推送。
