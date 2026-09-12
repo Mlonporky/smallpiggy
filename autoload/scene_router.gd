@@ -6,6 +6,10 @@ signal transition_finished(path: String)
 var _busy := false
 
 
+func is_busy() -> bool:
+	return _busy
+
+
 func change_scene(path: String, fade_duration := 0.28) -> void:
 	if _busy:
 		return

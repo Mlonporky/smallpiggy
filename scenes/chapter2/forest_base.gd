@@ -1,5 +1,7 @@
 extends Node2D
 ## Shared presentation only for the two new Act II scenes.
+signal menu_chosen(key: String)
+const MENU := "res://scenes/bootstrap/main.tscn"
 const PLAYER = preload("res://actors/shared/player.tscn")
 const PIG_SCRIPT = preload("res://scenes/chapter2/pig.gd")
 var player: PiggyPlayer
@@ -139,10 +141,62 @@ func shake() -> void:
 		await beat(0.06)
 	player.sprite.offset = Vector2.ZERO
 
+## Esc freezes the whole forest, the slime included, and offers Act I's choice.
+func open_pause_menu() -> void:
+	if SceneRouter.is_busy(): return
+	lock(true)
+	get_tree().paused = true
+	var layer := CanvasLayer.new()
+	layer.layer = 30
+	layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(layer)
+	var shade := ColorRect.new()
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0.035,0.028,0.025,0.88)
+	layer.add_child(shade)
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(center)
+	var column := VBoxContainer.new()
+	column.custom_minimum_size.x = 420
+	column.add_theme_constant_override("separation",12)
+	center.add_child(column)
+	# Esc again simply resumes.
+	var resume := Shortcut.new()
+	var cancel := InputEventAction.new()
+	cancel.action = "ui_cancel"
+	resume.events = [cancel]
+	var options := {"stay":"继续探索", "save":"保存并回主菜单"}
+	for key in options:
+		var button := Button.new()
+		button.name = key
+		button.text = options[key]
+		button.custom_minimum_size.y = 56
+		button.add_theme_font_size_override("font_size",20)
+		button.pressed.connect(func(): menu_chosen.emit(key))
+		if key == "stay":
+			button.shortcut = resume
+			button.shortcut_in_tooltip = false
+		column.add_child(button)
+	column.get_child(0).grab_focus()
+	var choice: String = await menu_chosen
+	layer.queue_free()
+	get_tree().paused = false
+	if choice == "save":
+		if not allow_save or SaveManager.save_game(scene_file_path):
+			# Keep the forest still while the screen fades out.
+			world.process_mode = Node.PROCESS_MODE_DISABLED
+			SceneRouter.change_scene(MENU)
+			return
+		ui.set_status("保存失败，请再试一次。",3)
+	lock(false)
+
 func _unhandled_input(event: InputEvent) -> void:
 	if busy: return
 	if event.is_action_pressed("ui_cancel"):
-		SceneRouter.change_scene("res://scenes/bootstrap/main.tscn")
+		get_viewport().set_input_as_handled()
+		open_pause_menu()
+		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		for item in world.get_children():
 			if item is Interactable and item.enabled and player.position.distance_to(item.position)<140 and get_global_mouse_position().distance_to(item.position)<65:

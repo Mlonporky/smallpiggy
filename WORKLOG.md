@@ -321,3 +321,67 @@
 验证：PIG_PIXEL_OK、CHARACTER_STYLE_OK、CHAPTER2_FLOW_OK、CHAPTER2_COMBAT_OK、SMOKE_TEST_OK、GAMEPLAY_TEST_OK。真实 OpenGL 渲染，按正常速度播放 `wake_up()` 并在约 0.2／2.0／2.6 秒截图：倒地（wake.png，0.59）→ 坐起（wake.png，0.59）→ 站立（cape.png 正面帧，0.53）。截图为会话临时文件，未存入仓库。
 
 限制与待确认：坐起到站立之间是直接换帧，没有中间起身动作，头部低垂的坐姿与站姿头宽相差约 6%，是否自然需用户试玩确认。只按时间点截图，未人工完整观看动态播放。未提交／推送。
+
+## 2026-09-11 · 项目审计与 Input Map 键码修正
+
+用户要求审计项目，随后明确要求直接修改 Input Map。审计发现 `project.godot` 自首次提交 `c9b33e4` 起有三个键码写错：`move_left` 的方向键实为 Insert（4194311），`move_right` 的方向键实为 Pause（4194313），`quick_save` 实为 F3（4194334）。README、CLAUDE.md、各 handoff 与游戏内帮助文字均写方向键和 F5。逻辑测试直接触发动作名，不经真实按键，所以一直没发现。
+
+已实现：用户明确授权直接编辑，`project.godot` 只替换三个 `physical_keycode` 数字：4194319（←）、4194321（→）、4194336（F5），其余字段与格式未动。WASD、上下方向键、E／空格、J／Z、Esc 原本就正确。
+
+验证：Godot 4.7.2 读回 Input Map，并用 `InputEventKey.is_action` 模拟物理按键：← / → / ↑ / ↓ / F5 分别命中对应动作，Insert、Pause、F3 不再绑定任何动作（会话临时探针脚本，未存入仓库）。16 个 headless 逻辑测试全部通过；`git diff --check` 通过。
+
+审计中其余问题只记录、未修改（详见当次对话）：第二幕 Esc 直接回菜单、不确认也不存档；存档非原子写入；4 个正式脚本用空格缩进；`docs/` 缺 `.gdignore`，约 19.5MB 未引用素材会进入导出包；咖啡机可重复触发（待确认是否有意）。
+
+限制：未在编辑器里实际按键试玩，也没有用真实键盘验证。未提交／推送。
+
+## 2026-09-11 · 小树枝移到苏醒处并加入拾取台词
+
+用户要求：树枝出现在小呆猪醒来的周围；捡起时说“还好有一个小树枝”“至少现在我不会太害怕了... ”。台词按项目对白格式写成“还好有一个小树枝。”“至少现在我不会太害怕了……”。bigidea 02_pig 实现文本把小木棍列为后续任务，没有规定位置或台词，因此不与历史规格冲突，只替换此前的山洞拾棍实现；方向文档已记录。
+
+已实现：
+- `scenes/chapter2/entrance.gd`：树枝热点放在 (610,750)，即苏醒点 (720,715) 左下，提示“捡起小树枝”，醒来后随时可捡。捡起时锁输入、面向树枝、切换持棍行走表，播放 `dialogue.json` 新增的 `"stick"` 段两句，存 `s2_pig_stick_collected` 并存档。北路阻挡要等巫师离开并且已拿树枝才撤；巫师离开后未拿树枝时，目标改为“捡起身旁的小树枝 · 再向北穿过黑暗森林”，走到阻挡前会提示。重进场景时已拿树枝则直接持棍、隐藏树枝。`lines()` 参数放宽为 Variant，以便使用具名段。
+- `scenes/chapter2/cave.gd`：删除树枝热点、武器门槛和未持棍拦截，进入山洞直接持棍并可战斗；提示改为“J / Z 挥动小树枝”。从调试菜单直接进山洞或旧存档缺少树枝标记时自动补上。
+- 测试：`chapter2_test` 改为在入口验证树枝位置、未拿树枝时北路挡住、拾取后持棍与两句台词，山洞到达即持棍；`chapter2_combat_test`、`chapter2_visual_check` 去掉山洞拾棍调用。
+- 文档：CHAPTER2_IMPLEMENTATION_ZH、STORY_AND_ART_DIRECTION、CLAUDE.md 目录地图；ACT2 handoff 顶部加更新说明，正文保留原状。
+
+验证：CHAPTER2_FLOW_OK、CHAPTER2_COMBAT_OK、PIG_PIXEL_OK、CHARACTER_STYLE_OK、SMOKE_TEST_OK、GAMEPLAY_TEST_OK。真实 OpenGL 渲染：苏醒时树枝在小猪左下方可见；拾取后两句台词依次显示、小猪持棍面向树枝；CHAPTER2_VISUAL_OK 山洞到达即持棍，正常速度四方向移动 p50=5.655ms、p95=13.855ms。截图为会话临时文件，未存入仓库。
+
+限制与待确认：没有捡起动作，直接换成持棍表（代码中已标 TODO: Missing asset）；树枝图标在默认窗口下约 30px，偏小，是否需要加光点或放大待用户试玩确认；是否允许不拿树枝先进森林目前按“必拿”处理。未提交／推送；另一轮的 `project.godot` 键码修正保持原样未动。
+
+## 2026-09-11 · 审计中风险：第二幕暂停菜单、史莱姆倒下即存档、存档防损坏
+
+用户要求修改审计报告中的三条中风险。第三条（苏醒→站立修正未提交）只能通过 commit 解决；工作区同时有另一会话的小树枝改动，未经明确要求不提交，留给用户决定。
+
+已实现：
+- `scenes/chapter2/forest_base.gd`：原先第二幕按 Esc 直接回主菜单，不确认、不存档。现在 Esc 打开暂停菜单：`get_tree().paused` 冻结整个场景（包括史莱姆），菜单层 `PROCESS_MODE_ALWAYS`，选项与第一幕相同（「继续探索」／「保存并回主菜单」），再按 Esc 等于继续。选保存后先存档，再禁用 world 并淡出，避免史莱姆在淡出时行动；存档失败时留在原场景并提示。剧情锁定、死亡、切场中不响应 Esc。
+- `autoload/scene_router.gd`：新增只读 `is_busy()`，切场淡入淡出期间不弹暂停菜单（否则菜单里选保存会被 SceneRouter 忽略而卡住）。
+- `scenes/chapter2/cave.gd`：史莱姆倒下时设 `s2_fragment_dropped` 并存档一次；重进山洞时若有该标记但尚未拾取碎片，不生成史莱姆，碎片仍在地上。加载时只恢复状态、不存档，避免测试在设 `allow_save=false` 之前写入真实存档。`forest_slime_defeated` 语义不变，仍表示拾取碎片、本段完成。
+- `autoload/save_manager.gd`：改为先写 `.tmp`、关闭并确认写入成功，再把旧存档复制为 `.bak`，最后改名替换正式存档；读取时正式存档缺失或损坏就退回 `.bak`，`has_save()` 同时认 `.bak`。新增 `save_path` 变量供测试改到别的路径，默认仍是 `user://piggy_manor_save.json`，存档格式不变。
+- 新测试：`tests/save_manager_test.gd`（临时文件改名、保留备份、写一半的坏存档和缺失存档均退回备份）、`tests/chapter2_pause_menu_test.gd`（真实 Esc 按键暂停并冻结移动中的史莱姆、再按 Esc 继续、史莱姆倒下即存档、保存并回主菜单、继续游戏后碎片仍在且无史莱姆、拾取后完成）。两者都把存档改到测试路径，结束后删除。
+- 文档：CLAUDE.md 按键说明与常用测试列表、CHAPTER2_IMPLEMENTATION_ZH 试玩第 5 步、ACT2 handoff 的 Esc 说明。
+
+验证：SAVE_MANAGER_OK、CHAPTER2_PAUSE_MENU_OK，其余 16 个 headless 逻辑测试（含另一会话修改后的 CHAPTER2_FLOW_OK、CHAPTER2_COMBAT_OK）全部通过。save_manager_test 输出的两行 ERROR 是故意制造坏存档时的预期输出。真实存档 `piggy_manor_save.json` 的修改时间早于本轮测试，用户数据目录无残留测试文件。`git diff --check` 通过。
+
+限制与待确认：
+- 暂停菜单只做了 headless 逻辑验证，未实机渲染看样式，也未用真实键盘试玩。
+- 如果恰好在史莱姆冲撞的约 0.3 秒内按 Esc，它的冲撞循环由协程驱动，暂停期间仍可能滑动一小段（物理监测已暂停，不会造成伤害）。
+- 第一幕 Esc 在切场淡入淡出期间也有同样的卡住可能，本轮未改。
+- 存档仍无版本迁移逻辑，等存档格式真正变化时再加。
+- 两个新测试的 `.uid` 需在编辑器打开项目后生成，并随测试一起提交。
+- 未提交／推送。
+
+## 2026-09-11 · 提交状态：苏醒→站立修正
+
+用户确认提交苏醒→站立修正。上面「第二幕苏醒→站立尺寸跳变修正」「苏醒最后站姿改用行走图正面帧」两条写的“未提交／推送”是写记录时的状态。两条对应的改动（`scenes/chapter2/pig.gd`、`tests/pig_pixel_test.gd`、`assets/chapter2/pig_unified/README.md`）连同这两条记录，已提交为 `162e28d fix: keep little pig's size steady when she stands up after waking`。随后按用户要求推送到 origin/main（`4346f5a..162e28d`）；推送前 fetch 核对过，只推送了这一个提交，远端没有新提交；推送后本地 main 与 origin/main 一致。原条目保留不改。
+
+提交只包含上述 4 个文件。WORKLOG 暂存的是 HEAD 加这两条记录，前 303 行已核对与 HEAD 一致。Input Map 键码、第二幕暂停菜单与史莱姆倒下存档、存档防损坏、另一会话的小树枝改动，以及审计、小树枝、暂停菜单几条记录和本条，仍在工作区、未提交。
+
+验证：提交前把暂存区导出到临时目录，复用 `.godot` 导入缓存，并在临时副本中改用独立用户数据目录，单独运行 PIG_PIXEL_OK、CHAPTER2_FLOW_OK、SMOKE_TEST_OK、CHARACTER_STYLE_OK、CHAPTER2_COMBAT_OK、GAMEPLAY_TEST_OK，全部通过。真实存档的修改时间前后一致。`git diff --cached --check` 通过。美术上仍待用户试玩确认坐起→站立的换帧观感。
+
+## 2026-09-11 · 提交当前剩余改动
+
+用户要求将状态检查中列出的改动一起提交。本次范围为 Input Map 键码修正、小树枝移到苏醒处及拾取对白、第二幕暂停菜单、史莱姆倒下即存档、存档临时写入与备份恢复，以及配套测试和文档；同时纳入史莱姆脚本末尾空行清理。两个新测试的 `.uid` 已存在并一并纳入。
+
+验证：提交前核对工作区范围及关键差异，`git diff --check` 通过。沿用上述各轮已记录的逻辑测试和树枝实机渲染结果，本轮未重跑游戏或新增美术验收。已知限制保持：暂停菜单未实机验收，冲撞协程暂停时可能短暂滑动，第一幕切场期间 Esc 风险未处理；缺少拾取／完整起身动作及音频。
+
+本次只提交本地，不推送远端。实际提交结果以 Git 提交记录为准。下一步为正常速度试玩当前流程并确认上述动画与暂停交互。

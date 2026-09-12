@@ -22,7 +22,7 @@
 | `autoload/` | 三个 Autoload：`GameState`（story_phase、flags、gift_fragments、heart_progress）、`SceneRouter`（带淡入淡出的切场）、`SaveManager`。不要新增 Autoload。 |
 | `scenes/prologue/` | 序章：`opening.gd` 是现行控制器，数据 `data/dialogue/opening_v2.json`；`prologue.gd` 是保留的旧控制器。 |
 | `scenes/chapter1/` | 第一幕三房间：`room_layout.gd`（背景、碰撞、热点、出口）、`chapter_room.gd`（调查、剧情门槛、回忆）、`room_exits.gd`、`chapter_presentation.gd`（对白、近景）、`exploration_light.gd/.gdshader`（环境暗幕与物品标记）。 |
-| `scenes/chapter2/` | 第二幕：`entrance.gd`（苏醒、红纸、巫师、Joy）、`cave.gd`（拾棍、战斗、碎片、死亡重试）、`forest_base.gd`（运行时装配地图与 UI）、`pig.gd`／`slime.gd`（局部子类）。地图与角色多在运行时装配，场景树为空不代表内容丢失。 |
+| `scenes/chapter2/` | 第二幕：`entrance.gd`（苏醒、拾小树枝、红纸、巫师、Joy）、`cave.gd`（战斗、碎片、死亡重试）、`forest_base.gd`（运行时装配地图与 UI）、`pig.gd`／`slime.gd`（局部子类）。地图与角色多在运行时装配，场景树为空不代表内容丢失。 |
 | `scenes/chapter_01_hollow_heart/`、`scenes/chapter_02_dark_forest/` | 历史样板。`legacy_forest_sample.tscn` 是旧森林战斗完整副本；新工作不要误改旧样板并宣称主入口生效。 |
 | `actors/` | `player_controller.gd`（共享移动、三姿势步态）、`sprite_atlas.gd`（显式行边界切帧）、`forest_slime.gd`。 |
 | `systems/` | `dialogue/`（DialogueUI）、`interaction/`（Interactable、PropInteractable、StoryTrigger2D）、`combat/`（HitBox2D、HurtBox2D、HealthComponent）、`vfx/`、`puzzles/`。 |
@@ -60,11 +60,11 @@
 ```
 
 - 测试脚本以 `extends SceneTree` 编写，成功时打印 `XXX_OK` 并 `quit(0)`，失败时 `push_error` 并 `quit(1)`。改动后至少跑对应章节测试与 `smoke_test.gd`、`gameplay_test.gd`。
-- 常用逻辑测试：`smoke_test`、`gameplay_test`、`opening_test`、`chapter1_test`、`chapter1_navigation_test`、`chapter1_ui_test`、`chapter1_exit_routing_test`、`chapter1_bottom_exit_test`、`chapter1_prop_click_test`、`chapter1_polish_test`、`memory_anchor_test`、`boy_atlas_test`、`chapter2_test`、`chapter2_combat_test`。
+- 常用逻辑测试：`smoke_test`、`gameplay_test`、`opening_test`、`chapter1_test`、`chapter1_navigation_test`、`chapter1_ui_test`、`chapter1_exit_routing_test`、`chapter1_bottom_exit_test`、`chapter1_prop_click_test`、`chapter1_polish_test`、`memory_anchor_test`、`boy_atlas_test`、`chapter2_test`、`chapter2_combat_test`、`chapter2_pause_menu_test`、`save_manager_test`。
 - `*_visual_check.gd` 是实机渲染检查，必须去掉 `--headless`，截图与日志写到 `/private/tmp/pig-*.png`、`/private/tmp/pig-*.log` 等临时位置；macOS 沙箱可能需要图形权限。
 - 提交前跑 `git diff --check`。
 - 用编辑器试玩：Project Manager → Import 选 `project.godot` → F5（部分 Mac 用 fn + F5）。主菜单可直接进序章、第一幕、第二幕；章节快捷入口会重置 GameState，继续进度用「继续」。
-- 按键：`WASD`／方向键移动，`E`／空格调查，`J`／`Z` 攻击，`F5` 快速保存，`Esc` 返回菜单；序章 `P` 暂停、`R` 重播、`M` 静音。
+- 按键：`WASD`／方向键移动，`E`／空格调查，`J`／`Z` 攻击，`F5` 快速保存，`Esc` 打开暂停菜单（第一幕、第二幕都可选「保存并回主菜单」）；序章 `P` 暂停、`R` 重播、`M` 静音。
 
 ## 代码约定
 

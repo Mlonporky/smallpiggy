@@ -57,6 +57,19 @@ func run() -> void:
 	await load_scene("res://scenes/chapter_02_dark_forest/forest_clearing.tscn")
 	assert(scene.wizard_finished and not scene.busy)
 	assert(state.heart_progress == 3)
+	# The stick lies beside the wake-up spot; the northern path stays shut until she holds it.
+	assert(scene.stick.visible and not scene.player.armed)
+	assert(scene.stick.position.distance_to(Vector2(720,715)) < 150)
+	scene.player.position = Vector2(740,400)
+	Input.action_press("move_up")
+	await create_timer(0.6).timeout
+	Input.action_release("move_up")
+	assert(scene.player.position.y > 365,"Must pick up the stick before leaving the clearing")
+	scene.stick.interact(scene.player)
+	await until_idle()
+	assert(scene.player.armed and not scene.stick.visible)
+	assert(state.has_flag("s2_pig_stick_collected"))
+	assert("还好有一个小树枝。" in seen and seen.back() == "至少现在我不会太害怕了……")
 	# Crossing the real exit triggers title, saved flag and the router.
 	scene.player.position = Vector2(740,390)
 	Input.action_press("move_up")
@@ -69,16 +82,9 @@ func run() -> void:
 	scene.allow_save = false
 	await create_timer(0.8).timeout
 	assert(scene.scene_file_path.ends_with("cave.tscn"))
-	assert(not scene.player.combat_enabled and not scene.slime.active)
+	# She arrives holding the stick from the clearing.
+	assert(scene.player.armed and scene.player.combat_enabled and not scene.slime.active)
 	assert(state.has_flag("heart_ui_unlocked") and state.heart_progress == 3)
-	scene.player.position = Vector2(730,780)
-	Input.action_press("move_up")
-	await create_timer(0.5).timeout
-	Input.action_release("move_up")
-	assert(scene.player.position.y > 740,"Must pick up stick before entering combat floor")
-	scene.stick.interact(scene.player)
-	assert(scene.player.armed and scene.player.combat_enabled)
-	assert(state.has_flag("s2_pig_stick_collected"))
 	# Use real hitbox and timing: face upward from below the enemy.
 	scene.slime.active = false
 	scene.lock(true) # Prevent the entrance trigger from starting AI during hitbox assertions.

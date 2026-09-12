@@ -497,5 +497,17 @@
       "text": "害怕也可以往前走。",
       "pause_after": 0.18
     }
+  ],
+  "stick": [
+    {
+      "speaker": "小呆猪",
+      "text": "还好有一个小树枝。",
+      "pause_after": 0.33
+    },
+    {
+      "speaker": "小呆猪",
+      "text": "至少现在我不会太害怕了……",
+      "pause_after": 0.18
+    }
   ]
 }

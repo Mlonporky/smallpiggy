@@ -2,6 +2,7 @@ extends "res://scenes/chapter2/forest_base.gd"
 const BATTLE := "res://scenes/chapter2/cave.tscn"
 var script_lines: Dictionary
 var paper: Interactable
+var stick: Interactable
 var blocker: StaticBody2D
 var wizard: Sprite2D
 var memory: TextureRect
@@ -18,6 +19,9 @@ func _ready() -> void:
 	blocker = rectangle(Rect2(550,330,450,35))
 	paper = hotspot(Vector2(925,592),"调查红色包装纸",examine_paper)
 	paper.name = "RedWrappingPaper"
+	# The stick lies just beside where she wakes, not in the cave.
+	stick = hotspot(Vector2(610,750),"捡起小树枝",take_stick,preload("res://assets/chapter2/stick.png"))
+	stick.name = "Stick"
 	wizard = Sprite2D.new()
 	wizard.name = "EvilWizard"
 	wizard.texture = preload("res://assets/chapter2/wizard.png")
@@ -31,14 +35,16 @@ func _ready() -> void:
 	world.add_child(wizard)
 	trigger(Rect2(470,805,580,40),backtrack)
 	trigger(Rect2(610,265,270,60),enter_forest)
+	trigger(Rect2(550,365,450,30),stick_hint)
+	if GameState.has_flag("s2_pig_stick_collected"): hold_stick()
 	wizard_finished = GameState.has_flag("s2_pig_wizard_complete")
 	if wizard_finished or GameState.has_flag("s2_pig_intro_complete"):
 		wizard_finished = true
-		blocker.queue_free()
-		ui.set_objective("向北穿过黑暗森林 · 回到猪猪山庄")
+		open_path()
+		refresh_objective()
 		if GameState.has_flag("s2_pig_intro_complete"): player.position = Vector2(745,395)
 	elif GameState.has_flag("s2_pig_wakeup_complete"):
-		ui.set_objective("调查身旁的红色包装纸")
+		refresh_objective()
 		if GameState.has_flag("s2_pig_wizard_scene_started"): call_deferred("run_wizard")
 	else:
 		lock(true)
@@ -46,7 +52,7 @@ func _ready() -> void:
 		curtain.color.a = 1
 		call_deferred("opening")
 
-func lines(section: int) -> void:
+func lines(section: Variant) -> void:
 	for line in script_lines[str(section)]:
 		await dialogue.say(line.speaker,line.text,0,float(line.pause_after))
 		if line.text == "白白菜还记不记得你。": await beat(0.8)
@@ -64,9 +70,40 @@ func opening() -> void:
 		await dialogue.say(line.speaker,line.text,0,float(line.pause_after))
 	player.face(paper.position-player.position)
 	GameState.set_flag("s2_pig_wakeup_complete")
-	ui.set_objective("调查身旁的红色包装纸 · 靠近后按 E 或点击")
+	refresh_objective()
 	lock(false)
 	checkpoint()
+
+func take_stick() -> void:
+	lock(true)
+	player.face(stick.position-player.position)
+	# TODO: Missing asset — no pick-up pose; she switches straight to the armed sheet.
+	hold_stick()
+	GameState.set_flag("s2_pig_stick_collected")
+	await lines("stick")
+	open_path()
+	refresh_objective()
+	lock(false)
+	checkpoint()
+
+func hold_stick() -> void:
+	stick.visible = false
+	stick.set_enabled(false)
+	player.armed = true
+
+## The northern path opens once the wizard has left and she holds the stick.
+func open_path() -> void:
+	if wizard_finished and GameState.has_flag("s2_pig_stick_collected") and is_instance_valid(blocker):
+		blocker.queue_free()
+
+func refresh_objective() -> void:
+	if not wizard_finished: ui.set_objective("调查身旁的红色包装纸 · 靠近后按 E 或点击")
+	elif not GameState.has_flag("s2_pig_stick_collected"): ui.set_objective("捡起身旁的小树枝 · 再向北穿过黑暗森林")
+	else: ui.set_objective("向北穿过黑暗森林 · 回到猪猪山庄")
+
+func stick_hint() -> void:
+	if wizard_finished and not GameState.has_flag("s2_pig_stick_collected"):
+		ui.set_status("身边的小树枝也许用得上 · 先把它捡起来",3)
 
 func examine_paper() -> void:
 	lock(true)
@@ -140,8 +177,8 @@ func run_wizard() -> void:
 	await lines(28)
 	wizard_finished = true
 	GameState.set_flag("s2_pig_wizard_complete")
-	blocker.queue_free()
-	ui.set_objective("向北穿过黑暗森林 · 回到猪猪山庄")
+	open_path()
+	refresh_objective()
 	lock(false)
 	checkpoint()
 
@@ -208,7 +245,7 @@ func backtrack() -> void:
 	checkpoint()
 
 func enter_forest() -> void:
-	if not wizard_finished: return
+	if not wizard_finished or not GameState.has_flag("s2_pig_stick_collected"): return
 	lock(true)
 	if not GameState.has_flag("s2_pig_intro_complete"):
 		await shake()

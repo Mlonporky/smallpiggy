@@ -31,7 +31,6 @@ func run() -> void:
 	root.add_child(cave)
 	await create_timer(0.7).timeout
 	await capture("/tmp/pig-cave.png")
-	cave.take_stick()
 	cave.player.position = Vector2(740,650)
 	cave.player.reset_physics_interpolation()
 	await create_timer(0.6).timeout

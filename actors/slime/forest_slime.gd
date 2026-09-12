@@ -112,4 +112,3 @@ func _draw() -> void:
 
 func draw_ellipse_shadow() -> void:
 	draw_colored_polygon(PackedVector2Array([Vector2(-42,39), Vector2(-28,32), Vector2(28,32), Vector2(42,39), Vector2(28,46), Vector2(-28,46)]), Color(0.02, 0.02, 0.05, 0.3))
-

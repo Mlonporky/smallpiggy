@@ -7,11 +7,8 @@ func run() -> void:
 	scene.allow_save=false
 	root.add_child(scene)
 	await process_frame
-	scene.player.position=Vector2(730,780)
-	Input.action_press("move_up")
-	await create_timer(0.5).timeout
-	Input.action_release("move_up")
-	scene.take_stick()
+	# Direct cave entry hands over the stick normally picked up in the clearing.
+	assert(scene.player.armed and scene.player.combat_enabled)
 	scene.lock(true)
 	scene.slime.active=false
 	for i in 3:
