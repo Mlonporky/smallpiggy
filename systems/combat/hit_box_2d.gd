@@ -12,9 +12,10 @@ func _ready() -> void:
 func activate(duration := 0.1) -> void:
 	monitoring = true
 	await get_tree().physics_frame
+	while get_tree().paused: await get_tree().process_frame
 	for area in get_overlapping_areas():
 		_on_area_entered(area)
-	await get_tree().create_timer(duration).timeout
+	await get_tree().create_timer(duration, false).timeout
 	monitoring = false
 
 

@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 	_travelled = global_position.distance_to(previous_position)
 	_update_visual(delta)
 	_update_interaction()
-	if input_enabled and Input.is_action_just_pressed("interact") and _nearest_interactable:
+	if input_enabled and _wants_interaction() and _nearest_interactable:
 		_nearest_interactable.interact(self)
 	if combat_enabled and input_enabled and Input.is_action_just_pressed("attack"):
 		attack()
@@ -96,6 +96,10 @@ func _physics_process(delta: float) -> void:
 		var save_manager := get_node_or_null("/root/SaveManager")
 		if save_manager:
 			save_manager.save_game()
+
+
+func _wants_interaction() -> bool:
+	return Input.is_action_just_pressed("interact")
 
 
 func set_input_enabled(value: bool) -> void:

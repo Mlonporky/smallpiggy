@@ -1,5 +1,5 @@
 extends "res://scenes/chapter2/forest_base.gd"
-const BATTLE := "res://scenes/chapter2/cave.tscn"
+const FOREST_PATH := "res://scenes/chapter2/forest_path.tscn"
 var script_lines: Dictionary
 var paper: Interactable
 var stick: Interactable
@@ -7,6 +7,8 @@ var blocker: StaticBody2D
 var wizard: Sprite2D
 var memory: TextureRect
 var wizard_finished := false
+var distance_shot: Node2D
+var distance_shot_count := 0
 
 func _ready() -> void:
 	GameState.story_phase = GameState.StoryPhase.LITTLE_PIG_DARK_FOREST
@@ -55,6 +57,7 @@ func _ready() -> void:
 func lines(section: Variant) -> void:
 	for line in script_lines[str(section)]:
 		await dialogue.say(line.speaker,line.text,0,float(line.pause_after))
+		if line.text == "在森林的另一端。": await reveal_manor_distance()
 		if line.text == "白白菜还记不记得你。": await beat(0.8)
 		if line.text in ["可是白菜一个人在那边。","他一定也会害怕。"]:
 			joy(9,0.45)
@@ -139,18 +142,6 @@ func run_wizard() -> void:
 	joy(8,0.35)
 	await recoil(25)
 	await lines(22)
-	var base_zoom := camera.zoom
-	var push_in := create_tween()
-	push_in.tween_property(camera,"zoom",base_zoom*1.2,0.45)
-	await push_in.finished
-	var pan := create_tween()
-	pan.tween_property(camera,"offset",Vector2(0,-65),0.9)
-	pan.tween_interval(0.5)
-	pan.tween_property(camera,"offset",Vector2.ZERO,0.9)
-	await pan.finished
-	var pull_back := create_tween()
-	pull_back.tween_property(camera,"zoom",base_zoom,0.45)
-	await pull_back.finished
 	await shake()
 	await lines(23)
 	await beat(0.67)
@@ -263,4 +254,17 @@ func enter_forest() -> void:
 		await fade(1)
 		GameState.set_flag("s2_pig_intro_complete")
 		checkpoint()
-	SceneRouter.change_scene(BATTLE)
+	SceneRouter.change_scene(FOREST_PATH)
+
+func reveal_manor_distance() -> void:
+	distance_shot_count += 1
+	distance_shot = preload("res://scenes/chapter2/manor_distance_shot.gd").new()
+	add_child(distance_shot)
+	await distance_shot.play(self,get_child(0) as Sprite2D)
+	distance_shot = null
+
+func fit_camera() -> void:
+	if is_instance_valid(distance_shot) and distance_shot.camera != null:
+		distance_shot.apply_camera()
+	else:
+		super.fit_camera()

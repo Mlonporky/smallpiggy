@@ -27,6 +27,7 @@ func until_idle() -> void:
 func run() -> void:
 	await process_frame
 	var state = root.get_node("GameState")
+	root.get_node("SaveManager").save_path = "/tmp/piggy_chapter2_flow_test.json"
 	state.reset()
 	state.heart_progress = 3
 	await load_scene("res://scenes/chapter_02_dark_forest/forest_clearing.tscn")
@@ -44,6 +45,8 @@ func run() -> void:
 	await until_idle()
 	assert(state.has_flag("s2_pig_wizard_complete"))
 	assert(not scene.wizard.visible)
+	assert(scene.distance_shot_count == 1 and scene.distance_shot == null)
+	assert(scene.camera.position == Vector2(724,543) and scene.camera.offset == Vector2.ZERO)
 	assert(scene.player.input_enabled)
 	assert("因为我要去找白菜。" in seen and "刚才是什么？" in seen)
 	var count := seen.count("你醒了。")
@@ -81,21 +84,33 @@ func run() -> void:
 	scene = current_scene
 	scene.allow_save = false
 	await create_timer(0.8).timeout
+	assert(scene.scene_file_path.ends_with("forest_path.tscn"))
+	assert(scene.player.armed and not scene.player.combat_enabled)
+	# Traverse the actual painted road via collision-aware movement.
+	for point in [Vector2(700,810),Vector2(740,650),Vector2(835,490)]:
+		assert(await scene.player.walk_to(point,4), "Road must be physically traversable")
+	await until_idle()
+	assert(state.has_flag("s2_cave_discovered") and scene.cave_door.enabled)
+	for point in [Vector2(965,380),Vector2(1090,275)]:
+		assert(await scene.player.walk_to(point,4), "Cave mouth must be reachable")
+	scene.enter_cave()
+	var path_scene = scene
+	while current_scene == path_scene or current_scene == null: await process_frame
+	scene = current_scene
+	scene.allow_save = false
+	await create_timer(0.8).timeout
 	assert(scene.scene_file_path.ends_with("cave.tscn"))
-	# She arrives holding the stick from the clearing.
 	assert(scene.player.armed and scene.player.combat_enabled and not scene.slime.active)
 	assert(state.has_flag("heart_ui_unlocked") and state.heart_progress == 3)
-	# Use real hitbox and timing: face upward from below the enemy.
-	scene.slime.active = false
-	scene.lock(true) # Prevent the entrance trigger from starting AI during hitbox assertions.
-	for hit in 3:
-		scene.player.position = scene.slime.position + Vector2(0,70)
-		scene.player.face(Vector2.UP)
-		scene.player.attack()
-		await create_timer(0.6).timeout
-	var defeat_deadline := Time.get_ticks_msec()+2500
-	while not scene.won and Time.get_ticks_msec()<defeat_deadline: await process_frame
-	assert(scene.won,"Three real stick attacks should defeat the slime")
+	scene.start_encounter()
+	await until_idle()
+	assert(scene.awakened and scene.player.health.current_health == 40)
+	scene.slime.stop_attack()
+	scene.player.position = scene.slime.position + Vector2(0,95)
+	scene.player.face(Vector2.UP)
+	scene.player.attack()
+	await create_timer(1).timeout
+	assert(scene.won,"Enhanced attack should finish the slime after the joy burst")
 	assert(scene.fragment.enabled)
 	scene.lock(false)
 	scene.fragment.interact(scene.player)
@@ -107,17 +122,20 @@ func run() -> void:
 	assert(scene.won and not is_instance_valid(scene.slime))
 	# Death reloads the cave, retaining weapon and story but restoring health.
 	state.set_flag("forest_slime_defeated",false)
+	state.set_flag("s2_fragment_dropped",false)
 	await load_scene("res://scenes/chapter2/cave.tscn")
 	assert(scene.player.armed)
 	var dying_scene = scene
-	scene.player.health.damage(3)
+	scene.player.health.damage(100)
 	await process_frame
 	assert(scene.busy and not scene.player.input_enabled)
 	while current_scene == dying_scene or current_scene == null: await process_frame
 	scene = current_scene
 	scene.allow_save = false
 	await create_timer(0.6).timeout
-	assert(scene.player.health.current_health == 3 and scene.player.input_enabled)
+	assert(scene.player.health.current_health == 40 and scene.player.input_enabled)
 	assert(scene.player.armed and state.has_flag("s2_pig_intro_complete"))
+	for suffix in ["", ".tmp", ".bak"]:
+		DirAccess.remove_absolute(root.get_node("SaveManager").save_path + suffix)
 	print("CHAPTER2_FLOW_OK")
 	quit()

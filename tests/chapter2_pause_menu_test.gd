@@ -8,7 +8,7 @@ func run() -> void:
 	var saves = root.get_node("SaveManager")
 	var router = root.get_node("SceneRouter")
 	# Never touch the player's real save.
-	saves.save_path = "user://chapter2_pause_menu_test.json"
+	saves.save_path = "/tmp/piggy_chapter2_pause_menu_test.json"
 	clear(saves.save_path)
 	state.reset()
 	change_scene_to_file("res://scenes/chapter2/cave.tscn")
@@ -28,6 +28,19 @@ func run() -> void:
 	await process_frame
 	assert(not paused and not cave.busy and cave.player.input_enabled, "Esc again resumes")
 	assert(cave.find_child("save", true, false) == null, "The menu is removed")
+	# Pause in the dash itself: neither movement, timer nor active hitbox may expire.
+	cave.slime.attack_lunge()
+	await create_timer(0.95).timeout
+	assert(cave.slime.state == "dash")
+	escape()
+	await process_frame
+	var dash_at: Vector2 = cave.slime.position
+	var dash_time: float = cave.slime.state_time
+	await create_timer(0.7).timeout
+	assert(cave.slime.position == dash_at and cave.slime.state_time == dash_time)
+	assert(cave.slime.hit_box.monitoring)
+	escape()
+	await process_frame
 	# The slime falls: progress is saved before the fragment is picked up.
 	cave.slime.health.damage(99)
 	await create_timer(0.8).timeout
