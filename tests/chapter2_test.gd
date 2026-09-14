@@ -104,13 +104,23 @@ func run() -> void:
 	assert(state.has_flag("heart_ui_unlocked") and state.heart_progress == 3)
 	scene.start_encounter()
 	await until_idle()
-	assert(scene.awakened and scene.player.health.current_health == 40)
+	scene.slime.stop_attack()
+	for i in 5:
+		scene.player.hurt_box.receive_hit(scene.slime.hit_box)
+		await create_timer(1).timeout
+	while not scene.awakened: await process_frame
+	assert(scene.player.health.current_health == 40)
 	scene.slime.stop_attack()
 	scene.player.position = scene.slime.position + Vector2(0,95)
 	scene.player.face(Vector2.UP)
-	scene.player.attack()
-	await create_timer(1).timeout
-	assert(scene.won,"Enhanced attack should finish the slime after the joy burst")
+	await create_timer(2.2).timeout
+	scene.slime.stop_attack()
+	for i in 6:
+		scene.player.position = scene.slime.position + Vector2(0,95)
+		scene.player.face(Vector2.UP)
+		scene.player.attack()
+		await create_timer(0.8).timeout
+	assert(scene.won,"Six enhanced attacks finish the slime after the joy burst")
 	assert(scene.fragment.enabled)
 	scene.lock(false)
 	scene.fragment.interact(scene.player)

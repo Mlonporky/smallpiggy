@@ -8,7 +8,8 @@ var state_time := 0.0
 var lunge_direction := Vector2.DOWN
 var shielded := true
 var damage_cooldown := 0.0
-var ambush := false
+const ATTACK_DAMAGE := 12
+const JOY_PHASE_HEALTH := 12
 
 func _ready() -> void:
 	super._ready()
@@ -21,7 +22,9 @@ func _ready() -> void:
 	art.texture_filter = CharacterSpriteStyle.FILTER
 	add_child(art)
 	$HurtBox/CollisionShape2D.position.y = -45
-	hit_box.damage = 20
+	health.max_health = 24
+	health.reset()
+	hit_box.damage = ATTACK_DAMAGE
 
 func _process(delta: float) -> void:
 	phase += delta
@@ -60,7 +63,7 @@ func _physics_process(delta: float) -> void:
 			hit_box.monitoring = false
 	elif state == "recover":
 		scale = scale.lerp(Vector2.ONE, minf(1,delta * 14))
-		if state_time >= 1.05:
+		if state_time >= 1.6:
 			state = "idle"
 			state_time = 0
 			_busy = false
@@ -88,7 +91,8 @@ func _on_damaged(source: HitBox2D) -> void:
 	FX.spawn(get_parent(), position + Vector2(0,-40), "impact", Vector2.RIGHT, Color("ffeeb5"), 70)
 	FX.sound(self, "impact")
 	if shielded:
-		# Intro cannot be skipped by attacking before the visible ambush lands.
+		# Early swings weaken the shell but cannot bypass the story awakening.
+		health.damage(mini(source.damage, maxi(0, health.current_health - 14)))
 		return
 	health.damage(source.damage)
 	if not _dead:

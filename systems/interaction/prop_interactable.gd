@@ -35,7 +35,7 @@ func _draw() -> void:
 			for x in [-12.0, 8.0]:
 				draw_circle(Vector2(x, 0), 4, Color("8b3d4a"))
 	if not display_label.is_empty():
-		draw_string(ThemeDB.fallback_font, Vector2(-42, 55), display_label, HORIZONTAL_ALIGNMENT_CENTER, 84, 15, Color(1, 0.95, 0.85, 0.8))
+		draw_string(preload("res://assets/fonts/game_font.tres"), Vector2(-42, 55), display_label, HORIZONTAL_ALIGNMENT_CENTER, 84, 15, Color(1, 0.95, 0.85, 0.8))
 
 
 func _box(color: Color, radius: int) -> StyleBoxFlat:

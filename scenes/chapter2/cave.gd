@@ -53,19 +53,19 @@ func _ready() -> void:
 			awakened = true
 			player.joy_power = true
 			slime.shielded = false
-			slime.health.current_health = 2
+			slime.health.current_health = slime.JOY_PHASE_HEALTH
 			player.health.current_health = 40
 			on_health_changed(40,100)
 			skill_label.text = "想起白菜 · 快乐力量已激活"
 			ui.set_objective("用快乐挥击击退史莱姆 · 找回礼物碎片")
-			ui.set_status("J / Z 快乐挥击 · 空格跳跃躲扑击",7)
+			ui.set_status("J / Z 快乐挥击 · Shift 翻滚 · K 招架 · 空格跳跃",7)
 	trigger(Rect2(350,600,800,75),start_encounter)
 
 func equip() -> void:
 	player.armed = true
 	player.combat_enabled = true
 	ui.set_objective("穿过山洞 · 击退挡路的变异史莱姆")
-	ui.set_status("J / Z 挥动树枝 · 空格跳跃 · 靠近查看挡路的史莱姆",7)
+	ui.set_status("J / Z 挥动树枝 · Shift 翻滚 · K 招架 · 空格跳跃",7)
 
 func start_encounter() -> void:
 	if won or not is_instance_valid(slime) or encounter_started: return
@@ -79,9 +79,11 @@ func start_encounter() -> void:
 	await player.walk_to(Vector2(735,650),4)
 	player.face(slime.position-player.position)
 	await dialogue.say("小呆猪", "史莱姆……挡住了去路。")
-	ui.set_status("史莱姆猛地扑了过来！",3)
-	# A real, telegraphed collision causes the story injury, not an offscreen HP edit.
-	slime.hit_box.damage = 60
+	ui.set_status("留意扑击前摇 · Shift 翻滚 · K 树枝招架",3)
+	# Free combat: repeated real hits gradually reach the story threshold.
+	lock(false)
+	player.combat_enabled = true
+	slime.hit_box.damage = slime.ATTACK_DAMAGE
 	slime.active = true
 	slime.attack_lunge()
 
@@ -106,6 +108,11 @@ func build_combat_hud() -> void:
 	skill_label.add_theme_color_override("font_color",Color("ffda96"))
 	skill_label.text = "想起白菜 · 生命降至 40% 时触发"
 	ui.add_child(skill_label)
+	var controls := Label.new()
+	controls.position = Vector2(24,170)
+	controls.add_theme_font_size_override("font_size",16)
+	controls.text = "J / Z 挥击   Shift 翻滚   K 朝向敌人招架（减伤75%）   空格跳跃"
+	ui.add_child(controls)
 
 func on_health_changed(current: int, maximum: int) -> void:
 	ui.heart.visible = true
@@ -136,13 +143,13 @@ func awaken_joy() -> void:
 	awakening = false
 	GameState.set_flag("s2_joy_awakened")
 	slime.shielded = false
-	# The burst breaks its protection; the player still delivers the finishing blow.
+	# The burst breaks the shell, leaving six enhanced hits of combat.
 	FX.spawn(world,slime.position+Vector2(0,-35),"joy",Vector2.RIGHT,Color("ffdc87"),125)
-	slime.health.damage(1)
-	slime.hit_box.damage = 20
+	slime.health.damage(maxi(0, slime.health.current_health - slime.JOY_PHASE_HEALTH))
+	slime.hit_box.damage = slime.ATTACK_DAMAGE
 	skill_label.text = "想起白菜 · 快乐力量已激活"
 	ui.set_objective("快乐力量已激活 · 挥动树枝击退史莱姆")
-	ui.set_status("J / Z 快乐挥击 · 空格跳跃躲扑击 · 留意紫色预警",8)
+	ui.set_status("J / Z 快乐挥击 · Shift 翻滚 · K 招架 · 空格跳跃 · 留意紫色预警",8)
 	player.combat_enabled = true
 	player.story_protected = false
 	lock(false)
