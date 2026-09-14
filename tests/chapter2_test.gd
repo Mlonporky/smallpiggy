@@ -9,8 +9,8 @@ func _process(_delta: float) -> bool:
 		scene.dialogue._advance_requested = true
 	return false
 func load_scene(path: String) -> void:
-	if is_instance_valid(scene):
-		scene.queue_free()
+	if is_instance_valid(current_scene):
+		current_scene.queue_free()
 		await process_frame
 	scene = load(path).instantiate()
 	scene.allow_save = false
@@ -128,8 +128,13 @@ func run() -> void:
 	assert(state.gift_fragments.count("fragment_red_wrap_01") == 1)
 	scene.fragment.interact(scene.player)
 	assert(state.gift_fragments.size() == 1)
+	await root.get_node("SceneRouter").transition_finished
+	assert(current_scene.scene_file_path.ends_with("cabbage_act2/villa.tscn"))
+	assert(current_scene.player.character_id == "white_cabbage" and current_scene.player.input_enabled)
+	# Completed old cave saves also resume the boy instead of stranding the player.
 	await load_scene("res://scenes/chapter2/cave.tscn")
-	assert(scene.won and not is_instance_valid(scene.slime))
+	await root.get_node("SceneRouter").transition_finished
+	assert(current_scene.scene_file_path.ends_with("cabbage_act2/villa.tscn"))
 	# Death reloads the cave, retaining weapon and story but restoring health.
 	state.set_flag("forest_slime_defeated",false)
 	state.set_flag("s2_fragment_dropped",false)

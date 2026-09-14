@@ -331,8 +331,10 @@ func travel(target: String) -> void:
 		return
 	await say("leave")
 	GameState.set_flag("ch1_completed")
-	GameState.story_phase = GameState.StoryPhase.LITTLE_PIG_DARK_FOREST
-	last_route = "res://scenes/chapter_02_dark_forest/forest_clearing.tscn"
+	# The first departure cuts to the pig; returning home later must not replay her act.
+	var pig_finished := GameState.has_flag("forest_slime_defeated")
+	GameState.story_phase = GameState.StoryPhase.CABBAGE_HOLLOW_HEART if pig_finished else GameState.StoryPhase.LITTLE_PIG_DARK_FOREST
+	last_route = "res://scenes/cabbage_act2/villa.tscn" if pig_finished else "res://scenes/chapter_02_dark_forest/forest_clearing.tscn"
 	if route_on_exit:
 		routing = true
 		SceneRouter.change_scene(last_route)

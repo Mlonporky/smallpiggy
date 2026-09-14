@@ -107,7 +107,7 @@ func _run() -> void:
 	scene = await room("living")
 	check(scene.paper.visible and scene.hotspots.paper.enabled and not scene.busy,"room reload restores physical paper without replaying memory")
 	await scene.travel({"bedroom":"kitchen","kitchen":"bedroom","living":"outside"}[scene.room_id])
-	check(scene.last_route.ends_with("forest_clearing.tscn") and state.story_phase == 2,"confirmed exit hands off to pig, not cabbage exterior")
+	check(scene.last_route.ends_with("forest_clearing.tscn") and state.story_phase == 2,"first departure cuts to pig")
 	scene.queue_free()
 	await process_frame
 	scene = await room("bedroom")

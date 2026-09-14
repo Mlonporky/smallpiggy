@@ -61,6 +61,18 @@ func run() -> void:
 	assert(cave.won and not is_instance_valid(cave.slime) and cave.fragment.enabled and cave.fragment.visible)
 	cave.collect_fragment()
 	assert(state.has_flag("forest_slime_defeated") and state.gift_fragments.count("fragment_red_wrap_01") == 1)
+	await router.transition_finished
+	assert(current_scene.scene_file_path.ends_with("cabbage_act2/villa.tscn"))
+	assert(saves.load_game() == "res://scenes/cabbage_act2/villa.tscn")
+	assert(state.story_phase == state.StoryPhase.CABBAGE_HOLLOW_HEART)
+	# Going home and leaving again must not restart the pig's forest chapter.
+	current_scene.travel("living")
+	await router.transition_finished
+	state.set_flag("ch1_can_leave_home")
+	current_scene.test_mode = true
+	current_scene.travel("outside")
+	await router.transition_finished
+	assert(current_scene.scene_file_path.ends_with("cabbage_act2/villa.tscn"))
 	clear(saves.save_path)
 	saves.save_path = saves.SAVE_PATH
 	print("CHAPTER2_PAUSE_MENU_OK: Esc pauses and resumes, save returns to menu, fallen slime stays saved")

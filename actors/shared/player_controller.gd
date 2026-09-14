@@ -9,6 +9,7 @@ signal attack_started
 @export_enum("white_cabbage", "little_pig") var character_id := "white_cabbage"
 @export var combat_enabled := false
 @export var move_speed := 205.0
+const WALK_SPEED_MULTIPLIER := 1.5
 @export var acceleration := 1150.0
 @export var deceleration := 1450.0
 @export var handpainted_room := false
@@ -80,7 +81,7 @@ func _physics_process(delta: float) -> void:
 		direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction.length_squared() > 0.0:
 		_facing = _cardinal_facing(direction)
-		velocity = velocity.move_toward(direction * move_speed, acceleration * delta)
+		velocity = velocity.move_toward(direction * move_speed * WALK_SPEED_MULTIPLIER, acceleration * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 	var previous_position := global_position

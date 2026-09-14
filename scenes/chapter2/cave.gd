@@ -8,6 +8,8 @@ var skill_label: Label
 var slime: ForestSlime
 var fragment: Interactable
 var won := false
+var handing_off := false
+const CABBAGE_EXTERIOR := "res://scenes/cabbage_act2/villa.tscn"
 
 func _ready() -> void:
 	GameState.story_phase = GameState.StoryPhase.FOREST_EXPLORATION
@@ -34,6 +36,7 @@ func _ready() -> void:
 		player.armed = true
 		ui.set_objective("已找回红色礼物碎片 · 继续寻找白白菜")
 		ui.set_status("本段完成 · Esc 返回菜单",6)
+		call_deferred("return_to_cabbage")
 	elif GameState.has_flag("s2_fragment_dropped"):
 		# Saved after the slime fell but before the fragment was picked up.
 		player.armed = true
@@ -173,14 +176,25 @@ func drop_fragment() -> void:
 	ui.set_objective("拾取史莱姆留下的红色礼物碎片")
 
 func collect_fragment() -> void:
-	if not won: return
+	if not won or handing_off or GameState.has_flag("forest_slime_defeated"): return
 	fragment.visible = false
 	fragment.set_enabled(false)
 	GameState.add_gift_fragment("fragment_red_wrap_01")
 	GameState.set_flag("forest_slime_defeated")
 	ui.set_objective("已找回红色礼物碎片 · 继续寻找白白菜")
-	ui.set_status("礼物碎片已保存 · 本段完成 · Esc 返回菜单",8)
-	checkpoint()
+	return_to_cabbage()
+
+func return_to_cabbage() -> void:
+	if handing_off: return
+	handing_off = true
+	lock(true)
+	# A completed legacy cave save can load during the router fade-in.
+	while SceneRouter.is_busy(): await get_tree().process_frame
+	GameState.story_phase = GameState.StoryPhase.CABBAGE_HOLLOW_HEART
+	# Continue must reopen the boy's exterior, not the completed cave.
+	if allow_save and not SaveManager.save_game(CABBAGE_EXTERIOR):
+		ui.set_status("自动保存失败，可在白菜外景按 F5 重试",8)
+	SceneRouter.change_scene(CABBAGE_EXTERIOR)
 
 func defeated() -> void:
 	lock(true)

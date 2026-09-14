@@ -23,6 +23,6 @@ func _run() -> void:
  current_scene.test_mode = true
  current_scene.travel("outside")
  await root.get_node("SceneRouter").transition_finished
- assert(current_scene.scene_file_path.ends_with("forest_clearing.tscn"),"Outside exit did not reach pig scene")
+ assert(current_scene.scene_file_path.ends_with("forest_clearing.tscn"),"First departure must cut to the pig")
  print("CHAPTER1_EXIT_ROUTING_OK: real transitions bedroom ↔ kitchen ↔ living → outside, matching entrances and input")
  quit()
