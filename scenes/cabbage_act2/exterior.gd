@@ -18,7 +18,23 @@ var player: PiggyPlayer
 var camera: Camera2D
 var ui: ChapterPresentation
 var busy := false
+var mushroom_story: Node
 var floor_polygon: PackedVector2Array
+var exit_labels: Array[Label] = []
+
+# Heights measured against the doors at each depth, using visible body bounds.
+func body_height(foot_y: float) -> float:
+ var depth := {"villa":Vector4(520,850,140,215), "path":Vector4(420,800,95,180), "mushroom":Vector4(650,950,195,235)}
+ var d: Vector4 = depth[location]
+ return lerpf(d.z,d.w,clampf((foot_y-d.x)/(d.y-d.x),0,1))
+
+func _physics_process(_delta: float) -> void:
+ if not is_instance_valid(player): return
+ player.visible_height = body_height(player.position.y)
+ if location == "mushroom" and is_instance_valid(mushroom_story) and not SceneRouter.is_busy() and player.position.distance_to(Vector2(865,675)) < 235:
+  mushroom_story.discover()
+ for i in exit_labels.size():
+  exit_labels[i].modulate = Color.WHITE if player.position.distance_to(DATA[location].exits[i][1]) < 120 else Color(0.8,0.8,0.8,0.75)
 
 func _ready() -> void:
  var data: Dictionary = DATA[location]
@@ -43,12 +59,13 @@ func _ready() -> void:
  player.handpainted_room = true
  player.sheet_override = preload("res://assets/chapter1/boy.png")
  player.sheet_row_edges = PackedInt32Array([0,368,694,1028,1448])
- player.visible_height = 105.0
  player.move_speed = 155.0
  player.position = data.spawn
  if pending_entry == "path" and location == "villa": player.position = Vector2(1150,795)
  if pending_entry == "mushroom" and location == "path": player.position = Vector2(1045,795)
+ if pending_entry == "interior" and location == "mushroom": player.position = Vector2(850,745)
  pending_entry = ""
+ player.visible_height = body_height(player.position.y)
  player.get_node("Camera2D").enabled = false
  add_child(player)
  player.reset_physics_interpolation()
@@ -70,6 +87,10 @@ func _ready() -> void:
   label.add_theme_constant_override("outline_size",6)
   label.mouse_filter = Control.MOUSE_FILTER_IGNORE
   add_child(label)
+  exit_labels.append(label)
+ if location == "mushroom":
+  mushroom_story = preload("res://scenes/cabbage_act2/mushroom_story.gd").new()
+  add_child(mushroom_story)
  get_viewport().size_changed.connect(_fit)
  _fit()
 
@@ -85,16 +106,26 @@ func _unhandled_input(event: InputEvent) -> void:
   pause_menu()
  elif event.is_action_pressed("interact"):
   for item in DATA[location].exits:
-   if player.position.distance_to(item[1]) < 100:
+   if player.position.distance_to(item[1]) < 120:
     get_viewport().set_input_as_handled()
-    travel(item[0])
+    choose_exit(item)
     return
+
+func choose_exit(item: Array) -> void:
+ busy = true
+ player.set_input_enabled(false)
+ var target: String = item[0]
+ var caption: String = item[2].replace("E · ","")
+ var choice := await ui.choose({target:caption,"stay":"继续在这里探索"},{},"要去哪里？")
+ await get_tree().process_frame
+ busy = false
+ player.set_input_enabled(true)
+ if choice == target: travel(target)
 
 func travel(target: String) -> void:
  if busy or SceneRouter.is_busy(): return
  if target == "door":
-  ui.prompt.text = "已到蘑菇屋门口\n\n室内探索尚未制作\n可沿小路返回主屋"
-  GameState.set_flag("cabbage_mushroom_reached")
+  mushroom_story.enter()
   return
  busy = true
  player.set_input_enabled(false)
