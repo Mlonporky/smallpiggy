@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scenes/action_test/weapons/base_weapon.gd" id="1"]
+[resource]
+script = ExtResource("1")
+display_name = "匕首"
+kind = "dagger"
+damage = 16
+reach = 58.0
+windup = 0.025
+active_time = 0.065
+recovery = 0.09
+knockback = 90.0
+hit_pause = 0.03
