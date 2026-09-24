@@ -25,11 +25,14 @@ func _ready() -> void:
  slime.room = self
  world.add_child(slime)
  enemies.append(slime)
- h.damaged.connect(func(_dir): hit_feedback(player.position+Vector2(0,-40),0.04))
+ h.damaged.connect(func(_dir):
+  hit_feedback(player.position+Vector2(0,-40),0.04)
+  camera.add_trauma(0.3))
 func hit_feedback(at: Vector2, duration: float) -> void:
  hit_stop = maxf(hit_stop,duration)
  player.paused = true
- camera.trauma = 0.65
+ # Small, short shake: readable impact without swinging the whole view.
+ camera.add_trauma(duration*6.5)
  burst("hit",at,1)
 func _physics_process(delta: float) -> void:
  layout()

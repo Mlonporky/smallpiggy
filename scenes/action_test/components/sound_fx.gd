@@ -14,14 +14,17 @@ func cue(kind: String) -> void:
    voice = candidate
    break
  if voice==null: return
- var count := 4410 if kind=="heal" else 1764
+ # [samples, start Hz, end Hz] per cue; anything unknown uses the low swing/hit sweep.
+ var shape: Array = {"heal":[4410,650.0,1300.0],"chime":[3300,1250.0,1900.0],"bounce":[3900,210.0,560.0],"crack":[1500,150.0,70.0]}.get(kind,[1764,180.0,100.0])
+ var count: int = shape[0]
  var data := PackedByteArray()
  data.resize(count*2)
+ var phase := 0.0
  for i in count:
-  var t := float(i)/22050
   var progress := float(i)/count
-  var hz := (650+650*progress) if kind=="heal" else (180-80*progress)
-  var value := sin(TAU*hz*t)*(1-progress)*minf(progress*25,1)*0.45
+  var hz: float = lerpf(shape[1],shape[2],progress)
+  phase += TAU*hz/22050
+  var value := sin(phase)*(1-progress)*minf(progress*25,1)*0.45
   data.encode_s16(i*2,int(value*32767))
  var stream := AudioStreamWAV.new()
  stream.format = AudioStreamWAV.FORMAT_16_BITS

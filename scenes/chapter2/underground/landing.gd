@@ -1,7 +1,8 @@
 extends Node2D
 ## Isolated first-room study. No inventory, save, or main-story state changes.
 const BACKDROP = preload("res://assets/chapter2/underground/root_grotto_v1.png")
-const TerrainArt = preload("res://scenes/chapter2/underground/terrain_art.gd")
+const TerrainArt = preload("res://scenes/action_test/components/terrain_painter.gd")
+const Backdrop = preload("res://scenes/action_test/components/backdrop.gd")
 const Combat = preload("res://scenes/chapter2/underground/combat.gd")
 var combat: Node2D
 const Pig = preload("res://scenes/chapter2/underground/pig.gd")
@@ -22,14 +23,14 @@ func _ready() -> void:
  stage.clip_contents = true
  stage.mouse_filter = Control.MOUSE_FILTER_IGNORE
  add_child(stage)
+ # Native resolution (no 1/3-size canvas with nearest-neighbour upscaling), so the pig and
+ # terrain stay smooth; the stage still scales the whole room to the window.
  var container := SubViewportContainer.new()
- container.size = SIZE/3
- container.scale = Vector2.ONE*3
- container.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+ container.size = SIZE
  container.mouse_filter = Control.MOUSE_FILTER_IGNORE
  stage.add_child(container)
  var viewport := SubViewport.new()
- viewport.size = Vector2i(SIZE/3)
+ viewport.size = Vector2i(SIZE)
  viewport.world_2d = World2D.new()
  viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
  container.add_child(viewport)
@@ -38,8 +39,11 @@ func _ready() -> void:
  var camera := Camera2D.new()
  camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
  camera.position = SIZE/2
- camera.zoom = Vector2.ONE/3
  world.add_child(camera)
+ var backdrop := Backdrop.new()
+ world.add_child(backdrop)
+ backdrop.setup(BACKDROP,Rect2(Vector2.ZERO,SIZE),SIZE)
+ backdrop.follow(SIZE/2)
  world.draw.connect(_draw_room)
  for rect in PLATFORMS: _solid(rect)
  _solid(Rect2(-60,-500,60,1500))
@@ -127,13 +131,10 @@ func _plate(rect: Rect2) -> void:
  stage.add_child(panel)
 
 func _draw_room() -> void:
- world.draw_texture_rect(BACKDROP,Rect2(Vector2.ZERO,SIZE),false)
- # Quiet the artwork slightly, retaining separation from the solid foreground.
- world.draw_rect(Rect2(Vector2.ZERO,SIZE),Color(0.05,0.10,0.08,0.12))
  for rect in PLATFORMS: TerrainArt.paint(world,rect)
  for i in 16:
-  var at := Vector2(80+i*91,230+fmod(i*139.0,440.0)+sin(elapsed*0.7+i)*7).snapped(Vector2(3,3))
-  world.draw_rect(Rect2(at,Vector2(3,3)),Color(0.78,0.83,0.58,0.28))
+  var at := Vector2(80+i*91,230+fmod(i*139.0,440.0)+sin(elapsed*0.7+i)*7)
+  world.draw_circle(at,2.2,Color(0.78,0.83,0.58,0.32),true,-1,true)
  var strength := clampf(1-(730-pig.position.y)/180,0,1)
  world.draw_set_transform(Vector2(pig.position.x,733),0,Vector2(1,0.18))
  world.draw_circle(Vector2.ZERO,32,Color(0.02,0.05,0.03,strength*0.45))

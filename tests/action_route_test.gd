@@ -1,79 +1,373 @@
-extends "res://tests/action_level_test.gd"
+extends SceneTree
+## Plays the redesigned test level with key presses only (no teleporting, no HP edits).
+## Inputs are injected on physics frames and flushed immediately, so every run is repeatable.
+## Route A (canopy): sword → thorn gap → mushroom cliff → campfire → ferry → roll past the spiked
+## patrol → crumbling slabs → elevator → canopy → leaf-curtain nook (hammer) → exit.
+## Route B (after R): campfire → drop into the cavern → dagger → golden mushroom → ground path → exit.
 var room: Node2D
+var p: CharacterBody2D
 var frame_times: Array[float] = []
-func go(goal: Vector2) -> void:
- var p = room.player
- var deadline := Time.get_ticks_msec()+8000
- var jump_end := 0
- var next_jump := 0
- var attack_end := 0
- var next_attack := 0
- while Time.get_ticks_msec()<deadline:
-  if p.is_on_floor() and absf(p.position.x-goal.x)<28 and absf(p.position.y-goal.y)<8: break
-  var dx: float = goal.x-p.position.x
-  var direction := signf(dx)
-  key(KEY_D,dx>12)
-  key(KEY_A,dx < -12)
-  var now := Time.get_ticks_msec()
-  var floor_rect := Rect2()
-  for rect in room.platforms:
-   if absf(p.position.y-rect.position.y)<5 and p.position.x>=rect.position.x-10 and p.position.x<=rect.end.x+10:
-    floor_rect = rect
-    break
-  var near_edge: bool = p.position.x>floor_rect.end.x-42 if direction>0 else p.position.x<floor_rect.position.x+42
-  var need_jump: bool = p.is_on_wall() or (goal.y<p.position.y-35 and (absf(dx)<140 or near_edge)) or (near_edge and absf(dx)>80 and goal.y<=p.position.y+35)
-  if p.is_on_floor() and need_jump and now>next_jump:
-   jump_end = now+600
-   next_jump = now+900
-  key(KEY_SPACE,now<jump_end)
-  if now>next_attack:
-   attack_end = now+70
-   next_attack = now+400
-  key(KEY_J,now<attack_end)
-  await create_timer(0.025).timeout
- key(KEY_D,false)
- key(KEY_A,false)
- key(KEY_SPACE,false)
- key(KEY_J,false)
- if not (absf(p.position.x-goal.x)<45 and absf(p.position.y-goal.y)<12):
-  push_error("Route waypoint unreachable: %s at %s" % [goal,p.position])
-  quit(1)
-  await process_frame
- await create_timer(0.12).timeout
+var failed := false
+
+
+func _initialize() -> void:
+	call_deferred("run")
+
+
+var held: Dictionary = {}
+
+
+func press(code: int, down: bool) -> void:
+	if down:
+		held[code] = true
+	else:
+		held.erase(code)
+	_send(code, down)
+
+
+func _send(code: int, down: bool) -> void:
+	var e := InputEventKey.new()
+	e.keycode = code
+	e.physical_keycode = code
+	e.pressed = down
+	Input.parse_input_event(e)
+	Input.flush_buffered_events()
+
+
+func steer(direction: int) -> void:
+	press(KEY_D, direction > 0)
+	press(KEY_A, direction < 0)
+
+
+func step(count := 1) -> void:
+	for i in count:
+		await physics_frame
+		# A window focus change releases every pressed key; keep held keys held, like a finger would.
+		for code in held:
+			if not Input.is_physical_key_pressed(code):
+				_send(code, true)
+
+
+func check(condition: bool, message: String) -> void:
+	if condition or failed:
+		return
+	failed = true
+	push_error("ROUTE FAILED: %s (pig at %s, hp %d, velocity %s, right %s, control %s, paused %s/%s, hit_stop %.2f, dying %.2f)" % [message, p.position, p.health.hp, p.velocity, Input.is_action_pressed("move_right"), p.control_enabled, p.paused, room.paused, room.hit_stop, room.death_timer])
+	quit(1)
+
+
+func tap(code: int) -> void:
+	press(code, true)
+	await step(2)
+	press(code, false)
+	await step(2)
+
+
+func capture(name: String) -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	# macOS stops drawing a covered window; skip the screenshot instead of waiting forever.
+	var drawn := {"done": false}
+	RenderingServer.frame_post_draw.connect(func(): drawn.done = true, CONNECT_ONE_SHOT)
+	var frames := 0
+	while not drawn.done and frames < 30:
+		await process_frame
+		frames += 1
+	if drawn.done:
+		root.get_texture().get_image().save_png("/private/tmp/pig-route-%s.png" % name)
+	else:
+		print("  capture %s skipped: window not drawing" % name)
+
+
+func settle() -> void:
+	steer(0)
+	var frames := 0
+	while (not p.is_on_floor() or absf(p.velocity.x) > 5) and frames < 180:
+		await step()
+		frames += 1
+
+
+## Walks to x on the current floor; releases early enough to stop close to the target.
+func walk_to(x: float, tolerance := 10.0) -> void:
+	var frames := 0
+	while frames < 900 and not failed:
+		var gap := x - p.position.x
+		var stopping: float = p.velocity.x * p.velocity.x / (2.0 * p.deceleration)
+		if absf(gap) <= tolerance + (stopping if signf(p.velocity.x) == signf(gap) else 0.0):
+			break
+		steer(1 if gap > 0 else -1)
+		await step()
+		frames += 1
+	await settle()
+	check(absf(p.position.x - x) < tolerance + 30, "walk_to %.0f" % x)
+
+
+## Runs toward `direction`, jumps when crossing `at_x`, holds jump for `hold` frames, steers until landing.
+func run_jump(at_x: float, direction: int, hold: int, air_limit := 150) -> void:
+	var frames := 0
+	steer(direction)
+	while (p.position.x - at_x) * direction < 0 and frames < 600:
+		await step()
+		frames += 1
+	press(KEY_SPACE, true)
+	await step(hold)
+	press(KEY_SPACE, false)
+	await step(3)
+	frames = 0
+	while not p.is_on_floor() and frames < air_limit:
+		await step()
+		frames += 1
+	steer(0)
+	await step(2)
+
+
+## Jumps now and steers in the air toward `target` (x centre of the landing spot), like a player would.
+func jump_to(target_x: float, hold: int, air_limit := 150) -> void:
+	press(KEY_SPACE, true)
+	var frames := 0
+	while frames < air_limit and not failed:
+		if frames == hold:
+			press(KEY_SPACE, false)
+		var gap := target_x - p.position.x
+		steer(0 if absf(gap) < 10 else (1 if gap > 0 else -1))
+		await step()
+		frames += 1
+		if frames > 3 and p.is_on_floor():
+			break
+	press(KEY_SPACE, false)
+	steer(0)
+	await step(2)
+
+
+func stage(name: String) -> void:
+	if OS.get_environment("ROUTE_DEBUG") != "":
+		print("  [%s] pig %s hp %d  t=%.1fs" % [name, p.position.round(), p.health.hp, Time.get_ticks_msec() / 1000.0])
+
+
+## Fights like a careful player: keeps between contact range (51 px) and weapon reach, backs off
+## when too close, turns to face the enemy before each swing.
+func fight(enemy: Node2D, reach := 80.0, stay := Vector2(-INF, INF)) -> void:
+	if enemy == null:
+		return
+	var frames := 0
+	var cooldown := 0
+	var release_at := -1
+	while is_instance_valid(enemy) and enemy.hp > 0 and frames < 900 and not failed and p.alive():
+		var gap: float = enemy.position.x - p.position.x
+		var toward := 1 if gap > 0 else -1
+		var ahead: float = p.position.x + toward * 40
+		if absf(gap) > reach:
+			steer(toward if ahead > stay.x and ahead < stay.y else 0)
+		elif absf(gap) < 60 and p.position.x - toward * 40 > stay.x and p.position.x - toward * 40 < stay.y:
+			steer(-toward)
+		elif p.facing != toward:
+			steer(toward)
+		else:
+			steer(0)
+			if cooldown <= 0:
+				press(KEY_J, true)
+				release_at = frames + 2
+				cooldown = 16
+		if frames == release_at:
+			press(KEY_J, false)
+		cooldown -= 1
+		await step()
+		frames += 1
+	press(KEY_J, false)
+	steer(0)
+	check(not is_instance_valid(enemy) or enemy.hp <= 0, "enemy not defeated")
+	await step(20)
+
+
+func enemy_near(x: float, radius := 320.0) -> Node2D:
+	var best: Node2D = null
+	for enemy in room.enemies:
+		if enemy.hp > 0 and absf(enemy.position.x - x) < radius and (best == null or absf(enemy.position.x - x) < absf(best.position.x - x)):
+			best = enemy
+	return best
+
+
+func wait_until(condition: Callable, limit: int, message: String) -> void:
+	var frames := 0
+	while not condition.call() and frames < limit:
+		await step()
+		frames += 1
+	check(condition.call(), message)
+
+
 func run() -> void:
- await process_frame
- var before: Dictionary = root.get_node("GameState").to_dictionary()
- change_scene_to_file("res://scenes/action_test/test_level.tscn")
- await create_timer(0.3).timeout
- room = current_scene
- process_frame.connect(func(): frame_times.append(root.get_process_delta_time()))
- await go(Vector2(345,900))
- await tap(KEY_E)
- assert(room.player.combat.weapon.kind=="sword")
- for goal in [Vector2(730,840),Vector2(975,750),Vector2(1245,660),Vector2(1590,570)]: await go(goal)
- await tap(KEY_E)
- assert(room.player.combat.weapon.kind=="dagger")
- await capture("upper-route")
- for goal in [Vector2(1850,590),Vector2(2140,660),Vector2(2390,580),Vector2(2620,490)]: await go(goal)
- await tap(KEY_E)
- assert(room.player.combat.weapon.kind=="hammer" and room.secrets_found)
- await capture("secret")
- await go(Vector2(2860,650))
- await go(Vector2(2380,900))
- assert(room.checkpoint_active)
- await capture("camp")
- for goal in [Vector2(3020,900),Vector2(3480,900),Vector2(3790,820),Vector2(4040,735),Vector2(4300,820),Vector2(4600,900)]: await go(goal)
- assert(room.finished and room.player.health.hp>0)
- await capture("exit")
- # Return to checkpoint via normal retry, then descend into the recoverable lower path.
- await tap(KEY_R)
- await go(Vector2(2160,1030))
- await go(Vector2(1640,1120))
- await capture("lower-route")
- await go(Vector2(1200,1120))
- await go(Vector2(1085,1030))
- await go(Vector2(955,900))
- assert(root.get_node("GameState").to_dictionary()==before)
- frame_times.sort()
- print("ACTION_ROUTES_OK p95_ms=",frame_times[int(frame_times.size()*0.95)]*1000)
- quit()
+	await process_frame
+	var before: Dictionary = root.get_node("GameState").to_dictionary()
+	change_scene_to_file("res://scenes/action_test/test_level.tscn")
+	while current_scene == null or not current_scene.has_method("seed_room"):
+		await process_frame
+	# Count physics frames from here on, so platform phases and enemy moves repeat exactly.
+	await step(20)
+	room = current_scene
+	p = room.player
+	process_frame.connect(func(): frame_times.append(root.get_process_delta_time()))
+	if OS.get_environment("ROUTE_DEBUG") != "":
+		var beat := Timer.new()
+		beat.wait_time = 5.0
+		beat.autostart = true
+		beat.timeout.connect(func(): print("  heartbeat physics=%d pig=%s" % [Engine.get_physics_frames(), p.position.round()]))
+		root.add_child(beat)
+	await settle()
+	# 入口: sword, the small step, the first thorn gap and the first slime.
+	await walk_to(410)
+	await tap(KEY_E)
+	check(p.combat.weapon != null and p.combat.weapon.kind == "sword", "sword pickup")
+	await run_jump(430, 1, 30)
+	await run_jump(735, 1, 40)
+	check(p.is_on_floor() and p.position.x > 960 and absf(p.position.y - 1000) < 2, "thorn gap cleared")
+	check(p.health.hp == 100, "landing zone after the gap is safe")
+	await capture("gap")
+	await fight(enemy_near(1430))
+	stage("mushroom")
+	# 蘑菇崖: the mushroom launches the pig onto the upper cliff.
+	steer(1)
+	await wait_until(func(): return p.position.y < 900, 400, "mushroom launch")
+	await wait_until(func(): return p.is_on_floor(), 200, "landing after mushroom")
+	await walk_to(1970)
+	check(absf(p.position.y - 700) < 2, "mushroom reaches the cliff")
+	await capture("cliff")
+	await walk_to(2030)
+	check(room.checkpoint_active and room.checkpoint == room.CAMPFIRES[0], "first campfire")
+	await fight(enemy_near(2260), 80.0, Vector2(1900, 2580))
+	stage("ferry")
+	# 摆渡石板: board at the left end, ride across, step off onto the far ledge.
+	await walk_to(2575)
+	var ferry: Node2D = room.movers[0]
+	await wait_until(func(): return ferry.position.x < 2622 and ferry.progress_at(ferry.clock + 0.35) < 0.01, 800, "ferry at the near end")
+	await walk_to(ferry.position.x + 70)
+	check(absf(p.position.y - 700) < 2 and p.get_floor_normal().y < -0.9, "standing on the ferry")
+	await wait_until(func(): return ferry.position.x > 3268, 500, "ferry reaches the far end")
+	await capture("ferry")
+	await walk_to(3520)
+	check(absf(p.position.y - 700) < 2, "stepped off the ferry")
+	stage("patrol")
+	# 荆棘回廊: the spiked patrol cannot be stomped; roll through it.
+	var patrol: Node2D = enemy_near(3820)
+	var hp_before: int = p.health.hp
+	steer(1)
+	await wait_until(func(): return patrol.position.x - p.position.x < 104, 400, "approach patrol")
+	await tap(KEY_SHIFT)
+	steer(1)
+	await wait_until(func(): return p.position.x > patrol.position.x + 60, 120, "rolled past patrol")
+	await step(10)
+	check(p.health.hp == hp_before, "roll protects against the spikes")
+	stage("thorn bed")
+	await walk_to(4075)
+	# Crumbling slabs over the thorn bed.
+	await jump_to(4205, 16)
+	check(absf(p.position.y - 640) < 2, "landed on first slab")
+	await jump_to(4375, 14)
+	check(absf(p.position.y - 620) < 2, "landed on second slab")
+	await jump_to(4580, 18)
+	check(p.position.x > 4520 and absf(p.position.y - 700) < 2, "crossed the thorn bed")
+	check(room.crumbles.any(func(slab): return slab.state != "SOLID"), "a slab gave way behind the pig")
+	await fight(enemy_near(4720), 80.0, Vector2(4530, 4985))
+	stage("lift")
+	# 升降石台 up to the canopy.
+	await walk_to(4975)
+	var lift: Node2D = room.movers[1]
+	await wait_until(func(): return lift.position.y > 699 and lift.progress_at(lift.clock + 0.4) < 0.01, 800, "lift at the bottom")
+	await walk_to(5095)
+	await wait_until(func(): return lift.position.y < 431, 400, "lift reaches the canopy")
+	check(absf(p.position.y - 430) < 3, "rode the lift")
+	await walk_to(5440)
+	await run_jump(5470, 1, 30)
+	check(absf(p.position.y - 400) < 2, "canopy gap one")
+	await run_jump(5860, 1, 26)
+	check(absf(p.position.y - 430) < 2, "canopy gap two")
+	await capture("canopy")
+	stage("nook")
+	# The leaf curtain hides the hammer.
+	await walk_to(6500)
+	check(room.secrets.has("nook"), "nook secret found")
+	await tap(KEY_E)
+	check(p.combat.weapon.kind == "hammer", "hammer pickup")
+	await capture("nook")
+	stage("exit climb")
+	# 出口: drop to the steps and climb to the exit.
+	steer(1)
+	await wait_until(func(): return p.is_on_floor() and p.position.y > 700, 300, "drop from the canopy")
+	steer(0)
+	await run_jump(6700, 1, 30)
+	await run_jump(6900, 1, 30)
+	check(absf(p.position.y - 640) < 2, "final plateau")
+	await fight(enemy_near(7200), 110)
+	await fight(enemy_near(7330), 110)
+	await walk_to(7470)
+	check(room.finished and room.results.visible, "results shown at the exit")
+	await capture("exit")
+	var route_a_flies: int = room.firefly_count
+	stage("route B")
+	# Route B: R returns to the lit campfire; drop into the cavern and climb out with the golden mushroom.
+	await tap(KEY_R)
+	await step(5)
+	check(absf(p.position.x - 2030) < 2, "R respawns at the campfire")
+	await walk_to(2500)
+	await wait_until(func(): return ferry.position.x > 2900, 900, "ferry away from the edge")
+	steer(1)
+	await wait_until(func(): return p.is_on_floor() and p.position.y > 1300, 300, "fell into the cavern")
+	steer(0)
+	check(room.secrets.has("cavern"), "cavern secret")
+	await walk_to(2800)
+	await tap(KEY_E)
+	check(p.combat.weapon.kind == "dagger", "dagger swap")
+	check(room.pickups.any(func(i): return not i.consumed and i.kind == "weapon" and i.weapon.kind == "sword"), "old weapon dropped nearby")
+	await fight(enemy_near(3020), 70.0, Vector2(2610, 3440))
+	await capture("cavern")
+	steer(1)
+	await wait_until(func(): return p.position.y < 1100, 400, "golden mushroom launch")
+	await wait_until(func(): return p.is_on_floor(), 200, "landing after golden mushroom")
+	await walk_to(3500)
+	check(absf(p.position.y - 700) < 2, "golden mushroom climbs out of the cavern")
+	stage("ground path")
+	# Ground path: walk past the lift shaft down to the 林下 path and on to the exit.
+	var patrol_b: Node2D = enemy_near(3820)
+	steer(1)
+	await wait_until(func(): return patrol_b.position.x - p.position.x < 104, 400, "approach patrol again")
+	await tap(KEY_SHIFT)
+	steer(1)
+	await wait_until(func(): return p.position.x > patrol_b.position.x + 60, 120, "rolled past patrol again")
+	await walk_to(4075)
+	await jump_to(4205, 16)
+	await jump_to(4375, 14)
+	await jump_to(4580, 18)
+	check(p.position.x > 4520 and absf(p.position.y - 700) < 2, "crossed the thorn bed again")
+	await walk_to(4960)
+	await wait_until(func(): return lift.position.y < 600, 600, "lift away")
+	steer(1)
+	await wait_until(func(): return p.is_on_floor() and p.position.y > 990, 300, "dropped to the ground path")
+	steer(0)
+	await walk_to(5300)
+	check(room.checkpoint == room.CAMPFIRES[1], "second campfire")
+	var ground := func(stompable: bool) -> Node2D:
+		for enemy in room.enemies:
+			if enemy.hp > 0 and enemy.stompable == stompable and enemy.position.x > 5000 and enemy.position.x < 6530 and absf(enemy.position.y - 1000) < 5:
+				return enemy
+		return null
+	await fight(ground.call(true), 70.0, Vector2(5010, 6520))
+	var patrol_c: Node2D = ground.call(false)
+	check(patrol_c != null, "ground patrol present")
+	steer(1)
+	await wait_until(func(): return patrol_c.position.x - p.position.x < 104, 600, "approach ground patrol")
+	await tap(KEY_SHIFT)
+	steer(1)
+	await wait_until(func(): return p.position.x > patrol_c.position.x + 60, 120, "rolled past ground patrol")
+	await walk_to(6480)
+	await run_jump(6500, 1, 30)
+	await run_jump(6700, 1, 30)
+	await run_jump(6900, 1, 30)
+	check(absf(p.position.y - 640) < 2, "final plateau via the ground path")
+	await walk_to(7470)
+	check(room.finished and p.health.hp > 0, "exit via the ground path")
+	check(room.firefly_count > route_a_flies, "cavern and ground fireflies add to the count")
+	check(root.get_node("GameState").to_dictionary() == before, "GameState untouched")
+	if failed:
+		return
+	frame_times.sort()
+	print("ACTION_ROUTES_OK fireflies=%d/%d secrets=%d deaths=%d time=%.1fs p95_ms=%.2f" % [room.firefly_count, room.fireflies.size(), room.secrets.size(), room.deaths, room.elapsed, frame_times[int(frame_times.size() * 0.95)] * 1000])
+	quit()

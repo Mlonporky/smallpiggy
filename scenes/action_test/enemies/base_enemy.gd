@@ -41,7 +41,7 @@ func tick(delta: float) -> void:
  else: velocity.x = move_toward(velocity.x,0,700*delta)
  move_and_slide()
  var box := Rect2(position+Vector2(-30,-49),Vector2(60,50))
- var player_box := Rect2(target.position+Vector2(-21,-94),Vector2(42,94))
+ var player_box: Rect2 = target.body_box()
  if target.alive() and box.intersects(player_box):
   if stompable and target.velocity.y>90 and target.previous_feet.y<=position.y-38:
    take_hit(32,signf(position.x-target.position.x)*100)
