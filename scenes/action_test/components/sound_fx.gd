@@ -15,7 +15,7 @@ func cue(kind: String) -> void:
    break
  if voice==null: return
  # [samples, start Hz, end Hz] per cue; anything unknown uses the low swing/hit sweep.
- var shape: Array = {"heal":[4410,650.0,1300.0],"chime":[3300,1250.0,1900.0],"bounce":[3900,210.0,560.0],"crack":[1500,150.0,70.0]}.get(kind,[1764,180.0,100.0])
+ var shape: Array = {"heal":[4410,650.0,1300.0],"chime":[3300,1250.0,1900.0],"bounce":[3900,210.0,560.0],"crack":[1500,150.0,70.0],"purify":[5200,880.0,1760.0],"alert":[1300,1320.0,1500.0],"roll":[3000,130.0,90.0],"puff":[2600,320.0,150.0],"swoop":[3300,560.0,240.0],"drop":[1700,760.0,320.0],"clang":[2400,2300.0,1800.0]}.get(kind,[1764,180.0,100.0])
  var count: int = shape[0]
  var data := PackedByteArray()
  data.resize(count*2)

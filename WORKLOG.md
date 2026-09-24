@@ -670,3 +670,16 @@ Apple M1 OpenGL正常时间运行更新后的动作预览，输出CHAPTER2_ADVEN
 验证：headless下ACTION_MOVEMENT_OK（短跳53.3／高跳166.1未变）、ACTION_HEALTH_OK、ACTION_SWORD_OK、ACTION_SLIME_OK、ACTION_WEAPONS_DODGE_OK、ACTION_LEVEL_OK、ACTION_CAMERA_OK、ACTION_ROUTES_OK（萤火39/60、秘密2、倒下0）。窗口置顶实际渲染8秒跑跳：118fps，p50 8.8ms，p95 12.9ms（与改前基线p95 12.8ms相当）。检查追踪小猪的放大姿势图（待机、行走、起跳、下落、挥剑、朝左）与关卡截图。ACTION_ROUTES_OK在Apple M1 OpenGL窗口置顶正常速度实际渲染下通过（p95帧间隔9.55ms，退出码0），截图刷新至docs/art_direction/action_test_v2_review（新增pig_poses.png）。
 
 未解决／下一步：素材只有四帧侧面行走，没有专门的跳跃、攻击、受伤、翻滚帧；故事线地下落地房的小猪仍是旧的代码绘制大猪，等用户确认后可同样替换。自动测试与截图不等于人工手感与美术验收。
+
+## 2026-09-23 · 动作测试关：7 种精巧怪物、怪物试炼场
+
+用户要求：小呆猪第二幕平台跳跃里的怪物设计得更精巧、种类更多，并问能否生图。开工检查 Git（工作区干净）。本会话没有 AI 生图工具，改为矢量逐只绘制；未启动子代理，未提交／推送。范围为 `scenes/action_test/`（测试关、战斗房、新增怪物试炼场）；未改主线路由、GameState、存档，故事线地下房与第二幕山洞战斗不变。
+
+已实现：
+- 美术：`tools/monster_art/make_svgs.py` 生成 12 个 SVG 部件（渐变明暗、细描边、双高光眼睛、腮红，每只一处紫色诅咒印记），`tools/render_monster_art.gd` 用 Godot 内置 SVG 渲染转成 `assets/chapter2/monsters/*.png`，导入开启 mipmap，与小猪同一采样策略；源 SVG 目录带 `.gdignore`。
+- 怪物（`scenes/action_test/enemies/`）：`base_enemy.gd` 重写为公共部分（受击闪光、击退、接触与踩踏判定含踩后短暂保护、飞行／悬挂怪不受重力、部件绘制、净化光团＋金色火花、掉出关卡自动移除）。苔团史莱姆（蓄力跳扑、眼睛追看、眨眼）；大苔团（打倒后分裂两只小苔团）；栗刺球（原 `patrol_enemy.gd` 改名：「!」预警→滚动冲撞→晕眩可踩且伤害×1.5，打中滚球即晕，刺朝上时踩会被扎并弹起）；噗噗菇（鼓起发光→抛 3 颗孢子，孢子可被武器打散，踩它弹高 880）；灰翅夜蛾（8 字巡飞→展翅锁定→弧线俯冲，最低点为小猪身体中部，受击打断，空中可踩）；橡果蛛（抖动落灰→垂到头部高度挡路→爬回）；苔壳蜗牛（正面挡剑／匕首并推开小猪，踩壳只弹起，背后全伤害，锤子一击碎壳后慌张加速）。
+- `combat_room.gd` 新增 `ENEMY_KINDS`、`spawn_enemy()`、`cue()`；`test_level.gd` 敌人表改为 12 只 7 类，按段落各教一件事，新增 5 块路牌，结算加"净化怪物"数。新增 `bestiary_room.tscn` 怪物试炼场（1/2/3 换武器，R 复活怪物）。粒子新增孢子／叮当／碎壳，合成音新增 8 个占位 cue。
+
+验证：headless 新增 ACTION_MONSTERS_OK（逐只规则检查，会直接摆放位置）。ACTION_ROUTES_OK 两条纯按键路线全程通过：机器人跳过蜗牛打背后、夜蛾俯冲时挥砍、等橡果蛛垂下再打、翻滚穿过栗刺球（反射写在 step()），连续两次结果一致——萤火 39/60、秘密 2、倒下 0、关卡用时 90.2 秒（上轮 69.8 秒，多出的是战斗时间）。Apple M1 OpenGL 窗口置顶实际渲染同样通过，p95 帧间隔 12.37ms（上轮 12.9ms）。回归：SMOKE_TEST_OK、GAMEPLAY_TEST_OK、ACTION_MOVEMENT／HEALTH／SWORD／SLIME／WEAPONS_DODGE／LEVEL／CAMERA_OK、UNDERGROUND_LANDING／COMBAT／ROUTE_OK、DARK_PATH_OK。`action_level_test` 的带刺怪检查改为按脚本查找栗刺球，并新增"关卡含全部怪物种类"。新增 `action_monsters_visual_check.gd`（需窗口）截图各状态，审阅图存 `docs/art_direction/monsters_v1_review/`。检查中修正：孢子初版太小（放大 1.6 倍，判定同步放宽）、蜗牛偏小（0.42→0.5）、净化火花中心灰圈；截图脚本需重置镜头物理插值。
+
+未解决／限制：怪物是矢量部件＋程序动画，不是逐帧手绘；外形、紫色诅咒印记和"净化"设定是本轮提出的，待用户确认。音效仍为合成占位。自动测试与静态截图不等于手感和美术验收；难度（12 只怪，机器人通关用时从 69.8 秒增至 90.2 秒）需用户实际试玩判断。下一步：用户 F6 运行 `bestiary_room.tscn` 看每种怪，再玩 `test_level.tscn`，反馈造型、难度和节奏；如要手绘笔触版，按 `docs/art_direction/monsters_v1_prompts.md` 外部生图后替换部件。未提交／推送。

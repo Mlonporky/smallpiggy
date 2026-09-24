@@ -1,8 +1,11 @@
 extends "res://scenes/action_test/combat_room.gd"
 ## 苔根小径 · action test level (v2). Standalone: nothing here touches GameState or the save file.
 ## 入口 (sword, first slime, thorn gap) → 蘑菇崖 (bounce up) → 摆渡石板 over the optional 坑底萤穴
-## (dagger, golden mushroom back up) → 荆棘回廊 (spiked patrol, crumbling slabs) → 升降石台 to the
+## (dagger, golden mushroom back up) → 荆棘回廊 (burr hog, crumbling slabs) → 升降石台 to the
 ## 树冠 (leaf-curtain nook with the hammer) or down to the 林下 path → 出口 climb.
+## Monsters (scenes/action_test/enemies): each section introduces one idea — hop-and-stomp slime,
+## spore-lobbing puffcap, splitting big slime and a swooping moth in the cavern, the charging burr
+## hog, the armoured snail, a moth over the canopy gaps, an acorn spider dropping on the ground path.
 const Pickup = preload("res://scenes/action_test/components/pickup.gd")
 const Sound = preload("res://scenes/action_test/components/sound_fx.gd")
 const Mover = preload("res://scenes/action_test/level/moving_platform.gd")
@@ -34,13 +37,28 @@ const SIGNS := [
 	{"at": Vector2(1080, 1000), "text": "树枝可从下方穿过 · S+空格落下"},
 	{"at": Vector2(1700, 1000), "text": "踩蘑菇 ↑"},
 	{"at": Vector2(2520, 700), "text": "乘石板 → 掉下去也没关系"},
-	{"at": Vector2(3530, 700), "text": "带刺怪不能踩 · Shift 翻滚穿过"},
+	{"at": Vector2(2160, 700), "text": "孢子可以用武器打散"},
+	{"at": Vector2(3530, 700), "text": "栗刺球冲撞 → Shift 翻滚 · 晕了再踩"},
 	{"at": Vector2(4040, 700), "text": "碎石板会塌"},
+	{"at": Vector2(4600, 700), "text": "蜗牛正面坚硬 · 打背后或用锤"},
+	{"at": Vector2(5240, 430), "text": "夜蛾展翅发光 → 要俯冲了"},
+	{"at": Vector2(5480, 1000), "text": "小心头顶"},
 	{"at": Vector2(4930, 700), "text": "↑ 升降石台 · ↓ 林下小路"}]
+## Kinds are listed in combat_room.gd (ENEMY_KINDS); extra keys set script properties.
+## Spiders are placed at the ceiling point they hang from; moths at the roost they circle.
 const ENEMIES := [
-	{"at": Vector2(1430, 1000)}, {"at": Vector2(2260, 700)}, {"at": Vector2(3020, 1320)},
-	{"at": Vector2(3820, 700), "patrol": 170.0}, {"at": Vector2(4720, 700)}, {"at": Vector2(5750, 1000)},
-	{"at": Vector2(6200, 1000), "patrol": 200.0}, {"at": Vector2(7200, 640)}, {"at": Vector2(7330, 640), "patrol": 80.0}]
+	{"kind": "slime", "at": Vector2(1430, 1000)},
+	{"kind": "puffcap", "at": Vector2(2400, 700)},
+	{"kind": "big_slime", "at": Vector2(3050, 1320)},
+	{"kind": "moth", "at": Vector2(3200, 1150)},
+	{"kind": "burr_hog", "at": Vector2(3820, 700), "patrol_width": 170.0},
+	{"kind": "moss_snail", "at": Vector2(4760, 700), "patrol_width": 100.0},
+	{"kind": "moth", "at": Vector2(5955, 250)},
+	{"kind": "acorn_spider", "at": Vector2(5720, 428)},
+	{"kind": "slime", "at": Vector2(5980, 1000)},
+	{"kind": "burr_hog", "at": Vector2(6250, 1000), "patrol_width": 150.0},
+	{"kind": "puffcap", "at": Vector2(7160, 640)},
+	{"kind": "moss_snail", "at": Vector2(7340, 640), "patrol_width": 90.0}]
 const WEAPON_SPAWNS := [{"at": Vector2(410, 1000), "kind": "sword"}, {"at": Vector2(2800, 1320), "kind": "dagger"}, {"at": Vector2(6500, 430), "kind": "hammer"}]
 const HEALS := [{"at": Vector2(1615, 770), "amount": 20}, {"at": Vector2(2700, 1320), "amount": 20}, {"at": Vector2(4600, 700), "amount": 20}, {"at": Vector2(6440, 430), "amount": 40}, {"at": Vector2(6790, 760), "amount": 20}]
 var pickups: Array[Node2D] = []
@@ -225,16 +243,10 @@ static func arc(from: Vector2, to: Vector2, height: float, count: int) -> Array:
 
 func seed_room() -> void:
 	for data in ENEMIES:
-		var script = preload("res://scenes/action_test/enemies/patrol_enemy.gd") if data.has("patrol") else preload("res://scenes/action_test/enemies/slime.gd")
-		var enemy = script.new()
-		enemy.position = data.at
-		enemy.target = player
-		enemy.room = self
-		if data.has("patrol"):
-			enemy.patrol_width = data.patrol
-		enemy.defeated.connect(_enemy_dead)
-		world.add_child(enemy)
-		enemies.append(enemy)
+		var options: Dictionary = data.duplicate()
+		options.erase("kind")
+		options.erase("at")
+		spawn_enemy(data.kind, data.at, options)
 	for data in WEAPON_SPAWNS:
 		spawn_pickup("weapon", data.at, {"sword": Sword, "dagger": Dagger, "hammer": Hammer}[data.kind])
 	for data in HEALS:
@@ -249,6 +261,10 @@ func spawn_pickup(kind: String, at: Vector2, weapon: Resource = null) -> Node2D:
 	world.add_child(item)
 	pickups.append(item)
 	return item
+
+
+func enemy_added(enemy: CharacterBody2D) -> void:
+	enemy.defeated.connect(_enemy_dead)
 
 
 func _enemy_dead(at: Vector2) -> void:
@@ -414,7 +430,7 @@ func _tick_places(delta: float) -> void:
 	results.visible = finished and player.position.x > EXIT.x - 260
 	results_panel.visible = results.visible
 	if results.visible:
-		results.text = "抵达出口！\n用时 %d:%02d   萤火 %d / %d\n秘密 %d / 2   倒下 %d 次\n\n可以回头探索 · R 从营火重来" % [int(finish_time) / 60, int(finish_time) % 60, firefly_count, fireflies.size(), secrets.size(), deaths]
+		results.text = "抵达出口！\n用时 %d:%02d   萤火 %d / %d\n秘密 %d / 2   净化怪物 %d   倒下 %d 次\n\n可以回头探索 · R 从营火重来" % [int(finish_time) / 60, int(finish_time) % 60, firefly_count, fireflies.size(), secrets.size(), kills, deaths]
 
 
 func _found_secret(key: String, text: String) -> void:

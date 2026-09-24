@@ -30,6 +30,7 @@
 | `data/dialogue/` | JSON 对白。现行：`chapter1.json`、`opening_v2.json`、`assets/chapter2/dialogue.json`；`chapter_01.json`／`chapter_02.json`／`prologue.json` 属旧样板。 |
 | `assets/` | 已接入的图片，按 `prologue/`、`chapter1/`、`chapter2/`、`backgrounds/`、`sprites/` 分目录；`.import` 文件随图片一起提交。 |
 | `tests/` | 以 `extends SceneTree` 编写的测试脚本，见下文「验证」。 |
+| `tools/` | 美术生成脚本：`monster_art/make_svgs.py`（怪物矢量源，目录带 `.gdignore`）→ `render_monster_art.gd`（转成 `assets/chapter2/monsters/*.png`）。 |
 | `docs/` | 方向文档、handoff、实现说明、`art_direction/`（生成图与完整提示词）、`master_spec_v3_2d.md`（历史主规格原文）。 |
 
 ## 素材仓 bigidea

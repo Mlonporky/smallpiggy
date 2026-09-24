@@ -4,6 +4,9 @@ extends SceneTree
 ## Route A (canopy): sword → thorn gap → mushroom cliff → campfire → ferry → roll past the spiked
 ## patrol → crumbling slabs → elevator → canopy → leaf-curtain nook (hammer) → exit.
 ## Route B (after R): campfire → drop into the cavern → dagger → golden mushroom → ground path → exit.
+## Monsters are met the way a player would: hop over the snail to hit its soft back, swing at a
+## swooping moth, wait for the acorn spider to drop, and roll through a charging burr hog (a reflex
+## in step(), like a player reacting to the rolling ball).
 var room: Node2D
 var p: CharacterBody2D
 var frame_times: Array[float] = []
@@ -39,6 +42,9 @@ func steer(direction: int) -> void:
 	press(KEY_A, direction < 0)
 
 
+var reflex_release := 0
+
+
 func step(count := 1) -> void:
 	for i in count:
 		await physics_frame
@@ -46,6 +52,25 @@ func step(count := 1) -> void:
 		for code in held:
 			if not Input.is_physical_key_pressed(code):
 				_send(code, true)
+		_dodge_reflex()
+
+
+## Rolls through a burr hog ball that is about to hit, the way a player reacts to it.
+func _dodge_reflex() -> void:
+	if reflex_release > 0:
+		reflex_release -= 1
+		if reflex_release == 0:
+			_send(KEY_SHIFT, false)
+		return
+	if p == null or not p.alive() or not p.is_on_floor() or p.roll_time > 0 or p.roll_cooldown > 0:
+		return
+	for enemy in room.enemies:
+		if enemy.hp > 0 and enemy.state == "ROLL" and absf(enemy.position.y - p.position.y) < 40:
+			var gap: float = p.position.x - enemy.position.x
+			if signf(gap) == enemy.facing and absf(gap) < 120:
+				_send(KEY_SHIFT, true)
+				reflex_release = 2
+				return
 
 
 func check(condition: bool, message: String) -> void:
@@ -179,12 +204,112 @@ func fight(enemy: Node2D, reach := 80.0, stay := Vector2(-INF, INF)) -> void:
 	await step(20)
 
 
+## Nearest living ground monster to x (moths and spiders are handled on their own).
 func enemy_near(x: float, radius := 320.0) -> Node2D:
 	var best: Node2D = null
 	for enemy in room.enemies:
-		if enemy.hp > 0 and absf(enemy.position.x - x) < radius and (best == null or absf(enemy.position.x - x) < absf(best.position.x - x)):
+		if enemy.hp > 0 and not enemy.flying and absf(enemy.position.x - x) < radius and (best == null or absf(enemy.position.x - x) < absf(best.position.x - x)):
 			best = enemy
 	return best
+
+
+func monster(kind: String, near_x: float) -> Node2D:
+	var best: Node2D = null
+	for enemy in room.enemies:
+		if enemy.hp > 0 and enemy.get_script().resource_path.get_file() == kind + ".gd" and (best == null or absf(enemy.home.x - near_x) < absf(best.home.x - near_x)):
+			best = enemy
+	return best
+
+
+## Fights every ground monster around x (a big slime's halves included).
+func clear_near(x: float, radius: float, reach: float, stay: Vector2) -> void:
+	var rounds := 0
+	while enemy_near(x, radius) != null and rounds < 6 and not failed:
+		await fight(enemy_near(x, radius), reach, stay)
+		rounds += 1
+
+
+## The snail's shell front turns blades: hop over it and strike its soft back; hop again if it
+## turns round. With the hammer, just break the shell.
+func fight_snail(enemy: Node2D, stay: Vector2) -> void:
+	if enemy == null:
+		return
+	if p.combat.weapon.kind == "hammer":
+		await fight(enemy, 110, stay)
+		return
+	var frames := 0
+	var cooldown := 0
+	var release_at := -1
+	var reach: float = p.combat.weapon.reach + 12
+	while is_instance_valid(enemy) and enemy.hp > 0 and frames < 1500 and not failed and p.alive():
+		var gap: float = enemy.position.x - p.position.x
+		var toward := 1 if gap > 0 else -1
+		if signf(-gap) == enemy.facing:
+			# In front of the shell: run in and jump over, landing behind it.
+			var behind := clampf(enemy.position.x + toward * 95, stay.x + 20, stay.y - 20)
+			if absf(gap) > 130:
+				steer(toward)
+				await step()
+				frames += 1
+				continue
+			await jump_to(behind, 22)
+			frames += 40
+			continue
+		if absf(gap) > reach:
+			steer(toward)
+		elif absf(gap) < 62:
+			steer(-toward)
+		elif p.facing != toward:
+			steer(toward)
+		else:
+			steer(0)
+			if cooldown <= 0:
+				press(KEY_J, true)
+				release_at = frames + 2
+				cooldown = 14
+		if frames == release_at:
+			press(KEY_J, false)
+		cooldown -= 1
+		await step()
+		frames += 1
+	press(KEY_J, false)
+	steer(0)
+	check(not is_instance_valid(enemy) or enemy.hp <= 0, "snail not defeated")
+	await step(20)
+
+
+## Stands and faces the moth; swings as it swoops through.
+func fight_moth(enemy: Node2D, stay: Vector2) -> void:
+	if enemy == null:
+		return
+	var frames := 0
+	var cooldown := 0
+	var release_at := -1
+	var reach: float = p.combat.weapon.reach + 40
+	while is_instance_valid(enemy) and enemy.hp > 0 and frames < 2400 and not failed and p.alive():
+		var gap: Vector2 = enemy.position - (p.position + Vector2(0, -40))
+		var toward := 1 if gap.x > 0 else -1
+		if p.position.x < stay.x:
+			steer(1)
+		elif p.position.x > stay.y:
+			steer(-1)
+		elif p.facing != toward and absf(gap.x) > 8:
+			steer(toward)
+		else:
+			steer(0)
+		if enemy.state == "SWOOP" and absf(gap.x) < reach and gap.y < 70 and gap.y > -90 and cooldown <= 0 and p.facing == toward:
+			press(KEY_J, true)
+			release_at = frames + 2
+			cooldown = 16
+		if frames == release_at:
+			press(KEY_J, false)
+		cooldown -= 1
+		await step()
+		frames += 1
+	press(KEY_J, false)
+	steer(0)
+	check(not is_instance_valid(enemy) or enemy.hp <= 0, "moth not defeated")
+	await step(10)
 
 
 func wait_until(condition: Callable, limit: int, message: String) -> void:
@@ -266,7 +391,8 @@ func run() -> void:
 	await jump_to(4580, 18)
 	check(p.position.x > 4520 and absf(p.position.y - 700) < 2, "crossed the thorn bed")
 	check(room.crumbles.any(func(slab): return slab.state != "SOLID"), "a slab gave way behind the pig")
-	await fight(enemy_near(4720), 80.0, Vector2(4530, 4985))
+	stage("snail")
+	await fight_snail(enemy_near(4760), Vector2(4530, 4940))
 	stage("lift")
 	# 升降石台 up to the canopy.
 	await walk_to(4975)
@@ -278,6 +404,10 @@ func run() -> void:
 	await walk_to(5440)
 	await run_jump(5470, 1, 30)
 	check(absf(p.position.y - 400) < 2, "canopy gap one")
+	stage("canopy moth")
+	await walk_to(5760)
+	await fight_moth(monster("moth", 5955), Vector2(5680, 5840))
+	check(absf(p.position.y - 400) < 2, "stayed on the canopy while fighting the moth")
 	await run_jump(5860, 1, 26)
 	check(absf(p.position.y - 430) < 2, "canopy gap two")
 	await capture("canopy")
@@ -296,8 +426,8 @@ func run() -> void:
 	await run_jump(6700, 1, 30)
 	await run_jump(6900, 1, 30)
 	check(absf(p.position.y - 640) < 2, "final plateau")
-	await fight(enemy_near(7200), 110)
-	await fight(enemy_near(7330), 110)
+	await fight(enemy_near(7160), 110, Vector2(6940, 7590))
+	await fight(enemy_near(7340), 110, Vector2(6940, 7590))
 	await walk_to(7470)
 	check(room.finished and room.results.visible, "results shown at the exit")
 	await capture("exit")
@@ -317,7 +447,9 @@ func run() -> void:
 	await tap(KEY_E)
 	check(p.combat.weapon.kind == "dagger", "dagger swap")
 	check(room.pickups.any(func(i): return not i.consumed and i.kind == "weapon" and i.weapon.kind == "sword"), "old weapon dropped nearby")
-	await fight(enemy_near(3020), 70.0, Vector2(2610, 3440))
+	await clear_near(3050, 420, 70.0, Vector2(2610, 3380))
+	check(room.kills >= 3, "big slime and both halves defeated")
+	await fight_moth(monster("moth", 3200), Vector2(2700, 3300))
 	await capture("cavern")
 	steer(1)
 	await wait_until(func(): return p.position.y < 1100, 400, "golden mushroom launch")
@@ -349,6 +481,10 @@ func run() -> void:
 			if enemy.hp > 0 and enemy.stompable == stompable and enemy.position.x > 5000 and enemy.position.x < 6530 and absf(enemy.position.y - 1000) < 5:
 				return enemy
 		return null
+	stage("spider")
+	var spider: Node2D = monster("acorn_spider", 5720)
+	await walk_to(spider.anchor.x - 160)
+	await fight(spider, 70.0, Vector2(5010, spider.anchor.x - 40))
 	await fight(ground.call(true), 70.0, Vector2(5010, 6520))
 	var patrol_c: Node2D = ground.call(false)
 	check(patrol_c != null, "ground patrol present")
@@ -362,6 +498,8 @@ func run() -> void:
 	await run_jump(6700, 1, 30)
 	await run_jump(6900, 1, 30)
 	check(absf(p.position.y - 640) < 2, "final plateau via the ground path")
+	await fight(enemy_near(7160), 70, Vector2(6940, 7590))
+	await fight_snail(enemy_near(7340), Vector2(6940, 7590))
 	await walk_to(7470)
 	check(room.finished and p.health.hp > 0, "exit via the ground path")
 	check(room.firefly_count > route_a_flies, "cavern and ground fireflies add to the count")

@@ -197,6 +197,18 @@ func burst(kind: String, at: Vector2, amount: float) -> void:
 		"stomp", "bounce":
 			color = Color("e8d9a8")
 			count = 12
+		"spore":
+			color = Color("d9b4ff")
+			spread = Vector2(60, 50)
+			count = 7
+		"clang":
+			color = Color("fff0b0")
+			spread = Vector2(190, 150)
+			count = 10
+		"shell":
+			color = Color("9a8f76")
+			spread = Vector2(200, 260)
+			count = 14
 		"land":
 			count = int(4 + 6 * amount)
 	for i in count:

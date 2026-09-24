@@ -105,14 +105,18 @@ func run() -> void:
  await create_timer(1.15).timeout
  assert(p.health.hp==100 and absf(p.position.x-room.CAMPFIRES[0].x)<5 and room.deaths==1)
  assert(p.combat.weapon.kind=="dagger","Respawn keeps the weapon held at the campfire")
- # Spiked patrol cannot be stomped.
- var enemy = room.enemies[3]
+ # The burr hog's spikes cannot be stomped (only while it sits dizzy).
+ var enemy = room.enemies.filter(func(e): return e.get_script().resource_path.ends_with("burr_hog.gd"))[0]
  assert(not enemy.stompable)
  p.reset_at(enemy.position+Vector2(0,-140))
  p.health.invulnerable = 0
  p.velocity.y = 480
  await create_timer(0.4).timeout
- assert(enemy.hp==72 and p.health.hp<100,"Spiked patrol cannot be stomped")
+ assert(enemy.hp==72 and p.health.hp<100,"Burr hog spikes cannot be stomped")
+ # The level fields every monster kind.
+ var kinds := {}
+ for e in room.enemies: kinds[e.get_script().resource_path.get_file()+str(e.get("variant"))] = true
+ assert(kinds.size()>=7,"Level uses every monster kind: %s"%str(kinds.keys()))
  # The leaf curtain fades while the pig is inside the nook.
  p.reset_at(Vector2(6480,430))
  await create_timer(0.5).timeout
