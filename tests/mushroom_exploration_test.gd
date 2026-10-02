@@ -117,18 +117,21 @@ func run() -> void:
  gs.reset()
  assert(save.load_game().ends_with("interior.tscn"))
  assert(gs.has_flag("wrapping_piece_1_found"))
- current_scene.leave()
- await root.get_node("SceneRouter").transition_finished
- assert(current_scene.player.position.distance_to(Vector2(850,745)) < 3)
- current_scene.travel("door")
- await root.get_node("SceneRouter").transition_finished
- assert(not current_scene.paper.visible)
- assert(current_scene.player.input_enabled)
+ # Leave using the real doorway interaction; preserve the collected clue state.
+ await walk(Vector2(550,810))
  await walk(Vector2(720,970))
  key(KEY_E,true)
  await process_frame
  key(KEY_E,false)
  await root.get_node("SceneRouter").transition_finished
- assert(current_scene.location == "mushroom")
+ assert(current_scene.scene_file_path.ends_with("dark_path/dark_path.tscn"))
+ assert(gs.has_flag("cabbage_left_mushroom_house"))
+ assert(gs.has_flag("wrapping_piece_1_found"))
+ assert(gs.story_phase == gs.StoryPhase.FOREST_EXPLORATION)
+ assert(gs.heart_progress == 0 and gs.gift_fragments.is_empty())
+ assert(save.save_game(current_scene.scene_file_path))
+ gs.reset()
+ assert(save.load_game().ends_with("dark_path/dark_path.tscn"))
+ assert(gs.has_flag("cabbage_left_mushroom_house"))
  print("MUSHROOM_EXPLORATION_OK")
  quit()

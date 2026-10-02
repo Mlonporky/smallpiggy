@@ -34,21 +34,38 @@ func _ready() -> void:
  shackle = Node2D.new()
  shackle.position = Vector2(220,195)
  assembly.add_child(shackle)
- # Gold strokes remain independent from the painted body so the bow can open.
+ # Opaque aged bronze: narrow directional reflections, no luminous core.
  var path := PackedVector2Array([Vector2(0,0),Vector2(0,-30)])
- for i in 33:
-  var angle := PI + PI*float(i)/32.0
+ for i in 65:
+  var angle := PI + PI*float(i)/64.0
   path.append(Vector2(98,-30)+Vector2(cos(angle)*98,sin(angle)*80))
  path.append(Vector2(196,0))
- for spec in [[35.0,Color("51391d")],[29.0,Color("ad7736")],[22.0,Color("e7b964")],[10.0,Color("f8d995")]]:
-  var line := Line2D.new()
-  line.points = path
-  line.width = spec[0]
-  line.default_color = spec[1]
-  line.antialiased = true
-  line.begin_cap_mode = Line2D.LINE_CAP_ROUND
-  line.end_cap_mode = Line2D.LINE_CAP_ROUND
-  shackle.add_child(line)
+ var bronze := Gradient.new()
+ bronze.offsets = PackedFloat32Array([0.0,0.16,0.35,0.52,0.72,1.0])
+ bronze.colors = PackedColorArray([Color("302b26"),Color("66513a"),Color("a58b61"),Color("857052"),Color("594b39"),Color("302b26")])
+ # Cross-sectional shading follows the curve instead of stacked bright tubes.
+ for i in range(path.size()-1):
+  var incoming := (path[i+1]-path[maxi(0,i-1)]).normalized()
+  var outgoing := (path[mini(path.size()-1,i+2)]-path[i]).normalized()
+  var normal := Vector2(-incoming.y,incoming.x)
+  var next_normal := Vector2(-outgoing.y,outgoing.x)
+  for band in 16:
+   var u := float(band)/16.0
+   var v := float(band+1)/16.0
+   var strip := Polygon2D.new()
+   strip.polygon = PackedVector2Array([path[i]+normal*lerpf(-17,17,u),path[i+1]+next_normal*lerpf(-17,17,u),path[i+1]+next_normal*lerpf(-17,17,v),path[i]+normal*lerpf(-17,17,v)])
+   strip.vertex_colors = PackedColorArray([bronze.sample(u),bronze.sample(u),bronze.sample(v),bronze.sample(v)])
+   shackle.add_child(strip)
+ # Restrained, irregular wear marks remain attached during opening.
+ for i in range(5,62,7):
+  var tangent := (path[i+1]-path[i]).normalized()
+  var normal := Vector2(-tangent.y,tangent.x)
+  var scratch := Line2D.new()
+  scratch.points = PackedVector2Array([path[i]+normal*3,path[i]+normal*8+tangent*2])
+  scratch.width = 0.7
+  scratch.default_color = Color(0.76,0.66,0.49,0.30)
+  scratch.antialiased = true
+  shackle.add_child(scratch)
  body = TextureRect.new()
  var atlas := AtlasTexture.new()
  atlas.atlas = preload("res://assets/cabbage_act2/combination_lock_body_v1.png")
@@ -58,6 +75,7 @@ func _ready() -> void:
  body.position = Vector2(130,168)
  body.size = Vector2(380,310)
  body.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+ body.self_modulate = Color("c4b9a3")
  body.mouse_filter = Control.MOUSE_FILTER_IGNORE
  assembly.add_child(body)
  for i in 4:
@@ -218,8 +236,6 @@ func submit(_text: String = "") -> void:
   return
  status.text = ""
  create_tween().tween_property(heading,"modulate:a",0.0,0.2)
- for wheel in wheels:
-  create_tween().tween_property(wheel,"modulate",Color("cbeaaa"),0.25)
  await get_tree().create_timer(0.25).timeout
  sound("open")
  motion = create_tween()
