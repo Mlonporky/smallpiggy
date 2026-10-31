@@ -1,0 +1,20 @@
+First normal-speed story all-fireflies run, 2026-10-30 client date.
+Command: STORY_FIREFLIES=1 with isolated /tmp settings/save, OpenGL and Dummy audio,
+Godot 4.7.2, tests/all_fireflies_route_test.gd.
+
+Terminal tool reported exit_code 134 AFTER these script markers:
+  capture all-60 skipped: window not drawing
+ALL_FIREFLIES_OK fireflies=60/60 secrets=2 deaths=0 game_time=89.5s
+STORY_ALL_FIREFLIES_EXIT_OK
+
+The remaining crash report appeared on terminal output, not in --log-file:
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.7.2.stable.official
+Relevant native frames included std::__1::recursive_mutex::lock(),
+__CFNOTIFICATIONCENTER_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__,
+-[NSNotificationCenter postNotificationName:object:userInfo:],
+-[NSApplication terminate:], and the AppKit event loop.
+
+No root cause is established. This is not a passing process and is not reduced
+to the older ObjectDB warnings. Gameplay assertions and disk reload completed,
+but the all-60 screenshot was skipped and shutdown failed. Repeat separately.

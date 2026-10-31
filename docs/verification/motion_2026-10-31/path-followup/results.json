@@ -1,0 +1,30 @@
+[
+  {
+    "test": "motion_transition_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.64,
+    "log": "motion_transition_test.log"
+  },
+  {
+    "test": "finale_reunion_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.65,
+    "log": "finale_reunion_test.log"
+  },
+  {
+    "test": "finale_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.62,
+    "log": "finale_test.log"
+  },
+  {
+    "test": "full_story_flow_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 11.48,
+    "log": "full_story_flow_test.log"
+  }
+]

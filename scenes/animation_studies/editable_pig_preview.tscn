@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/animation_studies/single_joint_preview.gd" id="1_preview"]
+[ext_resource type="Script" path="res://scenes/animation_studies/editable_pig_motion.gd" id="2_motion"]
+
+[node name="EditablePigPreview" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_preview")
+pig_script = ExtResource("2_motion")
+preview_title = "你的装配 · 动作试播"
+hand_anchor = "near_hand"
+prop_z_index = 5

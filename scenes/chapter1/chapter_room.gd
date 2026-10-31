@@ -17,8 +17,10 @@ var lines: Dictionary
 var last_route := ""
 var base_zoom := 1.0
 var auto_exit_enabled := true
+var interaction_hint := ""
 
 func _ready() -> void:
+	MusicDirector.play_track("morning")
 	lines = JSON.parse_string(FileAccess.get_file_as_string("res://data/dialogue/chapter1.json"))
 	ChapterRoomLayout.build(self,room_id)
 	player = preload("res://actors/shared/player.tscn").instantiate()
@@ -49,7 +51,10 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_fit)
 	_fit()
 	player.prompt_changed.connect(func(text: String):
-		ui.prompt.text = ("点击物品 / E\n"+text if not text.is_empty() else ChapterPresentation.HELP))
+		interaction_hint = text
+		_refresh_prompt())
+	GameState.state_changed.connect(_refresh_prompt)
+	_refresh_prompt()
 	for item in ChapterRoomLayout.DATA[room_id].hotspots:
 		add_hotspot(item[0],item[1],item[2])
 	memory = Sprite2D.new()
@@ -126,13 +131,33 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and not busy:
 		get_viewport().set_input_as_handled()
 		lock(true)
-		var choice := await ui.choose({"stay":"继续探索", "save":"保存并回主菜单"})
+		var choice := await ui.choose(ChapterPresentation.HINTS.PAUSE_OPTIONS, {}, "已暂停")
+		while choice == "settings":
+			AppSettings.open_panel()
+			await AppSettings.panel_closed
+			choice = await ui.choose(ChapterPresentation.HINTS.PAUSE_OPTIONS, {}, "已暂停")
 		if choice == "save":
 			if SaveManager.save_game(scene_file_path):
 				routing = true
 				SceneRouter.change_scene("res://scenes/bootstrap/main.tscn")
 		await get_tree().process_frame
 		if not routing: lock(false)
+
+func _refresh_prompt() -> void:
+	if not is_instance_valid(ui): return
+	var objective := ""
+	match room_id:
+		"bedroom": objective = "去右侧厨房" if GameState.has_flag("bedroom_memory_complete") else "调查床头的画"
+		"kitchen":
+			if GameState.has_flag("kitchen_memory_complete"): objective = "去右侧客厅"
+			elif not GameState.has_flag("coffee_made"): objective = "查看咖啡机与餐具"
+			elif not GameState.has_flag("pig_cup_checked"): objective = "调查猪猪杯"
+			else: objective = "调查双人餐具"
+		"living":
+			if GameState.has_flag("ch1_can_leave_home"): objective = "从下方门口出门"
+			elif GameState.has_flag("red_paper_spawned"): objective = "调查地上的红纸"
+			else: objective = "调查猪猪抱枕"
+	ui.prompt.text = "当前目标\n%s\n\n%s\n\nF5 保存\nEsc 菜单\nF1 设置与操作" % [objective,"点击 / E\n"+interaction_hint if not interaction_hint.is_empty() else "WASD / 方向键移动\n靠近微光物品调查"]
 
 func add_hotspot(id: String, title: String, pos: Vector2) -> void:
 	var area := Interactable.new()
@@ -156,7 +181,7 @@ func lock(value: bool) -> void:
 	player.set_input_enabled(not value)
 
 func pause(seconds: float) -> void:
-	await get_tree().create_timer(0.01 if test_mode else seconds).timeout
+	await AppSettings.story_wait(self,0.01 if test_mode else seconds).finished
 
 func say(key: String) -> void:
 	for line in lines.get(key,[]):
@@ -179,10 +204,10 @@ func _opening() -> void:
 		if index == 0:
 			await ui.fade_from_black(test_mode)
 		await pause(1.1 if index == 0 else 0.8)
-	ui.hide_closeup()
 	player.position = Vector2(600,565)
 	player.reset_physics_interpolation()
 	player.visible = true
+	await ui.reveal_room(test_mode)
 	await say("opening")
 	ui.heart.visible = true
 	GameState.set_flag("ch1_opening_done")
@@ -263,7 +288,7 @@ func memory_beat(index: int) -> void:
 	memory.modulate = $MemoryAnchor.modulate
 	memory.modulate.a = 0.0
 	memory.visible = true
-	var tween := create_tween().set_parallel(true)
+	var tween := AppSettings.story_tween(self).set_parallel(true)
 	tween.tween_property(memory,"modulate:a",$MemoryAnchor.modulate.a,0.01 if test_mode else 0.65)
 	GameState.gain_chapter_heart(flags[index-1])
 	await pause(1.0)
@@ -275,7 +300,7 @@ func memory_beat(index: int) -> void:
 		await say("living_memory")
 		dialogue.panel.position.y = get_viewport().get_visible_rect().size.y-200
 	await pause(0.4)
-	var fade := create_tween()
+	var fade := AppSettings.story_tween(self)
 	fade.set_parallel(true)
 	fade.tween_property(memory,"modulate:a",0,0.01 if test_mode else 0.75)
 	await fade.finished
@@ -287,7 +312,7 @@ func paper_arrives() -> void:
 	paper.position = Vector2(710,970)
 	paper.rotation = -0.3
 	paper.visible = true
-	var tween := create_tween().set_parallel(true)
+	var tween := AppSettings.story_tween(self).set_parallel(true)
 	tween.tween_property(paper,"position",Vector2(710,875),0.01 if test_mode else 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_property(paper,"rotation",0.15,0.01 if test_mode else 1.6)
 	await tween.finished
@@ -361,6 +386,9 @@ func can_reach(id: String, feet: Vector2) -> bool:
 	if id == "cup": return Rect2(900,480,215,145).has_point(feet)
 	if id == "coffee": return Rect2(1070,480,215,145).has_point(feet)
 	if id == "tableware": return Rect2(345,500,740,470).has_point(feet)
+	# The pillow is on the sofa centre, not beside its left arm. Accept the
+	# front aisle and left approach; furniture collision still limits walking.
+	if id == "pillow": return Rect2(350,535,595,155).has_point(feet)
 	return feet.distance_to(hotspots[id].position) <= 155.0
 
 func nearest_reachable(feet: Vector2) -> Interactable:

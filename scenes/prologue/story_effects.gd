@@ -2,6 +2,7 @@ extends Node2D
 ## Subtle deterministic effects; clock is supplied by the pausable timeline.
 var shot_id := ""
 var clock := 0.0
+var particle_clock := 0.0
 var change := 0.0
 var joy_soft: Texture2D = preload("res://assets/prologue/joy_soft.png")
 var joy_burst: Texture2D = preload("res://assets/prologue/joy_burst.png")
@@ -31,11 +32,12 @@ func _draw() -> void:
 			_motes(Vector2(355, 310), Color(0.8, 0.62, 1.0, strength * 0.9), 35, 0.8)
 		"pig_panic", "teleport":
 			draw_rect(Rect2(0, 0, 1152, 648), Color(0.15, 0.04, 0.25, 0.22))
-			var strength := sin(change * PI) if shot_id == "teleport" else 0.3
+			var strength := lerpf(0.3,sin(change*PI),smoothstep(0,.65,clock)) if shot_id == "teleport" else 0.3
 			_halo(Vector2(515, 336), 100.0, Color(0.76, 0.5, 1.0, strength * 0.48))
 			if shot_id == "teleport":
-				_halo(Vector2(680, 365), 105.0, Color(0.76, 0.5, 1.0, strength * 0.48))
-				_motes(Vector2(680, 390), Color(0.81, 0.65, 1.0, strength), 28, 1.4)
+				var gift_strength := strength*smoothstep(0,.65,clock)
+				_halo(Vector2(680, 365), 105.0, Color(0.76, 0.5, 1.0, gift_strength * 0.48))
+				_motes(Vector2(680, 390), Color(0.81, 0.65, 1.0, gift_strength), 28, 1.4)
 			_motes(Vector2(515, 425), Color(0.81, 0.65, 1.0, strength), 46, 1.4)
 			if shot_id == "teleport":
 				for i in 3:
@@ -43,7 +45,7 @@ func _draw() -> void:
 					for j in 81:
 						var angle := float(j) / 80.0 * TAU
 						points.append(Vector2(515, 430 - i * 65) + Vector2(cos(angle) * 92, sin(angle) * 22))
-					draw_polyline(points, Color(0.8, 0.59, 1.0, strength * 0.6), 2.0, true)
+					draw_polyline(points, Color(0.8, 0.59, 1.0, strength * 0.6*smoothstep(0,.65,clock)), 2.0, true)
 		"title":
 			draw_rect(Rect2(0, 0, 1152, 648), Color(0.04, 0.035, 0.085, 0.72))
 
@@ -56,8 +58,8 @@ func _halo(center: Vector2, radius: float, color: Color) -> void:
 func _motes(center: Vector2, color: Color, count: int, speed: float) -> void:
 	for i in count:
 		var seed_phase := float(i) * 2.399963
-		var travel := fposmod(clock * speed * 0.22 + float(i) / count, 1.0)
-		var pos := center + Vector2(sin(seed_phase + clock * 0.35) * (22 + i % 7 * 11), -travel * 155)
+		var travel := fposmod(particle_clock * speed * 0.22 + float(i) / count, 1.0)
+		var pos := center + Vector2(sin(seed_phase + particle_clock * 0.35) * (22 + i % 7 * 11), -travel * 155)
 		var tint := color
 		tint.a *= sin(travel * PI)
 		draw_circle(pos, 1.4 + float(i % 3) * 0.65, tint)

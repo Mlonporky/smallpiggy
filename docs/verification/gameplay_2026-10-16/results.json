@@ -1,0 +1,270 @@
+{
+  "date": "2026-10-16",
+  "engine": "Godot 4.7.2 ed1daf0bf, macOS Apple M1, Compatibility OpenGL",
+  "passed_script_count": 28,
+  "results": [
+    {
+      "test": "res://tests/chapter2_combat_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "CHAPTER2_COMBAT_OK: multi-hit injury, roll input and dodge, directional timed partial parry, jump, six enhanced hits"
+      ],
+      "log": "chapter2_combat_test.log"
+    },
+    {
+      "test": "res://tests/chapter2_pause_menu_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "CHAPTER2_PAUSE_MENU_OK: Esc pauses and resumes, save returns to menu, fallen slime stays saved"
+      ],
+      "log": "chapter2_pause_menu_test.log"
+    },
+    {
+      "test": "res://tests/chapter2_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "CHAPTER2_FLOW_OK"
+      ],
+      "log": "chapter2_test.log"
+    },
+    {
+      "test": "res://tests/action_level_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "ACTION_LEVEL_OK"
+      ],
+      "log": "action_level_test.log"
+    },
+    {
+      "test": "res://tests/action_movement_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "ACTION_MOVEMENT_OK short=53.3161010742188 high=166.066162109375"
+      ],
+      "log": "action_movement_test.log"
+    },
+    {
+      "test": "res://tests/action_camera_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "ACTION_CAMERA_OK jump_bob_px=0.02 parallax_ratio=0.18 max_turn_accel=0.51"
+      ],
+      "log": "action_camera_test.log"
+    },
+    {
+      "test": "res://tests/action_health_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "ACTION_HEALTH_OK"
+      ],
+      "log": "action_health_test.log"
+    },
+    {
+      "test": "res://tests/action_weapons_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "ACTION_WEAPONS_DODGE_OK"
+      ],
+      "log": "action_weapons_test.log"
+    },
+    {
+      "test": "res://tests/action_monsters_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "ACTION_MONSTERS_OK"
+      ],
+      "log": "action_monsters_test.log"
+    },
+    {
+      "test": "res://tests/story_cave_checkpoint_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "STORY_CAVE_CHECKPOINT_OK: entrance, camp, F5, JSON reload, unique rewards, pause/menu, exit failure retry, invalid checkpoint"
+      ],
+      "log": "story_cave_checkpoint_test.log"
+    },
+    {
+      "test": "res://tests/mushroom_guidance_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "MUSHROOM_GUIDANCE_OK: fresh, partial, completed paper, memory, reload, final doorway"
+      ],
+      "log": "mushroom_guidance_test.log"
+    },
+    {
+      "test": "res://tests/combination_lock_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "LOCK_ANIMATION_OK frames=128 p95_ms=8.19"
+      ],
+      "log": "combination_lock_test.log"
+    },
+    {
+      "test": "res://tests/mushroom_exploration_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "MUSHROOM_EXPLORATION_OK"
+      ],
+      "log": "mushroom_exploration_test.log"
+    },
+    {
+      "test": "res://tests/wrapping_puzzle_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "WRAPPING_PUZZLE_OK"
+      ],
+      "log": "wrapping_puzzle_test.log"
+    },
+    {
+      "test": "res://tests/table_slide_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "TABLE_SLIDE_OK"
+      ],
+      "log": "table_slide_test.log"
+    },
+    {
+      "test": "res://tests/outdoor_navigation_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "OUTDOOR_NAVIGATION_OK"
+      ],
+      "log": "outdoor_navigation_test.log"
+    },
+    {
+      "test": "res://tests/chapter1_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "CHAPTER1_TEST_OK: rooms, gates, memories, persistence, walking, collision, pig handoff"
+      ],
+      "log": "chapter1_test.log"
+    },
+    {
+      "test": "res://tests/chapter1_navigation_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "CHAPTER1_NAVIGATION_OK: physical routes reach every required clue and door"
+      ],
+      "log": "chapter1_navigation_test.log"
+    },
+    {
+      "test": "res://tests/chapter1_polish_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "POLISH_OK: fixed user anchors, three graduated fades, stable camera, corridor both directions and solid table"
+      ],
+      "log": "chapter1_polish_test.log"
+    },
+    {
+      "test": "res://tests/chapter1_bottom_exit_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "CHAPTER1_BOTTOM_EXIT_OK: five real door approaches, bottom outside, gates, cancellation, no automatic travel"
+      ],
+      "log": "chapter1_bottom_exit_test.log"
+    },
+    {
+      "test": "res://tests/chapter1_prop_click_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "PROP_CLICK_OK: distance and story gates, real clicks, orientation independence, paired HD dishes"
+      ],
+      "log": "chapter1_prop_click_test.log"
+    },
+    {
+      "test": "res://tests/chapter1_exit_routing_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "CHAPTER1_EXIT_ROUTING_OK: real transitions bedroom ↔ kitchen ↔ living → outside, matching entrances and input"
+      ],
+      "log": "chapter1_exit_routing_test.log"
+    },
+    {
+      "test": "res://tests/boy_atlas_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "BOY_ATLAS_TEST_OK: 12 complete poses, no clipped alpha pixels, runtime integration, stable feet"
+      ],
+      "log": "boy_atlas_test.log"
+    },
+    {
+      "test": "res://tests/save_manager_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "SAVE_MANAGER_OK: atomic write, schema/scene validation, corrupt/missing fallback, good backup preserved after recovery, reward deduplication"
+      ],
+      "log": "save_manager_test.log"
+    },
+    {
+      "test": "res://tests/finale_routes_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "FINALE_ROUTES_OK: both investigation orders, unfinished clues return, saved role handoff, standalone isolation"
+      ],
+      "log": "finale_routes_test.log"
+    },
+    {
+      "test": "res://tests/finale_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "FINALE_TEST_OK"
+      ],
+      "log": "finale_test.log"
+    },
+    {
+      "test": "res://tests/acorn_memory_test.gd",
+      "mode": "headless",
+      "result": "passed",
+      "markers": [
+        "ACORN_MEMORY_OK"
+      ],
+      "log": "acorn_memory_test.log"
+    },
+    {
+      "test": "res://tests/action_route_test.gd",
+      "mode": "graphical real key input",
+      "result": "passed",
+      "markers": [
+        "ACTION_ROUTES_OK fireflies=39/60 secrets=2 deaths=0 time=90.3s p95_ms=10.11"
+      ],
+      "log": "action_route_test.log"
+    }
+  ],
+  "additional_graphical_checks": [
+    "story_cave_checkpoint_test.gd",
+    "mushroom_guidance_test.gd"
+  ],
+  "limits": [
+    "Route bot uses automatic dodge reflex; no human difficulty/fun acceptance.",
+    "Route collected 39 of 60 fireflies; remaining 21 are not proven unreachable or reachable.",
+    "Mainline route tests seed checkpoints/puzzle flags and accelerate walking; not a single unbroken new-save playthrough.",
+    "Processing interval is not rendered/displayed FPS.",
+    "Known headless certificate and exit resource warnings; deliberately invalid saves are expected negative tests."
+  ]
+}

@@ -23,7 +23,7 @@ func _run() -> void:
 		scene.player.move_speed = 400
 		for stop in routes[id]:
 			var reached: bool = await scene.player.walk_to(stop[0],4.0)
-			if not reached: failures.append("blocked route %s %s" % [id,stop[0]])
+			if not reached: failures.append("blocked route %s target=%s stopped=%s distance=%.2f" % [id,stop[0],scene.player.position,scene.player.position.distance_to(stop[0])])
 			if not stop[1].is_empty():
 				scene.player.face(scene.hotspots[stop[1]].position-scene.player.position)
 				for i in 4: await physics_frame

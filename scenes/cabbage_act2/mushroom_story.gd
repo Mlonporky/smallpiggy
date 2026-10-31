@@ -46,7 +46,7 @@ func enter() -> void:
   if not accepted:
    await release()
    return
-  await get_tree().create_timer(0.5).timeout
+  await AppSettings.story_wait(self,0.5).finished
   await say(UNLOCK)
   GameState.set_flag("mushroom_house_unlocked")
  SceneRouter.change_scene("res://scenes/cabbage_act2/interior.tscn")

@@ -1,0 +1,549 @@
+{
+  "collected": 60,
+  "deaths": 0,
+  "flies": [
+    {
+      "id": 0,
+      "nearest_distance": 35.3306732177734,
+      "position": [
+        500.0,
+        900.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 1,
+      "nearest_distance": 2.39641523361206,
+      "position": [
+        540.0,
+        882.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 2,
+      "nearest_distance": 1.14650988578796,
+      "position": [
+        580.0,
+        900.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 3,
+      "nearest_distance": 35.1568298339844,
+      "position": [
+        795.0,
+        955.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 4,
+      "nearest_distance": 31.4435424804688,
+      "position": [
+        827.5,
+        905.502502441406
+      ],
+      "taken": true
+    },
+    {
+      "id": 5,
+      "nearest_distance": 15.2717256546021,
+      "position": [
+        860.0,
+        885.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 6,
+      "nearest_distance": 25.4670124053955,
+      "position": [
+        892.5,
+        905.502502441406
+      ],
+      "taken": true
+    },
+    {
+      "id": 7,
+      "nearest_distance": 35.028148651123,
+      "position": [
+        925.0,
+        955.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 8,
+      "nearest_distance": 2.45352721214294,
+      "position": [
+        1070.0,
+        960.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 9,
+      "nearest_distance": 2.88585257530212,
+      "position": [
+        1120.0,
+        960.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 10,
+      "nearest_distance": 2.41812109947205,
+      "position": [
+        1170.0,
+        960.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 11,
+      "nearest_distance": 27.3910446166992,
+      "position": [
+        1435.0,
+        830.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 12,
+      "nearest_distance": 14.5324153900146,
+      "position": [
+        1600.0,
+        720.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 13,
+      "nearest_distance": 5.07391691207886,
+      "position": [
+        1650.0,
+        720.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 14,
+      "nearest_distance": 24.9697189331055,
+      "position": [
+        1815.0,
+        910.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 15,
+      "nearest_distance": 8.04441356658936,
+      "position": [
+        1828.0,
+        830.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 16,
+      "nearest_distance": 9.54700374603271,
+      "position": [
+        1845.0,
+        755.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 17,
+      "nearest_distance": 11.2528400421143,
+      "position": [
+        1872.0,
+        690.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 18,
+      "nearest_distance": 10.9350776672363,
+      "position": [
+        2150.0,
+        650.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 19,
+      "nearest_distance": 4.81943464279175,
+      "position": [
+        2205.0,
+        650.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 20,
+      "nearest_distance": 10.9529504776001,
+      "position": [
+        2260.0,
+        650.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 21,
+      "nearest_distance": 21.0011768341064,
+      "position": [
+        2800.0,
+        640.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 22,
+      "nearest_distance": 21.1328620910645,
+      "position": [
+        2950.0,
+        640.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 23,
+      "nearest_distance": 21.1156997680664,
+      "position": [
+        3100.0,
+        640.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 24,
+      "nearest_distance": 21.0261039733887,
+      "position": [
+        3250.0,
+        640.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 25,
+      "nearest_distance": 17.6537532806396,
+      "position": [
+        2660.0,
+        1265.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 26,
+      "nearest_distance": 27.9331111907959,
+      "position": [
+        2710.0,
+        1253.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 27,
+      "nearest_distance": 15.9403696060181,
+      "position": [
+        2760.0,
+        1265.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 28,
+      "nearest_distance": 12.9711608886719,
+      "position": [
+        2920.0,
+        1250.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 29,
+      "nearest_distance": 6.55683422088623,
+      "position": [
+        3020.0,
+        1210.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 30,
+      "nearest_distance": 30.9858627319336,
+      "position": [
+        3120.0,
+        1250.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 31,
+      "nearest_distance": 26.3462715148926,
+      "position": [
+        3392.0,
+        1180.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 32,
+      "nearest_distance": 11.6469135284424,
+      "position": [
+        3398.0,
+        1020.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 33,
+      "nearest_distance": 27.9326400756836,
+      "position": [
+        3405.0,
+        860.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 34,
+      "nearest_distance": 6.07407283782959,
+      "position": [
+        3900.0,
+        600.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 35,
+      "nearest_distance": 28.7510604858398,
+      "position": [
+        3960.0,
+        600.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 36,
+      "nearest_distance": 32.5253219604492,
+      "position": [
+        4205.0,
+        585.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 37,
+      "nearest_distance": 29.8904476165771,
+      "position": [
+        4375.0,
+        565.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 38,
+      "nearest_distance": 8.63567733764648,
+      "position": [
+        5095.0,
+        640.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 39,
+      "nearest_distance": 8.61540603637695,
+      "position": [
+        5095.0,
+        565.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 40,
+      "nearest_distance": 8.61623573303223,
+      "position": [
+        5095.0,
+        490.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 41,
+      "nearest_distance": 13.813645362854,
+      "position": [
+        5505.0,
+        370.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 42,
+      "nearest_distance": 6.18054151535034,
+      "position": [
+        5565.0,
+        315.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 43,
+      "nearest_distance": 15.6830472946167,
+      "position": [
+        5625.0,
+        340.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 44,
+      "nearest_distance": 15.731972694397,
+      "position": [
+        5895.0,
+        340.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 45,
+      "nearest_distance": 27.1955337524414,
+      "position": [
+        5955.0,
+        315.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 46,
+      "nearest_distance": 35.3748550415039,
+      "position": [
+        6015.0,
+        370.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 47,
+      "nearest_distance": 6.11059379577637,
+      "position": [
+        6430.0,
+        385.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 48,
+      "nearest_distance": 27.6660175323486,
+      "position": [
+        6473.33349609375,
+        363.349365234375
+      ],
+      "taken": true
+    },
+    {
+      "id": 49,
+      "nearest_distance": 27.6169185638428,
+      "position": [
+        6516.66650390625,
+        363.349365234375
+      ],
+      "taken": true
+    },
+    {
+      "id": 50,
+      "nearest_distance": 5.97219371795654,
+      "position": [
+        6560.0,
+        385.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 51,
+      "nearest_distance": 10.9368715286255,
+      "position": [
+        5550.0,
+        950.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 52,
+      "nearest_distance": 10.999005317688,
+      "position": [
+        5600.0,
+        950.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 53,
+      "nearest_distance": 10.9986305236816,
+      "position": [
+        5650.0,
+        950.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 54,
+      "nearest_distance": 14.9607076644897,
+      "position": [
+        6630.0,
+        830.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 55,
+      "nearest_distance": 12.13210105896,
+      "position": [
+        6830.0,
+        710.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 56,
+      "nearest_distance": 13.5322685241699,
+      "position": [
+        7060.0,
+        540.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 57,
+      "nearest_distance": 5.72637748718262,
+      "position": [
+        7062.0,
+        460.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 58,
+      "nearest_distance": 8.37550830841064,
+      "position": [
+        7064.0,
+        385.0
+      ],
+      "taken": true
+    },
+    {
+      "id": 59,
+      "nearest_distance": 7.51323080062866,
+      "position": [
+        7066.0,
+        320.0
+      ],
+      "taken": true
+    }
+  ],
+  "physics_input_only": true,
+  "secrets": 2,
+  "total": 60
+}

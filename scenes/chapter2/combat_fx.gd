@@ -32,6 +32,12 @@ func _draw() -> void:
 		var angle := direction.angle()
 		for i in 4:
 			draw_arc(Vector2.ZERO, radius - i * 6, angle - 1.05 + t * 0.6, angle + 0.65 + t * 0.6, 28, Color(color, color.a * (1.0 - i * 0.22)), 5.0 - i, true)
+	elif kind == "lane":
+		var side := direction.orthogonal() * 36
+		var end := direction * radius
+		draw_colored_polygon(PackedVector2Array([-side,side,end+side,end-side]),Color(color,color.a*0.16))
+		draw_line(Vector2.ZERO,end,color,3,true)
+		draw_polyline(PackedVector2Array([end-direction*20+side*0.5,end,end-direction*20-side*0.5]),color,3,true)
 	elif kind == "warning":
 		draw_arc(Vector2.ZERO, radius, 0, TAU, 64, color, 4, true)
 		draw_circle(Vector2.ZERO, radius, Color(color, color.a * 0.10))
@@ -48,27 +54,5 @@ func _draw() -> void:
 		draw_arc(Vector2.ZERO, maxf(1, radius * t), 0, TAU, 64, Color(color,color.a * 0.5), 3, true)
 
 static func sound(parent: Node, kind: String) -> void:
-	# Gentle synthesized feedback until recorded sound design is available.
-	var rate := 22050
-	var seconds := 0.55 if kind == "joy" else 0.16
-	var data := PackedByteArray()
-	data.resize(int(rate * seconds) * 2)
-	for i in int(rate * seconds):
-		var t := float(i) / rate
-		var envelope := sin(PI * t / seconds) * exp(-t * 9)
-		var frequency := 220.0
-		if kind == "joy": frequency = 523.25 + floor(t * 6) * 130.81
-		elif kind == "swing": frequency = lerpf(700, 180, t / seconds)
-		else: frequency = lerpf(140, 55, t / seconds)
-		var wave := sin(TAU * frequency * t) * envelope * 0.25
-		data.encode_s16(i * 2, int(wave * 32767))
-	var stream := AudioStreamWAV.new()
-	stream.format = AudioStreamWAV.FORMAT_16_BITS
-	stream.mix_rate = rate
-	stream.data = data
-	var audio := AudioStreamPlayer.new()
-	audio.stream = stream
-	audio.volume_db = -12
-	parent.add_child(audio)
-	audio.finished.connect(audio.queue_free)
-	audio.play()
+	var mapped: String = {"impact":"hit", "joy":"purify"}.get(kind,kind)
+	preload("res://systems/audio/gameplay_audio.gd").play_at(parent,mapped)

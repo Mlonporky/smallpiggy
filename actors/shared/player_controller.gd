@@ -72,16 +72,26 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var direction := Vector2.ZERO
+	var scripted_step := _script_walking
+	var target_distance := global_position.distance_to(_walk_target) if scripted_step else 0.0
 	if _script_walking:
 		direction = global_position.direction_to(_walk_target)
-		if global_position.distance_to(_walk_target) < 5.0:
+		if target_distance < 5.0:
 			_script_walking = false
 			direction = Vector2.ZERO
-	elif input_enabled and not _attacking:
+			velocity = Vector2.ZERO
+	elif input_enabled and _movement_allowed():
 		direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction.length_squared() > 0.0:
-		_facing = _cardinal_facing(direction)
-		velocity = velocity.move_toward(direction * move_speed * WALK_SPEED_MULTIPLIER, acceleration * delta)
+		if _turning_allowed(): _facing = _cardinal_facing(direction)
+		var speed := move_speed * WALK_SPEED_MULTIPLIER * _movement_multiplier()
+		if scripted_step:
+			# Brake before the destination; a fast scripted walk must not orbit
+			# its target and time out even on an unobstructed floor.
+			speed = minf(speed, sqrt(2.0 * acceleration * target_distance))
+		velocity = velocity.move_toward(direction * speed, acceleration * delta)
+		if scripted_step:
+			velocity = velocity.limit_length(target_distance / maxf(delta, 0.0001))
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 	var previous_position := global_position
@@ -96,8 +106,17 @@ func _physics_process(delta: float) -> void:
 	if input_enabled and Input.is_action_just_pressed("quick_save"):
 		var save_manager := get_node_or_null("/root/SaveManager")
 		if save_manager:
-			save_manager.save_game()
+			save_manager.save_game("", true)
 
+
+func _movement_allowed() -> bool:
+	return not _attacking
+
+func _turning_allowed() -> bool:
+	return true
+
+func _movement_multiplier() -> float:
+	return 1.0
 
 func _wants_interaction() -> bool:
 	return Input.is_action_just_pressed("interact")
@@ -120,6 +139,7 @@ func walk_to(target: Vector2, timeout := 8.0) -> bool:
 	var elapsed := 0.0
 	while _script_walking and elapsed < timeout:
 		await get_tree().physics_frame
+		if get_tree().paused: continue
 		elapsed += get_physics_process_delta_time()
 	_script_walking = false
 	velocity = Vector2.ZERO
@@ -134,12 +154,12 @@ func attack() -> void:
 	velocity = Vector2.ZERO
 	hit_box.position = _facing * 48.0
 	visual_root.scale = Vector2(0.92, 1.08)
-	await get_tree().create_timer(0.12).timeout # anticipation
+	await get_tree().create_timer(0.12, false).timeout # anticipation
 	visual_root.scale = Vector2(1.14, 0.9)
 	hit_box.activate(0.10)
-	await get_tree().create_timer(0.10).timeout # active
+	await get_tree().create_timer(0.10, false).timeout # active
 	visual_root.scale = Vector2.ONE
-	await get_tree().create_timer(0.18).timeout # recovery
+	await get_tree().create_timer(0.18, false).timeout # recovery
 	_attacking = false
 
 
@@ -204,9 +224,9 @@ func _on_damaged(source: HitBox2D) -> void:
 	global_position += knock_direction * 18.0
 	for i in 5:
 		sprite.visible = not sprite.visible
-		await get_tree().create_timer(0.07).timeout
+		await get_tree().create_timer(0.07, false).timeout
 	sprite.visible = true
-	await get_tree().create_timer(0.45).timeout
+	await get_tree().create_timer(0.45, false).timeout
 	_invulnerable = false
 	hurt_box.invulnerable = false
 

@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Condition "ret != noErr" is true. Returning: ""
+   at: get_system_ca_certificates (platform/macos/os_macos.mm:1035)
+SCRIPT ERROR: Assertion failed: No pillow close-up: (410.0, 570.0)mouse
+          at: run (res://tests/chapter1_pillow_test.gd:75)
+          GDScript backtrace (most recent call first):
+              [0] run (res://tests/chapter1_pillow_test.gd:75)
+              [1] click_pillow (res://tests/chapter1_pillow_test.gd:31)

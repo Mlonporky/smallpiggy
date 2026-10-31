@@ -21,7 +21,7 @@ static var DATA := {
  "living": {
   "title":"客厅", "spawn":Vector2(350,620), "door":Vector2(710,945),
   "blocks":[Rect2(0,0,1448,350),Rect2(0,350,205,736),Rect2(1280,350,168,736),Rect2(205,350,135,175),Rect2(465,350,480,220),Rect2(535,630,330,190),Rect2(950,500,250,280),Rect2(920,800,170,135),Rect2(205,710,175,220),Rect2(0,980,1448,106)],
-  "hotspots":[["pillow","猪猪抱枕",Vector2(410,570)],["blanket","粉色毯子",Vector2(980,415)],["basket","收纳篮",Vector2(1225,875)],["window","窗边",Vector2(1000,385)]],
+  "hotspots":[["pillow","猪猪抱枕",Vector2(690,600)],["blanket","粉色毯子",Vector2(980,415)],["basket","收纳篮",Vector2(1225,875)],["window","窗边",Vector2(1000,385)]],
   "occluders":[[815,PackedVector2Array([Vector2(535,710),Vector2(865,710),Vector2(865,825),Vector2(535,825)])]],
   "exits":[["kitchen",Rect2(205,535,75,160),Vector2(260,580),"← 厨房"],["outside",Rect2(400,915,510,65),Vector2(705,950),"↓ 出门"]]
  }

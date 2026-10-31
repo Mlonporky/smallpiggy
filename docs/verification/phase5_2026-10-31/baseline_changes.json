@@ -1,0 +1,27 @@
+{
+  "baseline_files": 390,
+  "changed_existing": [
+    "README.md",
+    "WORKLOG.md",
+    "ui/control_hints.gd",
+    "scenes/cabbage_act2/wrapping_puzzle.gd",
+    "scenes/cabbage_act2/wrapping_collectibles.gd",
+    "scenes/cabbage_act2/interior.gd",
+    "scenes/chapter2/pig.gd",
+    "scenes/chapter2/cave.gd",
+    "scenes/chapter2/entrance.gd",
+    "scenes/chapter2/combat_fx.gd",
+    "scenes/chapter2/forest_base.gd",
+    "scenes/chapter2/dark_path/dark_path.gd",
+    "scenes/action_test/movement_room.gd",
+    "scenes/action_test/test_level.gd",
+    "scenes/action_test/components/sound_fx.gd",
+    "docs/MUSIC_ZH.md",
+    "docs/CHAPTER2_IMPLEMENTATION_ZH.md",
+    "docs/ACTION_PLATFORMER_TEST_ZH.md",
+    "docs/STORY_AND_ART_DIRECTION.md",
+    "docs/PROJECT_AUDIT_2026-10-30.md",
+    "docs/HANDOFF.md"
+  ],
+  "missing": []
+}

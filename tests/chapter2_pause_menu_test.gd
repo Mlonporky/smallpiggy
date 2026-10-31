@@ -30,7 +30,7 @@ func run() -> void:
 	assert(cave.find_child("save", true, false) == null, "The menu is removed")
 	# Pause in the dash itself: neither movement, timer nor active hitbox may expire.
 	cave.slime.attack_lunge()
-	await create_timer(0.95).timeout
+	await create_timer(0.74).timeout
 	assert(cave.slime.state == "dash")
 	escape()
 	await process_frame

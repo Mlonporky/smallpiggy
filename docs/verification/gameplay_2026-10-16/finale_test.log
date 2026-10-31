@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Condition "ret != noErr" is true. Returning: ""
+   at: get_system_ca_certificates (platform/macos/os_macos.mm:1035)
+ERROR: Could not open save file: 7
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://autoload/save_manager.gd:23)
+       [1] checkpoint (res://scenes/finale/final_chapter.gd:97)
+       [2] _save_and_exit (res://scenes/finale/final_chapter.gd:604)
+       [3] run (res://tests/finale_test.gd:106)
+       [4] fresh (res://tests/finale_test.gd:22)
+       [5] frames (res://tests/finale_test.gd:7)
+FINALE_TEST_OK

@@ -1,0 +1,19 @@
+{
+  "protected_files": [
+    {
+      "path": "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json.bak",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/scenes/animation_studies/editable_pig.tscn",
+      "unchanged": true
+    }
+  ],
+  "original_settings_still_absent": true,
+  "baseline_count": 349,
+  "missing_baseline_files": []
+}

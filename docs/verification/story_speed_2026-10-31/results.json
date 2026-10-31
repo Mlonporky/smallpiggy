@@ -1,0 +1,72 @@
+[
+  {
+    "test": "story_speed_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.04,
+    "log": "story_speed_test.log"
+  },
+  {
+    "test": "opening_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.79,
+    "log": "opening_test.log"
+  },
+  {
+    "test": "music_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.28,
+    "log": "music_test.log"
+  },
+  {
+    "test": "acorn_memory_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 3.31,
+    "log": "acorn_memory_test.log"
+  },
+  {
+    "test": "settings_ui_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.3,
+    "log": "settings_ui_test.log"
+  },
+  {
+    "test": "chapter1_navigation_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.02,
+    "log": "chapter1_navigation_test.log"
+  },
+  {
+    "test": "chapter2_combat_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.03,
+    "log": "chapter2_combat_test.log"
+  },
+  {
+    "test": "finale_audio_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.28,
+    "log": "finale_audio_test.log"
+  },
+  {
+    "test": "finale_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.54,
+    "log": "finale_test.log"
+  },
+  {
+    "test": "full_story_flow_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 10.69,
+    "log": "full_story_flow_test.log"
+  }
+]

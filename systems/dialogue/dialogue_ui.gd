@@ -1,5 +1,6 @@
 class_name DialogueUI
 extends CanvasLayer
+@onready var story_settings: Node = get_node("/root/AppSettings")
 
 signal line_started(line: Dictionary)
 signal line_finished(line: Dictionary)
@@ -16,6 +17,16 @@ var _advance_requested := false
 
 func _ready() -> void:
 	panel.visible = false
+	hint_label.text = preload("res://ui/control_hints.gd").DIALOGUE
+	get_viewport().size_changed.connect(_layout)
+	_layout()
+
+
+func _layout() -> void:
+	var extent := get_viewport().get_visible_rect().size
+	var at_top := panel.position.y <= 24
+	panel.size.x = extent.x * 0.84
+	panel.position = Vector2(extent.x * 0.08, 24 if at_top else maxf(24,extent.y-202))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -35,7 +46,7 @@ func say(
 	auto_duration := 1.5
 ) -> void:
 	if pause_before > 0.0:
-		await get_tree().create_timer(pause_before).timeout
+		await story_settings.story_wait(self,pause_before).finished
 	var line := {"speaker": speaker, "text": text}
 	line_started.emit(line)
 	_line_active = true
@@ -51,7 +62,8 @@ func say(
 	var elapsed := 0.0
 	while elapsed < duration and not _advance_requested:
 		await get_tree().process_frame
-		elapsed += get_process_delta_time()
+		if get_tree().paused: continue
+		elapsed += get_process_delta_time() * story_settings.story_speed
 		text_label.visible_ratio = elapsed / duration
 	_typing = false
 	text_label.visible_ratio = 1.0
@@ -61,13 +73,14 @@ func say(
 	var auto_elapsed := 0.0
 	while not _advance_requested:
 		await get_tree().process_frame
+		if get_tree().paused: continue
 		if auto_advance:
 			auto_elapsed += get_process_delta_time()
 			if auto_elapsed >= auto_duration:
 				break
 	_advance_requested = false
 	if pause_after > 0.0:
-		await get_tree().create_timer(pause_after).timeout
+		await story_settings.story_wait(self,pause_after).finished
 	_line_active = false
 	panel.visible = false
 	line_finished.emit(line)

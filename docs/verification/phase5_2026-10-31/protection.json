@@ -1,0 +1,234 @@
+{
+  "protected_files": 38,
+  "checks": [
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/chapter1/boy.png",
+      "before_sha256": "c9d2a673a6842213608d89f5a2e905e52971c399f55305672679ab2147f29693",
+      "after_sha256": "c9d2a673a6842213608d89f5a2e905e52971c399f55305672679ab2147f29693",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/scenes/animation_studies/editable_pig.tscn",
+      "before_sha256": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54",
+      "after_sha256": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/characters/pig_single_joint/parts_v1.png",
+      "before_sha256": "86994dd72894a732796637a9fc65b5152b162711784b1fbecd84549c6b71a2d5",
+      "after_sha256": "86994dd72894a732796637a9fc65b5152b162711784b1fbecd84549c6b71a2d5",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json.bak",
+      "before_sha256": "3870a9836908dcd9619ce1c9e1ee601f7b7e5e7e137bc697d0f7e4d162dcc17e",
+      "after_sha256": "3870a9836908dcd9619ce1c9e1ee601f7b7e5e7e137bc697d0f7e4d162dcc17e",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json",
+      "before_sha256": "4473b24cda3d06eef0df574a365c4dcbf4a8465f64755ed86b2aa5e1a92cf2c9",
+      "after_sha256": "4473b24cda3d06eef0df574a365c4dcbf4a8465f64755ed86b2aa5e1a92cf2c9",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/music/hollow_morning.wav",
+      "before_sha256": "98dbf71c16e7254af7bfdf72e786347d992cf3a44de3b930bf93e0e110aa1815",
+      "after_sha256": "98dbf71c16e7254af7bfdf72e786347d992cf3a44de3b930bf93e0e110aa1815",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/music/hollow_morning.json",
+      "before_sha256": "20820f68628a6268c3f27d67cb51295ff2a76a6960aebbf5cafd8d2d7124a950",
+      "after_sha256": "20820f68628a6268c3f27d67cb51295ff2a76a6960aebbf5cafd8d2d7124a950",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/music/opening_story.wav",
+      "before_sha256": "e28c0735a4dda742e0455028548d8d687f26329f97c5f1a8097231c432ec2b12",
+      "after_sha256": "e28c0735a4dda742e0455028548d8d687f26329f97c5f1a8097231c432ec2b12",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/music/opening_story.json",
+      "before_sha256": "ad14dc89c350b5f9b059fe5d9b987ba56b49ee9db2703cbb89bb1d4a1c81d685",
+      "after_sha256": "ad14dc89c350b5f9b059fe5d9b987ba56b49ee9db2703cbb89bb1d4a1c81d685",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/reunion.wav",
+      "before_sha256": "464a5dce8ef1273910ad020c54651630ef74c3e20483acd5859216994dd1a4d2",
+      "after_sha256": "464a5dce8ef1273910ad020c54651630ef74c3e20483acd5859216994dd1a4d2",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/reunion_v2.json",
+      "before_sha256": "3ddd53b3b00291bd0660c2cf920bc0271bd53ba04e8f1ef0446e8a3e96a88cc6",
+      "after_sha256": "3ddd53b3b00291bd0660c2cf920bc0271bd53ba04e8f1ef0446e8a3e96a88cc6",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/curse_cast_v1.wav",
+      "before_sha256": "53d2473f991c5090030f76e7a4c457e19b434e5dad735190ee40173fcf291b4f",
+      "after_sha256": "53d2473f991c5090030f76e7a4c457e19b434e5dad735190ee40173fcf291b4f",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/manor_home_v1.json",
+      "before_sha256": "606379500bd74033e40b6db479dfb692df23ea198475dd02032d6312023fe1eb",
+      "after_sha256": "606379500bd74033e40b6db479dfb692df23ea198475dd02032d6312023fe1eb",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/curse.wav",
+      "before_sha256": "9f39ea3977a97966e9993ab26a45c246f8a5bf6d47e78905e5226b10a78df07e",
+      "after_sha256": "9f39ea3977a97966e9993ab26a45c246f8a5bf6d47e78905e5226b10a78df07e",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/leaves_v1.wav",
+      "before_sha256": "8f246274a02d9ab5e98de01b8b6dc7e3a296bba1129f080baf81b4f8b5e75fe4",
+      "after_sha256": "8f246274a02d9ab5e98de01b8b6dc7e3a296bba1129f080baf81b4f8b5e75fe4",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/wind.wav",
+      "before_sha256": "af30c7a1bb839469019eeaa0e15b655f1b9c7f84a928bca7eb2cb623081ea03a",
+      "after_sha256": "af30c7a1bb839469019eeaa0e15b655f1b9c7f84a928bca7eb2cb623081ea03a",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/path.wav",
+      "before_sha256": "464a5dce8ef1273910ad020c54651630ef74c3e20483acd5859216994dd1a4d2",
+      "after_sha256": "464a5dce8ef1273910ad020c54651630ef74c3e20483acd5859216994dd1a4d2",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/home.wav",
+      "before_sha256": "f422874e6179ab58b7217946d5975fa6f6fcfa6451fbfb6ac262caca05ebcc76",
+      "after_sha256": "f422874e6179ab58b7217946d5975fa6f6fcfa6451fbfb6ac262caca05ebcc76",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/step_earth_1.wav",
+      "before_sha256": "e2ef90a90fe1fc69936c7d289500e6f13c0f6f57a5ed6122334823aae14c867b",
+      "after_sha256": "e2ef90a90fe1fc69936c7d289500e6f13c0f6f57a5ed6122334823aae14c867b",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/dissolve_v1.wav",
+      "before_sha256": "e9ee553d812ce23d0e89e0f1a5ba528f9806f95633efb4b054f3c95addb31c88",
+      "after_sha256": "e9ee553d812ce23d0e89e0f1a5ba528f9806f95633efb4b054f3c95addb31c88",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/memory_v2.json",
+      "before_sha256": "db852876f083de4cd6fbc0467a6930b7362ff02df6d0f18893a008cac3f30494",
+      "after_sha256": "db852876f083de4cd6fbc0467a6930b7362ff02df6d0f18893a008cac3f30494",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/path_v2.wav",
+      "before_sha256": "3749bdb3d917e7bb33c585113ed7f42cdf7eece409691d2311a370bc7ddd6b5e",
+      "after_sha256": "3749bdb3d917e7bb33c585113ed7f42cdf7eece409691d2311a370bc7ddd6b5e",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/step_earth_2.wav",
+      "before_sha256": "c34c93a171bc78fab536c763c029e343aac95cf13827805b6ece233e9b72b6e9",
+      "after_sha256": "c34c93a171bc78fab536c763c029e343aac95cf13827805b6ece233e9b72b6e9",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/step_earth_3.wav",
+      "before_sha256": "f3896ff26776822321f73720ec7d06b62fa8f76c4d71656dfddbd271eb1f83aa",
+      "after_sha256": "f3896ff26776822321f73720ec7d06b62fa8f76c4d71656dfddbd271eb1f83aa",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/reunion_v2.wav",
+      "before_sha256": "7d5a0889865b8caf0781b519e21d7186505372ff9fc3965250ac123cde6f1d28",
+      "after_sha256": "7d5a0889865b8caf0781b519e21d7186505372ff9fc3965250ac123cde6f1d28",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/joy.wav",
+      "before_sha256": "49a4296da4ae07c75edfb5802f755d039e47b4bf840412e33c3891dc27d2d6dc",
+      "after_sha256": "49a4296da4ae07c75edfb5802f755d039e47b4bf840412e33c3891dc27d2d6dc",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/joy_v2.wav",
+      "before_sha256": "2b1a802fec700806daadbfd7cf88a7b38d8d2b3b03a7e68f1d98fffe4505ef17",
+      "after_sha256": "2b1a802fec700806daadbfd7cf88a7b38d8d2b3b03a7e68f1d98fffe4505ef17",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/memory.wav",
+      "before_sha256": "464a5dce8ef1273910ad020c54651630ef74c3e20483acd5859216994dd1a4d2",
+      "after_sha256": "464a5dce8ef1273910ad020c54651630ef74c3e20483acd5859216994dd1a4d2",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/birds_v1.wav",
+      "before_sha256": "e6c96ad94e0d3e25ba4ebdf287cb8a2e01aec6965cac8d34aa10b30d742fc67d",
+      "after_sha256": "e6c96ad94e0d3e25ba4ebdf287cb8a2e01aec6965cac8d34aa10b30d742fc67d",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/joy_v2.json",
+      "before_sha256": "12847ca96a19728747964c5965ea2c09fc075a66b80358b183da7306a9dfab76",
+      "after_sha256": "12847ca96a19728747964c5965ea2c09fc075a66b80358b183da7306a9dfab76",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/curse_v2.json",
+      "before_sha256": "e48cdd3bfba0f9f1a86646900b651176198ddb8367ea83e42ee6423cf2b70d7f",
+      "after_sha256": "e48cdd3bfba0f9f1a86646900b651176198ddb8367ea83e42ee6423cf2b70d7f",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/path_v2.json",
+      "before_sha256": "a4db2e774ef6d687dea4c3937eec95f96b319d3418b73ee2ba04f35ebfbed7a0",
+      "after_sha256": "a4db2e774ef6d687dea4c3937eec95f96b319d3418b73ee2ba04f35ebfbed7a0",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/memory_v2.wav",
+      "before_sha256": "cb739b9ffd69f758efdcd089ba88b9074abd68e22e1068b7c2f0b8cfa632865a",
+      "after_sha256": "cb739b9ffd69f758efdcd089ba88b9074abd68e22e1068b7c2f0b8cfa632865a",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/manor_home_v1.wav",
+      "before_sha256": "bc681a699caa3f60e98b498498cc9ab7d23ad9579a27b929097c4680c153f0a2",
+      "after_sha256": "bc681a699caa3f60e98b498498cc9ab7d23ad9579a27b929097c4680c153f0a2",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/curse_v2.wav",
+      "before_sha256": "946574ef44be294afa5d341d55a1fe670d37a32d1643ef9d66a8ddc1a5f87b23",
+      "after_sha256": "946574ef44be294afa5d341d55a1fe670d37a32d1643ef9d66a8ddc1a5f87b23",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/afterglow_v2.json",
+      "before_sha256": "12b2d6ab5a5bbfdaa90513c3e83784d677c37a3c242aa8983dc3acfc503f3b90",
+      "after_sha256": "12b2d6ab5a5bbfdaa90513c3e83784d677c37a3c242aa8983dc3acfc503f3b90",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/afterglow_v2.wav",
+      "before_sha256": "b048207524634cee550fef363c54ab1ad0e84a54d1db502f0a3905cbc2d01399",
+      "after_sha256": "b048207524634cee550fef363c54ab1ad0e84a54d1db502f0a3905cbc2d01399",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/audio/finale/joy_wave_v1.wav",
+      "before_sha256": "2087727468af5334adf88077dba092f5de12425461c2fd88459df0a7b55586d1",
+      "after_sha256": "2087727468af5334adf88077dba092f5de12425461c2fd88459df0a7b55586d1",
+      "unchanged": true
+    }
+  ],
+  "default_settings_exists": false
+}

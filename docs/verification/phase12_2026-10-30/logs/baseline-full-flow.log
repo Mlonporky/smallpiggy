@@ -1,0 +1,131 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 91.7 - Compatibility - Using Device: Apple - Apple M1
+
+FLOW_SCENE res://scenes/bootstrap/main.tscn
+AUDIT_CAPTURE 00-menu
+FLOW_SCENE res://scenes/prologue/prologue.tscn
+FLOW_STAGE natural opening
+AUDIT_CAPTURE 01-natural-opening
+FLOW_HEARTBEAT natural opening busy=<null> pos=(0.0, 0.0)
+FLOW_HEARTBEAT natural opening busy=<null> pos=(0.0, 0.0)
+FLOW_HEARTBEAT natural opening busy=<null> pos=(0.0, 0.0)
+FLOW_HEARTBEAT natural opening busy=<null> pos=(0.0, 0.0)
+FLOW_HEARTBEAT natural opening busy=<null> pos=(0.0, 0.0)
+FLOW_SCENE res://scenes/chapter1/bedroom.tscn
+FLOW_HEARTBEAT natural opening busy=true pos=(610.0, 570.0)
+FLOW_STAGE bedroom investigation
+AUDIT_CAPTURE 02-bedroom-investigation
+FLOW_SCENE res://scenes/chapter1/kitchen.tscn
+FLOW_STAGE kitchen investigation
+AUDIT_CAPTURE 03-kitchen-investigation
+FLOW_HEARTBEAT kitchen investigation busy=false pos=(1119.074, 634.6934)
+FLOW_SCENE res://scenes/chapter1/living.tscn
+FLOW_STAGE living investigation
+AUDIT_CAPTURE 04-living-investigation
+FLOW_HEARTBEAT living investigation busy=false pos=(709.8032, 941.083)
+FLOW_SCENE res://scenes/chapter_02_dark_forest/forest_clearing.tscn
+FLOW_STAGE forest wake and wizard
+AUDIT_CAPTURE 05-forest-wake-and-wizard
+FLOW_HEARTBEAT forest wake and wizard busy=true pos=(836.1354, 632.7375)
+FLOW_HEARTBEAT forest wake and wizard busy=true pos=(836.1354, 632.7375)
+FLOW_HEARTBEAT forest wake and wizard busy=true pos=(836.1354, 632.7375)
+FLOW_SCENE res://scenes/chapter2/forest_path.tscn
+FLOW_STAGE find cave
+AUDIT_CAPTURE 06-find-cave
+FLOW_SCENE res://scenes/chapter2/cave.tscn
+FLOW_HEARTBEAT find cave busy=true pos=(734.8522, 686.6583)
+FLOW_STAGE real slime combat
+AUDIT_CAPTURE 07-real-slime-combat
+FLOW_HEARTBEAT real slime combat busy=true pos=(734.9754, 744.8223)
+FLOW_SCENE res://scenes/cabbage_act2/villa.tscn
+FLOW_STAGE boy exterior route
+AUDIT_CAPTURE 08-boy-exterior-route
+FLOW_SCENE res://scenes/cabbage_act2/path.tscn
+FLOW_HEARTBEAT boy exterior route busy=false pos=(761.068, 754.3947)
+FLOW_SCENE res://scenes/cabbage_act2/mushroom.tscn
+FLOW_STAGE mushroom password
+AUDIT_CAPTURE 09-mushroom-password
+FLOW_SCENE res://scenes/cabbage_act2/interior.tscn
+FLOW_STAGE collect four paper scraps
+AUDIT_CAPTURE 10-collect-four-paper-scraps
+FLOW_HEARTBEAT collect four paper scraps busy=false pos=(559.7604, 425.1441)
+FLOW_STAGE paper jigsaw
+AUDIT_CAPTURE 11-paper-jigsaw
+FLOW_STAGE table slide and acorn memory
+AUDIT_CAPTURE 12-table-slide-and-acorn-memory
+FLOW_HEARTBEAT table slide and acorn memory busy=true pos=(795.3852, 765.7535)
+FLOW_HEARTBEAT table slide and acorn memory busy=true pos=(795.3852, 765.7535)
+FLOW_SCENE res://scenes/finale/final_chapter.tscn
+FLOW_STAGE boy final forest path
+AUDIT_CAPTURE 13-boy-final-forest-path
+FLOW_HEARTBEAT boy final forest path busy=<null> pos=(0.0, 0.0)
+FLOW_SCENE res://scenes/chapter2/dark_path/dark_path.tscn
+FLOW_STAGE pig dark path and natural fall
+AUDIT_CAPTURE 14-pig-dark-path-and-natural-fall
+FLOW_HEARTBEAT pig dark path and natural fall busy=<null> pos=(0.0, 0.0)
+FLOW_SCENE res://scenes/finale/story_cave.tscn
+FLOW_STAGE physical platform route
+AUDIT_CAPTURE 15-physical-platform-route
+FLOW_HEARTBEAT physical platform route busy=<null> pos=(1924.457, 648.3851)
+FLOW_HEARTBEAT physical platform route busy=<null> pos=(4614.719, 576.4648)
+FLOW_HEARTBEAT physical platform route busy=<null> pos=(6146.895, 323.6871)
+FLOW_SCENE res://scenes/finale/final_chapter.tscn
+FLOW_STAGE reunion through credits
+AUDIT_CAPTURE 16-reunion-through-credits
+FINALE_PROGRESS pig_path pig_path distance=297.488099999999 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS pig_path pig_path distance=1147.45409999999 axis=1.0
+FINALE_PROGRESS pig_path pig_path distance=1997.42009999999 axis=1.0
+FINALE_PROGRESS pig_path pig_path distance=2847.38610000011 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS pig_path pig_path distance=3697.35210000024 axis=1.0
+FINALE_PROGRESS pig_path pig_path distance=4547.31810000038 axis=1.0
+FINALE_PROGRESS reunion_walk reunion_walk distance=296.071489999999 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic someone distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic first_question distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic hesitate distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic secret_question distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic memory_house distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic memory_gift distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic memory_trail distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic memory_cape distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic memory_secret distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic remember distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic remember_cups distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic remember_you distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic close_name distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic found_reply distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic wizard_return distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic things_remain distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic memory_objects distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic final_curse distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic step_forward distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic shared_joy distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic hearts_return distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic joy_burst distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic curse_broken distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic manor_restore distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic manor_restore distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic return_home distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic home_here distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic home_find distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic home_promise distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic walk_away distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic final_secret distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic final_reply distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic final_shot distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic black_pause distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic the_end distance=560.0 axis=1.0
+FULL_STORY_OK scenes=["res://scenes/bootstrap/main.tscn", "res://scenes/prologue/prologue.tscn", "res://scenes/chapter1/bedroom.tscn", "res://scenes/chapter1/kitchen.tscn", "res://scenes/chapter1/living.tscn", "res://scenes/chapter_02_dark_forest/forest_clearing.tscn", "res://scenes/chapter2/forest_path.tscn", "res://scenes/chapter2/cave.tscn", "res://scenes/cabbage_act2/villa.tscn", "res://scenes/cabbage_act2/path.tscn", "res://scenes/cabbage_act2/mushroom.tscn", "res://scenes/cabbage_act2/interior.tscn", "res://scenes/finale/final_chapter.tscn", "res://scenes/chapter2/dark_path/dark_path.tscn", "res://scenes/finale/story_cave.tscn", "res://scenes/finale/final_chapter.tscn"] fragments=["fragment_red_wrap_01"]

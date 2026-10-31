@@ -1,0 +1,72 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Condition "ret != noErr" is true. Returning: ""
+   at: get_system_ca_certificates (platform/macos/os_macos.mm:1035)
+FLOW_SCENE res://scenes/bootstrap/main.tscn
+FLOW_SCENE res://scenes/prologue/prologue.tscn
+FLOW_STAGE natural opening
+FLOW_HEARTBEAT natural opening busy=<null> pos=(0.0, 0.0)
+FLOW_SCENE res://scenes/chapter1/bedroom.tscn
+FLOW_HEARTBEAT natural opening busy=true pos=(610.0, 570.0)
+FLOW_STAGE bedroom investigation
+FLOW_SCENE res://scenes/chapter1/kitchen.tscn
+FLOW_STAGE kitchen investigation
+FLOW_SCENE res://scenes/chapter1/living.tscn
+FLOW_STAGE living investigation
+FLOW_SCENE res://scenes/chapter_02_dark_forest/forest_clearing.tscn
+FLOW_HEARTBEAT living investigation busy=true pos=(720.0, 715.0)
+FLOW_STAGE forest wake and wizard
+FLOW_HEARTBEAT forest wake and wizard busy=true pos=(836.1354, 632.7375)
+FLOW_SCENE res://scenes/chapter2/forest_path.tscn
+FLOW_STAGE find cave
+FLOW_SCENE res://scenes/chapter2/cave.tscn
+FLOW_STAGE real slime combat
+FLOW_HEARTBEAT real slime combat busy=false pos=(734.9761, 726.8223)
+FLOW_SCENE res://scenes/cabbage_act2/villa.tscn
+FLOW_STAGE boy exterior route
+FLOW_SCENE res://scenes/cabbage_act2/path.tscn
+FLOW_SCENE res://scenes/cabbage_act2/mushroom.tscn
+FLOW_STAGE mushroom password
+FLOW_SCENE res://scenes/cabbage_act2/interior.tscn
+FLOW_STAGE collect four paper scraps
+FLOW_HEARTBEAT collect four paper scraps busy=false pos=(558.3054, 370.8304)
+FLOW_STAGE paper jigsaw
+FLOW_STAGE table slide and acorn memory
+FLOW_HEARTBEAT table slide and acorn memory busy=true pos=(795.3852, 765.7535)
+FLOW_SCENE res://scenes/finale/final_chapter.tscn
+FLOW_STAGE boy final forest path
+FLOW_SCENE res://scenes/chapter2/dark_path/dark_path.tscn
+FLOW_STAGE pig dark path and natural fall
+FLOW_HEARTBEAT pig dark path and natural fall busy=<null> pos=(0.0, 0.0)
+FLOW_SCENE res://scenes/finale/story_cave.tscn
+FLOW_STAGE physical platform route
+FLOW_HEARTBEAT physical platform route busy=<null> pos=(4957.649, 605.3308)
+FLOW_SCENE res://scenes/finale/final_chapter.tscn
+FLOW_STAGE reunion through credits
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS pig_path pig_path distance=1300.5 axis=1.0
+FINALE_PROGRESS pig_path pig_path distance=3000.50000000003 axis=1.0
+FINALE_PROGRESS pig_path pig_path distance=4700.50000000002 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic first_reunion distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic secret_question distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic memory_together distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic memory_cups distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic remember_house distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic close_name distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic wizard_return distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic memory_objects distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic hold_hands distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic wizard_dissolve distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic manor_restore distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic home_walk distance=560.0 axis=1.0
+FLOW_HEARTBEAT reunion through credits busy=<null> pos=(0.0, 0.0)
+FINALE_PROGRESS cinematic home_promise distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic final_question distance=560.0 axis=1.0
+FINALE_PROGRESS cinematic ending_title distance=560.0 axis=1.0
+FULL_STORY_OK scenes=["res://scenes/bootstrap/main.tscn", "res://scenes/prologue/prologue.tscn", "res://scenes/chapter1/bedroom.tscn", "res://scenes/chapter1/kitchen.tscn", "res://scenes/chapter1/living.tscn", "res://scenes/chapter_02_dark_forest/forest_clearing.tscn", "res://scenes/chapter2/forest_path.tscn", "res://scenes/chapter2/cave.tscn", "res://scenes/cabbage_act2/villa.tscn", "res://scenes/cabbage_act2/path.tscn", "res://scenes/cabbage_act2/mushroom.tscn", "res://scenes/cabbage_act2/interior.tscn", "res://scenes/finale/final_chapter.tscn", "res://scenes/chapter2/dark_path/dark_path.tscn", "res://scenes/finale/story_cave.tscn", "res://scenes/finale/final_chapter.tscn"] fragments=["fragment_red_wrap_01"]
+WARNING: 16 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

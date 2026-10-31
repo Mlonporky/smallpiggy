@@ -1,0 +1,13 @@
+{
+  "baseline_files": 368,
+  "changed_existing_files": [
+    "README.md",
+    "WORKLOG.md",
+    "scenes/finale/reunion_expression.gd",
+    "scenes/finale/finale_actor.gd",
+    "docs/STORY_AND_ART_DIRECTION.md",
+    "docs/PROJECT_AUDIT_2026-10-30.md",
+    "docs/HANDOFF.md"
+  ],
+  "missing_files": []
+}

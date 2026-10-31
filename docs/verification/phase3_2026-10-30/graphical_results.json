@@ -1,0 +1,30 @@
+[
+  {
+    "test": "wrapping_keyboard_test",
+    "exit_code": 0,
+    "passed": true,
+    "log": "logs/wrapping-keyboard-graphical.log",
+    "scope": "three window sizes; keyboard/mouse handoff; room persistence"
+  },
+  {
+    "test": "platform_guidance_test",
+    "exit_code": 0,
+    "passed": true,
+    "log": "logs/platform-guidance-graphical.log",
+    "scope": "two window sizes; seeded locations; pause/R and exit guidance"
+  },
+  {
+    "test": "route_capture_cleanup_test",
+    "exit_code": 0,
+    "passed": true,
+    "log": "logs/route-capture-cleanup.log",
+    "scope": "rendering deliberately disabled; timeout callbacks 0 to 0"
+  },
+  {
+    "test": "all_fireflies_route_test",
+    "exit_code": 0,
+    "passed": true,
+    "log": "logs/all-fireflies-story-graphical.log",
+    "scope": "story physical route; 60/60, 2 secrets, 0 deaths; 89.7 seconds; save reload and exit"
+  }
+]

@@ -1,0 +1,118 @@
+{
+  "bins": [
+    {
+      "blocked": 0,
+      "counter": 119,
+      "post_draw": 119,
+      "process": 119,
+      "second": 0
+    },
+    {
+      "blocked": 0,
+      "counter": 239,
+      "post_draw": 239,
+      "process": 120,
+      "second": 1
+    },
+    {
+      "blocked": 0,
+      "counter": 359,
+      "post_draw": 359,
+      "process": 120,
+      "second": 2
+    },
+    {
+      "blocked": 0,
+      "counter": 479,
+      "post_draw": 479,
+      "process": 120,
+      "second": 3
+    },
+    {
+      "blocked": 0,
+      "counter": 599,
+      "post_draw": 599,
+      "process": 120,
+      "second": 4
+    },
+    {
+      "blocked": 0,
+      "counter": 719,
+      "post_draw": 719,
+      "process": 120,
+      "second": 5
+    },
+    {
+      "blocked": 0,
+      "counter": 839,
+      "post_draw": 839,
+      "process": 120,
+      "second": 6
+    },
+    {
+      "blocked": 0,
+      "counter": 959,
+      "post_draw": 959,
+      "process": 120,
+      "second": 7
+    },
+    {
+      "blocked": 0,
+      "counter": 1079,
+      "post_draw": 1079,
+      "process": 120,
+      "second": 8
+    },
+    {
+      "blocked": 0,
+      "counter": 1199,
+      "post_draw": 1199,
+      "process": 120,
+      "second": 9
+    },
+    {
+      "blocked": 0,
+      "counter": 1319,
+      "post_draw": 1319,
+      "process": 120,
+      "second": 10
+    },
+    {
+      "blocked": 0,
+      "counter": 1439,
+      "post_draw": 1439,
+      "process": 120,
+      "second": 11
+    },
+    {
+      "blocked": 0,
+      "counter": 1440,
+      "post_draw": 1440,
+      "process": 1,
+      "second": 12
+    }
+  ],
+  "blocked_process_frames": 0,
+  "draw_fps": 119.995820145598,
+  "draw_max_ms": 14.269,
+  "draw_p95_ms": 13.142,
+  "engine_drawn": 1440,
+  "low_processor": false,
+  "max_fps": 0,
+  "post_draw": 1440,
+  "process_frames": 1440,
+  "render_loop": true,
+  "screen_hz": 60.0,
+  "seconds": 12.000418,
+  "subject": "restoration",
+  "transitions": [
+    {
+      "can_draw": true,
+      "focused": true,
+      "mode": 0,
+      "seconds": 0.003762
+    }
+  ],
+  "variant": "foreground",
+  "vsync": 1
+}

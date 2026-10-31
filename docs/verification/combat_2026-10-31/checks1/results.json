@@ -1,0 +1,30 @@
+[
+  {
+    "test": "chapter2_combat_test",
+    "passed": false,
+    "exit_code": 1,
+    "seconds": 1.01,
+    "log": "chapter2_combat_test.log"
+  },
+  {
+    "test": "chapter2_pause_menu_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.27,
+    "log": "chapter2_pause_menu_test.log"
+  },
+  {
+    "test": "chapter2_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.7,
+    "log": "chapter2_test.log"
+  },
+  {
+    "test": "chapter1_navigation_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.9,
+    "log": "chapter1_navigation_test.log"
+  }
+]

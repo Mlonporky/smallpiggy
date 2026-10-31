@@ -1,0 +1,21 @@
+{
+  "rate": 1.5,
+  "seconds": 59.0,
+  "frames": 2601900,
+  "sample_rate": 44100,
+  "peak": 0.596038818359375,
+  "rms": 0.09205196705442872,
+  "clipped_samples": 0,
+  "original_sha256": "e28c0735a4dda742e0455028548d8d687f26329f97c5f1a8097231c432ec2b12",
+  "fast_sha256": "178bfdd97942e1b07f5ab147fb30dc8436a4920f3084def54e08e1aadc119b07",
+  "pitch_probe": {
+    "source_seconds": 6,
+    "output_seconds": 4.0,
+    "measured_hz": {
+      "0.5": 440.0,
+      "1.5": 440.0,
+      "2.5": 880.0,
+      "3.5": 880.0
+    }
+  }
+}

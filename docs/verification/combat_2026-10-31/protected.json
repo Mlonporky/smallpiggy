@@ -1,0 +1,18 @@
+{
+  "assets/chapter2/pig_unified/cape.png": {
+    "before": "dd78745ef65c83a0ddf65d856af8adba3c880f3b969951745caea8c83140dda1",
+    "after": "dd78745ef65c83a0ddf65d856af8adba3c880f3b969951745caea8c83140dda1"
+  },
+  "assets/chapter2/pig_unified/armed.png": {
+    "before": "a1d3106787c8437cbca092c5af78be32aa70b36d14260dd41277c8b4f2b08ff3",
+    "after": "a1d3106787c8437cbca092c5af78be32aa70b36d14260dd41277c8b4f2b08ff3"
+  },
+  "assets/chapter2/slime.png": {
+    "before": "557adbd56556205787ccbc33ee96cea50c08559d5f4e22763870d4f81665e039",
+    "after": "557adbd56556205787ccbc33ee96cea50c08559d5f4e22763870d4f81665e039"
+  },
+  "scenes/animation_studies/editable_pig.tscn": {
+    "before": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54",
+    "after": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54"
+  }
+}

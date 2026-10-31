@@ -1,0 +1,11 @@
+{
+  "frames": 810,
+  "fps": 30,
+  "audio_rate": 48000,
+  "audio_sample_frames": 1296000,
+  "audio_channels": 2,
+  "audio_sample_bytes": 4,
+  "audio_seconds": 27.0,
+  "first_frame_initialized": true,
+  "renderer_completion_marker": "FINALE_REUNION_RENDER_OK frames=810 finished=true"
+}

@@ -142,6 +142,7 @@ func _ready() -> void:
    code_input.grab_focus())
  digit_buttons.append(backspace)
  audio = AudioStreamPlayer.new()
+ audio.bus = "Effects"
  add_child(audio)
  get_viewport().size_changed.connect(layout)
  layout()
@@ -236,7 +237,7 @@ func submit(_text: String = "") -> void:
   return
  status.text = ""
  create_tween().tween_property(heading,"modulate:a",0.0,0.2)
- await get_tree().create_timer(0.25).timeout
+ await get_tree().create_timer(0.25, false).timeout
  sound("open")
  motion = create_tween()
  motion.tween_property(shackle,"position:y",157.0,0.30).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -244,7 +245,7 @@ func submit(_text: String = "") -> void:
  await motion.finished
  opened = true
  status.text = "锁开了"
- await get_tree().create_timer(0.75).timeout
+ await get_tree().create_timer(0.75, false).timeout
  resolved = true
  finished.emit(true)
 

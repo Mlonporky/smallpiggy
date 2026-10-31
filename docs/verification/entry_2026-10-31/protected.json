@@ -1,0 +1,22 @@
+{
+  "scenes/animation_studies/editable_pig.tscn": {
+    "same": true,
+    "sha256": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54"
+  },
+  "assets/chapter1/boy.png": {
+    "same": true,
+    "sha256": "c9d2a673a6842213608d89f5a2e905e52971c399f55305672679ab2147f29693"
+  },
+  "assets/finale/cabbage_parts_v1.png": {
+    "same": true,
+    "sha256": "d730f861fb25d962e884870506fed00356628c90e71beb7da379621f0fd401de"
+  },
+  "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json.bak": {
+    "same": true,
+    "sha256": "3870a9836908dcd9619ce1c9e1ee601f7b7e5e7e137bc697d0f7e4d162dcc17e"
+  },
+  "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json": {
+    "same": true,
+    "sha256": "4473b24cda3d06eef0df574a365c4dcbf4a8465f64755ed86b2aa5e1a92cf2c9"
+  }
+}

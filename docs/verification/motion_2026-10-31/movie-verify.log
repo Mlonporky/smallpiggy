@@ -1,0 +1,91 @@
+tools/verify_scene_transition_movie.swift:9:25: warning: 'tracks(withMediaType:)' was deprecated in macOS 13.0: Use loadTracks(withMediaType:) instead [#DeprecatedDeclaration]
+ 7 | let folder = URL(fileURLWithPath: CommandLine.arguments[2])
+ 8 | try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+ 9 | guard let track = asset.tracks(withMediaType: .video).first else { fatalError("Missing video") }
+   |                         `- warning: 'tracks(withMediaType:)' was deprecated in macOS 13.0: Use loadTracks(withMediaType:) instead [#DeprecatedDeclaration]
+10 | guard asset.tracks(withMediaType: .audio).isEmpty else { fatalError("This sample must be silent") }
+11 | let duration = CMTimeGetSeconds(asset.duration)
+
+tools/verify_scene_transition_movie.swift:10:13: warning: 'tracks(withMediaType:)' was deprecated in macOS 13.0: Use loadTracks(withMediaType:) instead [#DeprecatedDeclaration]
+ 8 | try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+ 9 | guard let track = asset.tracks(withMediaType: .video).first else { fatalError("Missing video") }
+10 | guard asset.tracks(withMediaType: .audio).isEmpty else { fatalError("This sample must be silent") }
+   |             `- warning: 'tracks(withMediaType:)' was deprecated in macOS 13.0: Use loadTracks(withMediaType:) instead [#DeprecatedDeclaration]
+11 | let duration = CMTimeGetSeconds(asset.duration)
+12 | guard abs(duration - 22) < 0.002 else { fatalError("Unexpected duration: \(duration)") }
+
+tools/verify_scene_transition_movie.swift:11:39: warning: 'duration' was deprecated in macOS 13.0: Use load(.duration) instead [#DeprecatedDeclaration]
+ 9 | guard let track = asset.tracks(withMediaType: .video).first else { fatalError("Missing video") }
+10 | guard asset.tracks(withMediaType: .audio).isEmpty else { fatalError("This sample must be silent") }
+11 | let duration = CMTimeGetSeconds(asset.duration)
+   |                                       `- warning: 'duration' was deprecated in macOS 13.0: Use load(.duration) instead [#DeprecatedDeclaration]
+12 | guard abs(duration - 22) < 0.002 else { fatalError("Unexpected duration: \(duration)") }
+13 | let reader = try AVAssetReader(asset: asset)
+
+tools/verify_scene_transition_movie.swift:15:8: warning: 'add' was deprecated in macOS 27.0: Use the appropriate AVAssetReader.outputProvider(for:...) overload for your output and optional adaptor instead [#DeprecatedDeclaration]
+13 | let reader = try AVAssetReader(asset: asset)
+14 | let output = AVAssetReaderTrackOutput(track: track, outputSettings: [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA])
+15 | reader.add(output)
+   |        `- warning: 'add' was deprecated in macOS 27.0: Use the appropriate AVAssetReader.outputProvider(for:...) overload for your output and optional adaptor instead [#DeprecatedDeclaration]
+16 | guard reader.startReading() else { fatalError("Cannot decode") }
+17 | var frames = 0
+
+tools/verify_scene_transition_movie.swift:16:14: warning: 'startReading()' was deprecated in macOS 27.0: Use start() instead [#DeprecatedDeclaration]
+14 | let output = AVAssetReaderTrackOutput(track: track, outputSettings: [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA])
+15 | reader.add(output)
+16 | guard reader.startReading() else { fatalError("Cannot decode") }
+   |              `- warning: 'startReading()' was deprecated in macOS 27.0: Use start() instead [#DeprecatedDeclaration]
+17 | var frames = 0
+18 | var error = 0.0
+
+tools/verify_scene_transition_movie.swift:20:27: warning: 'copyNextSampleBuffer()' was deprecated in macOS 27.0: Use AVAssetReaderOutput.Provider.next() instead [#DeprecatedDeclaration]
+18 | var error = 0.0
+19 | var previous = -1.0
+20 | while let buffer = output.copyNextSampleBuffer() {
+   |                           `- warning: 'copyNextSampleBuffer()' was deprecated in macOS 27.0: Use AVAssetReaderOutput.Provider.next() instead [#DeprecatedDeclaration]
+21 |  let time = CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(buffer))
+22 |  guard CMSampleBufferGetImageBuffer(buffer) != nil, time > previous else { fatalError("Invalid video frame") }
+
+tools/verify_scene_transition_movie.swift:34:28: warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+32 | for seconds in [0.8, 4.1, 7.2, 11.07, 14.5, 19.4] {
+33 |  var actual = CMTime.zero
+34 |  let frame = try generator.copyCGImage(at: CMTime(seconds: seconds, preferredTimescale: 600), actualTime: &actual)
+   |                            `- warning: 'copyCGImage(at:actualTime:)' was deprecated in macOS 15.0: Use generateCGImageAsynchronouslyForTime:completionHandler: instead [#DeprecatedDeclaration]
+35 |  let rep = NSBitmapImageRep(cgImage: frame)
+36 |  try rep.representation(using: .png, properties: [:])!.write(to: folder.appendingPathComponent("decoded_\(seconds).png"))
+
+tools/verify_scene_transition_movie.swift:38:91: warning: 'nominalFrameRate' was deprecated in macOS 13.0: Use load(.nominalFrameRate) instead [#DeprecatedDeclaration]
+36 |  try rep.representation(using: .png, properties: [:])!.write(to: folder.appendingPathComponent("decoded_\(seconds).png"))
+37 | }
+38 | let report: [String: Any] = ["duration": duration, "decoded_frames": frames, "fps": track.nominalFrameRate, "width": track.naturalSize.width, "height": track.naturalSize.height, "maximum_timing_error": error, "audio_tracks": 0, "note": "Offline export; does not establish runtime display smoothness."]
+   |                                                                                           `- warning: 'nominalFrameRate' was deprecated in macOS 13.0: Use load(.nominalFrameRate) instead [#DeprecatedDeclaration]
+39 | let data = try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
+40 | try data.write(to: folder.appendingPathComponent("movie_validation.json"))
+
+tools/verify_scene_transition_movie.swift:38:124: warning: 'naturalSize' was deprecated in macOS 13.0: Use load(.naturalSize) instead [#DeprecatedDeclaration]
+36 |  try rep.representation(using: .png, properties: [:])!.write(to: folder.appendingPathComponent("decoded_\(seconds).png"))
+37 | }
+38 | let report: [String: Any] = ["duration": duration, "decoded_frames": frames, "fps": track.nominalFrameRate, "width": track.naturalSize.width, "height": track.naturalSize.height, "maximum_timing_error": error, "audio_tracks": 0, "note": "Offline export; does not establish runtime display smoothness."]
+   |                                                                                                                            `- warning: 'naturalSize' was deprecated in macOS 13.0: Use load(.naturalSize) instead [#DeprecatedDeclaration]
+39 | let data = try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
+40 | try data.write(to: folder.appendingPathComponent("movie_validation.json"))
+
+tools/verify_scene_transition_movie.swift:38:159: warning: 'naturalSize' was deprecated in macOS 13.0: Use load(.naturalSize) instead [#DeprecatedDeclaration]
+36 |  try rep.representation(using: .png, properties: [:])!.write(to: folder.appendingPathComponent("decoded_\(seconds).png"))
+37 | }
+38 | let report: [String: Any] = ["duration": duration, "decoded_frames": frames, "fps": track.nominalFrameRate, "width": track.naturalSize.width, "height": track.naturalSize.height, "maximum_timing_error": error, "audio_tracks": 0, "note": "Offline export; does not establish runtime display smoothness."]
+   |                                                                                                                                                               `- warning: 'naturalSize' was deprecated in macOS 13.0: Use load(.naturalSize) instead [#DeprecatedDeclaration]
+39 | let data = try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
+40 | try data.write(to: folder.appendingPathComponent("movie_validation.json"))
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+SCENE_TRANSITION_MOVIE_VERIFIED {
+  "audio_tracks" : 0,
+  "decoded_frames" : 660,
+  "duration" : 22,
+  "fps" : 30.000001907348633,
+  "height" : 648,
+  "maximum_timing_error" : 0,
+  "note" : "Offline export; does not establish runtime display smoothness.",
+  "width" : 1152
+}

@@ -1,0 +1,319 @@
+{
+  "bins": [
+    {
+      "blocked": 0,
+      "counter": 120,
+      "post_draw": 120,
+      "process": 120,
+      "second": 0
+    },
+    {
+      "blocked": 0,
+      "counter": 238,
+      "post_draw": 238,
+      "process": 118,
+      "second": 1
+    },
+    {
+      "blocked": 0,
+      "counter": 358,
+      "post_draw": 358,
+      "process": 120,
+      "second": 2
+    },
+    {
+      "blocked": 0,
+      "counter": 478,
+      "post_draw": 478,
+      "process": 120,
+      "second": 3
+    },
+    {
+      "blocked": 59,
+      "counter": 480,
+      "post_draw": 480,
+      "process": 60,
+      "second": 4
+    },
+    {
+      "blocked": 145,
+      "counter": 480,
+      "post_draw": 480,
+      "process": 145,
+      "second": 5
+    },
+    {
+      "blocked": 145,
+      "counter": 480,
+      "post_draw": 480,
+      "process": 145,
+      "second": 6
+    },
+    {
+      "blocked": 145,
+      "counter": 480,
+      "post_draw": 480,
+      "process": 145,
+      "second": 7
+    },
+    {
+      "blocked": 1,
+      "counter": 533,
+      "post_draw": 533,
+      "process": 55,
+      "second": 8
+    },
+    {
+      "blocked": 0,
+      "counter": 653,
+      "post_draw": 653,
+      "process": 120,
+      "second": 9
+    },
+    {
+      "blocked": 0,
+      "counter": 773,
+      "post_draw": 773,
+      "process": 120,
+      "second": 10
+    },
+    {
+      "blocked": 0,
+      "counter": 893,
+      "post_draw": 893,
+      "process": 120,
+      "second": 11
+    },
+    {
+      "blocked": 0,
+      "counter": 894,
+      "post_draw": 894,
+      "process": 1,
+      "second": 12
+    }
+  ],
+  "blocked_process_frames": 495,
+  "draw_fps": 74.4189577550048,
+  "draw_max_ms": 3968.922,
+  "draw_p95_ms": 13.155,
+  "engine_drawn": 894,
+  "low_processor": false,
+  "max_fps": 0,
+  "post_draw": 894,
+  "process_frames": 1389,
+  "render_loop": true,
+  "rendering": {
+    "counters_agree": true,
+    "draw_intervals": {
+      "max_ms": 3968.92,
+      "p50_ms": 9.299,
+      "p95_ms": 13.155,
+      "samples": 893
+    },
+    "draw_submissions_per_second": 74.424242323335,
+    "draw_to_process_ratio": 0.643628509719222,
+    "drawable_only_draw_intervals": {
+      "max_ms": 584.145,
+      "p50_ms": 9.299,
+      "p95_ms": 13.15,
+      "samples": 892
+    },
+    "engine_drawn": 894,
+    "frame_post_draw_count": 894,
+    "long_draw_intervals": [
+      {
+        "beat": "restoration",
+        "crossed_nondrawable_window": false,
+        "gap_ms": 584.145,
+        "seconds": 4.596308
+      },
+      {
+        "beat": "restoration",
+        "crossed_nondrawable_window": true,
+        "gap_ms": 3968.92,
+        "seconds": 8.565228
+      }
+    ],
+    "max_fps": 0,
+    "note": "Render submissions, not monitor presentation FPS; coverage validity is not a smoothness pass.",
+    "per_second": [
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 0
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 118,
+        "process": 118,
+        "second": 1
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 2
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 3
+      },
+      {
+        "blocked_process": 59,
+        "post_draw": 2,
+        "process": 60,
+        "second": 4
+      },
+      {
+        "blocked_process": 145,
+        "post_draw": 0,
+        "process": 145,
+        "second": 5
+      },
+      {
+        "blocked_process": 145,
+        "post_draw": 0,
+        "process": 145,
+        "second": 6
+      },
+      {
+        "blocked_process": 145,
+        "post_draw": 0,
+        "process": 145,
+        "second": 7
+      },
+      {
+        "blocked_process": 1,
+        "post_draw": 53,
+        "process": 55,
+        "second": 8
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 9
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 10
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 11
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 1,
+        "process": 1,
+        "second": 12
+      }
+    ],
+    "process_frames": 1389,
+    "process_intervals": {
+      "max_ms": 589.277,
+      "p50_ms": 6.902,
+      "p95_ms": 13.012,
+      "samples": 1389
+    },
+    "render_coverage_valid": false,
+    "rendering_driver": "opengl3",
+    "rendering_method": "gl_compatibility",
+    "screen_hz": 60.0,
+    "seconds": 12.012215,
+    "vsync": 1,
+    "window_drawable_seconds": 8.053023,
+    "window_nondrawable_seconds": 3.959141,
+    "window_transitions": [
+      {
+        "beat": "",
+        "can_draw": true,
+        "focused": true,
+        "low_processor": false,
+        "mode": 0,
+        "render_loop": true,
+        "seconds": 0.0
+      },
+      {
+        "beat": "restoration",
+        "can_draw": true,
+        "focused": false,
+        "low_processor": false,
+        "mode": 1,
+        "render_loop": true,
+        "seconds": 4.589115
+      },
+      {
+        "beat": "restoration",
+        "can_draw": false,
+        "focused": false,
+        "low_processor": false,
+        "mode": 1,
+        "render_loop": true,
+        "seconds": 4.601244
+      },
+      {
+        "beat": "restoration",
+        "can_draw": false,
+        "focused": true,
+        "low_processor": false,
+        "mode": 0,
+        "render_loop": true,
+        "seconds": 8.538637
+      },
+      {
+        "beat": "restoration",
+        "can_draw": true,
+        "focused": true,
+        "low_processor": false,
+        "mode": 0,
+        "render_loop": true,
+        "seconds": 8.560385
+      }
+    ]
+  },
+  "screen_hz": 60.0,
+  "seconds": 12.013068,
+  "subject": "restoration",
+  "transitions": [
+    {
+      "can_draw": true,
+      "focused": true,
+      "mode": 0,
+      "seconds": 0.012305
+    },
+    {
+      "can_draw": true,
+      "focused": false,
+      "mode": 1,
+      "seconds": 4.012248
+    },
+    {
+      "can_draw": false,
+      "focused": false,
+      "mode": 1,
+      "seconds": 4.601255
+    },
+    {
+      "can_draw": false,
+      "focused": true,
+      "mode": 0,
+      "seconds": 8.006474
+    },
+    {
+      "can_draw": true,
+      "focused": true,
+      "mode": 0,
+      "seconds": 8.560395
+    }
+  ],
+  "variant": "cycle",
+  "vsync": 1
+}

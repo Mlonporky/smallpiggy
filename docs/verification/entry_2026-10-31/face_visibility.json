@@ -1,0 +1,61 @@
+[
+  {
+    "old_mixed_layers_occluded_face_samples": 893
+  },
+  {
+    "beat": "home_here",
+    "cabbage_layer": 32,
+    "occluded_face_samples": 0,
+    "pig_layer": 20,
+    "time": 1.0
+  },
+  {
+    "beat": "home_promise",
+    "cabbage_layer": 32,
+    "occluded_face_samples": 0,
+    "pig_layer": 20,
+    "time": 1.0
+  },
+  {
+    "beat": "walk_away",
+    "cabbage_layer": 32,
+    "occluded_face_samples": 0,
+    "pig_layer": 20,
+    "time": 0.4
+  },
+  {
+    "beat": "walk_away",
+    "cabbage_layer": 32,
+    "occluded_face_samples": 0,
+    "pig_layer": 20,
+    "time": 1.5
+  },
+  {
+    "beat": "walk_away",
+    "cabbage_layer": 20,
+    "occluded_face_samples": 0,
+    "pig_layer": 8,
+    "time": 2.6
+  },
+  {
+    "beat": "final_secret",
+    "cabbage_layer": 20,
+    "occluded_face_samples": 0,
+    "pig_layer": 8,
+    "time": 1.0
+  },
+  {
+    "beat": "leave_frame",
+    "cabbage_layer": 20,
+    "occluded_face_samples": 0,
+    "pig_layer": 8,
+    "time": 0.1
+  },
+  {
+    "beat": "leave_frame",
+    "cabbage_layer": 20,
+    "occluded_face_samples": 0,
+    "pig_layer": 8,
+    "time": 0.6
+  }
+]

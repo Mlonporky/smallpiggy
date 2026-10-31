@@ -1,0 +1,1478 @@
+{
+  "beats": [
+    "cabbage_path",
+    "reunion_walk",
+    "someone",
+    "first_reunion",
+    "first_question",
+    "red_cape",
+    "cape_flash",
+    "hesitate",
+    "secret_name",
+    "secret_question",
+    "secret_pause",
+    "secret_phrase",
+    "memory_house",
+    "memory_together",
+    "memory_gift",
+    "memory_trail",
+    "memory_cape",
+    "memory_cups",
+    "memory_secret",
+    "remember_name",
+    "remember",
+    "remember_house",
+    "remember_cups",
+    "remember_gift",
+    "remember_you",
+    "reunion_close",
+    "close_name",
+    "found",
+    "found_reply",
+    "reunion_rest",
+    "wizard_return",
+    "protect",
+    "things_remain",
+    "memory_objects",
+    "final_curse",
+    "joy_failing",
+    "step_forward",
+    "reach_hand",
+    "hold_hands",
+    "shared_joy",
+    "hearts_return",
+    "joy_burst",
+    "wizard_dissolve",
+    "curse_broken",
+    "light_travels",
+    "manor_restore",
+    "return_home",
+    "home_here",
+    "home_walk",
+    "home_find",
+    "home_promise",
+    "home_seek",
+    "walk_away",
+    "final_secret",
+    "final_question",
+    "final_reply",
+    "leave_frame",
+    "final_shot",
+    "fade_out",
+    "black_pause",
+    "ending_title",
+    "the_end",
+    "credits"
+  ],
+  "frames_over_35ms": [
+    {
+      "beat": "remember_you",
+      "beat_time": 0.0,
+      "draw_calls": 45.0,
+      "engine_process_ms": 14.384,
+      "frame_ms": 44.595
+    }
+  ],
+  "max_ms": 44.595,
+  "p50_ms": 9.39,
+  "p95_ms": 13.085,
+  "preview_isolation": true,
+  "rendered_frames": 26586,
+  "rendering": {
+    "counters_agree": true,
+    "draw_intervals": {
+      "max_ms": 44.55,
+      "p50_ms": 9.39,
+      "p95_ms": 13.073,
+      "samples": 26585
+    },
+    "draw_submissions_per_second": 119.586471008818,
+    "draw_to_process_ratio": 1.0,
+    "drawable_only_draw_intervals": {
+      "max_ms": 44.55,
+      "p50_ms": 9.39,
+      "p95_ms": 13.073,
+      "samples": 26585
+    },
+    "engine_drawn": 26586,
+    "frame_post_draw_count": 26586,
+    "long_draw_intervals": [
+      {
+        "beat": "remember_gift",
+        "crossed_nondrawable_window": false,
+        "gap_ms": 44.55,
+        "seconds": 103.681224
+      }
+    ],
+    "max_fps": 0,
+    "note": "Render submissions, not monitor presentation FPS; coverage validity is not a smoothness pass.",
+    "per_second": [
+      {
+        "blocked_process": 0,
+        "post_draw": 118,
+        "process": 118,
+        "second": 0
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 1
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 2
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 3
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 4
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 5
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 6
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 7
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 8
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 9
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 10
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 11
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 12
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 13
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 14
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 15
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 16
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 17
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 18
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 19
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 20
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 21
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 22
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 23
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 24
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 25
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 26
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 27
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 28
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 29
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 30
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 31
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 32
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 33
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 34
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 35
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 36
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 37
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 38
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 39
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 40
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 41
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 42
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 43
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 44
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 45
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 46
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 47
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 48
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 49
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 50
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 51
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 52
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 53
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 54
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 55
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 56
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 57
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 58
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 59
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 60
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 61
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 62
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 63
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 64
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 65
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 66
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 67
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 68
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 69
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 70
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 71
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 72
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 73
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 74
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 75
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 76
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 77
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 119,
+        "process": 119,
+        "second": 78
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 79
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 80
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 81
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 82
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 83
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 84
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 85
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 86
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 87
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 88
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 89
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 90
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 91
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 92
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 93
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 94
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 95
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 96
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 118,
+        "process": 118,
+        "second": 97
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 98
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 99
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 100
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 118,
+        "process": 118,
+        "second": 101
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 102
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 116,
+        "process": 116,
+        "second": 103
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 104
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 105
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 106
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 107
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 108
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 109
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 110
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 111
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 112
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 113
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 114
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 115
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 116
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 117
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 118,
+        "process": 118,
+        "second": 118
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 119
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 120
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 121
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 122
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 123
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 124
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 125
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 126
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 127
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 128
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 129
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 130
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 131
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 132
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 133
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 134
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 135
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 136
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 137
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 138
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 139
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 140
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 141
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 142
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 143
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 144
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 145
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 146
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 147
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 148
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 149
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 150
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 151
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 152
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 153
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 154
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 155
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 87,
+        "process": 87,
+        "second": 156
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 74,
+        "process": 74,
+        "second": 157
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 158
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 159
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 160
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 161
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 162
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 163
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 164
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 165
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 166
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 167
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 168
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 169
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 170
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 171
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 172
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 173
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 174
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 175
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 176
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 177
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 178
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 179
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 180
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 181
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 182
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 183
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 184
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 185
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 186
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 187
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 188
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 189
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 190
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 191
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 192
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 193
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 194
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 195
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 196
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 197
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 198
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 199
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 200
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 201
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 202
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 203
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 204
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 205
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 206
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 207
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 208
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 209
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 210
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 211
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 212
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 213
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 214
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 215
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 216
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 217
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 218
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 219
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 220
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 221
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 38,
+        "process": 38,
+        "second": 222
+      }
+    ],
+    "process_frames": 26586,
+    "process_intervals": {
+      "max_ms": 44.585,
+      "p50_ms": 9.38,
+      "p95_ms": 13.077,
+      "samples": 26586
+    },
+    "render_coverage_valid": true,
+    "rendering_driver": "opengl3",
+    "rendering_method": "gl_compatibility",
+    "screen_hz": 60.0,
+    "seconds": 222.316118,
+    "vsync": 1,
+    "window_drawable_seconds": 222.315799,
+    "window_nondrawable_seconds": 0.0,
+    "window_transitions": [
+      {
+        "beat": "",
+        "can_draw": true,
+        "focused": true,
+        "low_processor": false,
+        "mode": 0,
+        "render_loop": true,
+        "seconds": 0.0
+      }
+    ]
+  },
+  "samples": 26586,
+  "seconds": 222.336338
+}

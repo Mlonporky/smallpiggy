@@ -15,7 +15,8 @@ var test_mode := false
 var choosing := false
 var heart_frames: Array[Rect2]
 var heart_sheet := preload("res://assets/chapter1/heart.png")
-const HELP := "WASD / 方向键\n移动\n\n靠近后点击物品\nE / 空格 调查\nF5 保存\n\n微光标记\n值得调查的物品\n\n走近门口微光处\n选择目的地"
+const HINTS = preload("res://ui/control_hints.gd")
+const HELP := "WASD / 方向键\n移动\n\n靠近后点击物品\nE / 空格 调查\nF5 保存\nEsc 菜单\nF1 设置与操作\n\n微光标记\n值得调查的物品"
 
 func _ready() -> void:
 	layer = 20
@@ -48,7 +49,7 @@ func _ready() -> void:
 	companion = closeup.duplicate()
 	add_child(companion)
 	close_hint = label(Vector2.ZERO,18)
-	close_hint.text = "点击 / E / 空格　收起"
+	close_hint.text = HINTS.CLOSEUP
 	close_hint.visible = false
 	menu = VBoxContainer.new()
 	menu.add_theme_constant_override("separation",12)
@@ -64,6 +65,8 @@ func label(pos: Vector2, font_size: int) -> Label:
 	result.add_theme_font_size_override("font_size",font_size)
 	result.add_theme_color_override("font_color",Color("f5e4c5"))
 	result.add_theme_color_override("font_shadow_color",Color("30271f"))
+	result.add_theme_color_override("font_outline_color",Color("211b19"))
+	result.add_theme_constant_override("outline_size",3)
 	result.add_theme_constant_override("shadow_offset_x",1)
 	result.add_theme_constant_override("shadow_offset_y",2)
 	add_child(result)
@@ -78,7 +81,9 @@ func layout() -> void:
 		closeup.size = Vector2(size.x*0.41,size.y-130)
 		companion.position = Vector2(size.x*0.51,40)
 		companion.size = closeup.size
-	close_hint.position = Vector2(size.x*0.5-70,size.y-56)
+	close_hint.position = Vector2(24,size.y-56)
+	close_hint.size.x = size.x-48
+	close_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	menu.size.x = minf(480.0,size.x-48.0)
 	menu.position = Vector2((size.x-menu.size.x)*0.5,maxf(24.0,(size.y-menu.get_combined_minimum_size().y)*0.5))
 
@@ -101,7 +106,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		choice = "cancel"
 		get_viewport().set_input_as_handled()
 		return
-	if inspecting and (event.is_action_pressed("interact") or event.is_action_pressed("ui_accept")):
+	if inspecting and (event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel")):
 		inspecting = false
 		get_viewport().set_input_as_handled()
 
@@ -134,13 +139,24 @@ func hide_closeup() -> void:
 	closeup.visible = false
 	close_hint.visible = false
 
+func reveal_room(fast: bool) -> void:
+	# Let the wide view emerge under the last waking close-up instead of cutting
+	# from the pictured bed straight to a standing actor in one frame.
+	var dissolve := AppSettings.story_tween(self).set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	for item in [closeup,shade]:
+		dissolve.tween_property(item,"modulate:a",0.0,0.01 if fast else .45)
+	await dissolve.finished
+	hide_closeup()
+	closeup.modulate.a=1.0
+	shade.modulate.a=1.0
+
 func flash(fast: bool, peak := 0.65) -> void:
 	var light := ColorRect.new()
 	light.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	light.color = Color(1.0,0.96,0.85,0)
 	light.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(light)
-	var tween := create_tween()
+	var tween := AppSettings.story_tween(self)
 	tween.tween_property(light,"color:a",peak,0.01 if fast else 0.16)
 	tween.tween_property(light,"color:a",0.0,0.01 if fast else 0.6)
 	await tween.finished
@@ -152,7 +168,7 @@ func fade_from_black(fast: bool) -> void:
 	black.color = Color(0.015,0.012,0.01,1)
 	black.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(black)
-	var tween := create_tween()
+	var tween := AppSettings.story_tween(self)
 	tween.tween_property(black,"color:a",0,0.01 if fast else 1.1)
 	await tween.finished
 	black.queue_free()

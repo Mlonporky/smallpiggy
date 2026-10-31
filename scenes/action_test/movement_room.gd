@@ -272,6 +272,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		paused = not paused
 		player.paused = paused
 		pause_notice.visible = paused
+		for child in get_children():
+			if child.has_method("set_audio_paused"): child.set_audio_paused(paused)
 	elif event.keycode == KEY_R:
 		get_tree().reload_current_scene()
 	elif event.keycode == KEY_F3:

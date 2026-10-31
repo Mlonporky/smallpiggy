@@ -1,0 +1,12 @@
+[
+  {
+    "test": "restart-write",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "test": "restart-read",
+    "passed": true,
+    "exit_code": 0
+  }
+]

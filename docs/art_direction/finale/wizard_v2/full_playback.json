@@ -1,0 +1,120 @@
+{
+  "beats": [
+    "cabbage_path",
+    "reunion_walk",
+    "someone",
+    "first_reunion",
+    "first_question",
+    "red_cape",
+    "cape_flash",
+    "hesitate",
+    "secret_name",
+    "secret_question",
+    "secret_pause",
+    "secret_phrase",
+    "memory_house",
+    "memory_together",
+    "memory_gift",
+    "memory_trail",
+    "memory_cape",
+    "memory_cups",
+    "memory_secret",
+    "remember_name",
+    "remember",
+    "remember_house",
+    "remember_cups",
+    "remember_gift",
+    "remember_you",
+    "reunion_close",
+    "close_name",
+    "found",
+    "found_reply",
+    "reunion_rest",
+    "wizard_return",
+    "protect",
+    "things_remain",
+    "memory_objects",
+    "final_curse",
+    "joy_failing",
+    "step_forward",
+    "reach_hand",
+    "hold_hands",
+    "shared_joy",
+    "hearts_return",
+    "joy_burst",
+    "wizard_dissolve",
+    "curse_broken",
+    "light_travels",
+    "manor_restore",
+    "return_home",
+    "home_here",
+    "home_walk",
+    "home_find",
+    "home_promise",
+    "home_seek",
+    "walk_away",
+    "final_secret",
+    "final_question",
+    "final_reply",
+    "leave_frame",
+    "final_shot",
+    "fade_out",
+    "black_pause",
+    "ending_title",
+    "the_end",
+    "credits"
+  ],
+  "frames_over_35ms": [
+    {
+      "beat": "pig_path",
+      "beat_time": 0.168350333333333,
+      "frame_ms": 39.421
+    },
+    {
+      "beat": "pig_path",
+      "beat_time": 0.638373333333333,
+      "frame_ms": 59.522
+    },
+    {
+      "beat": "someone",
+      "beat_time": 2.828687,
+      "frame_ms": 47.073
+    },
+    {
+      "beat": "someone",
+      "beat_time": 3.322427,
+      "frame_ms": 45.391
+    },
+    {
+      "beat": "someone",
+      "beat_time": 3.407396,
+      "frame_ms": 107.974
+    },
+    {
+      "beat": "first_reunion",
+      "beat_time": 0.0,
+      "frame_ms": 59.108
+    },
+    {
+      "beat": "remember_name",
+      "beat_time": 1.258283,
+      "frame_ms": 36.003
+    },
+    {
+      "beat": "final_shot",
+      "beat_time": 2.347496,
+      "frame_ms": 50.369
+    },
+    {
+      "beat": "final_shot",
+      "beat_time": 2.868269,
+      "frame_ms": 39.696
+    }
+  ],
+  "max_ms": 107.974,
+  "p50_ms": 6.899,
+  "p95_ms": 12.766,
+  "preview_isolation": true,
+  "samples": 30032,
+  "seconds": 222.208859
+}

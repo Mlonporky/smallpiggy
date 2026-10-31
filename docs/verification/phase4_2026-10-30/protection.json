@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "path": "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json.bak",
+      "before_sha256": "3870a9836908dcd9619ce1c9e1ee601f7b7e5e7e137bc697d0f7e4d162dcc17e",
+      "after_sha256": "3870a9836908dcd9619ce1c9e1ee601f7b7e5e7e137bc697d0f7e4d162dcc17e",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json",
+      "before_sha256": "4473b24cda3d06eef0df574a365c4dcbf4a8465f64755ed86b2aa5e1a92cf2c9",
+      "after_sha256": "4473b24cda3d06eef0df574a365c4dcbf4a8465f64755ed86b2aa5e1a92cf2c9",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/scenes/animation_studies/editable_pig.tscn",
+      "before_sha256": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54",
+      "after_sha256": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/chapter1/boy.png",
+      "before_sha256": "c9d2a673a6842213608d89f5a2e905e52971c399f55305672679ab2147f29693",
+      "after_sha256": "c9d2a673a6842213608d89f5a2e905e52971c399f55305672679ab2147f29693",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/missdaidai/codex/smallpiggy/assets/characters/pig_single_joint/parts_v1.png",
+      "before_sha256": "86994dd72894a732796637a9fc65b5152b162711784b1fbecd84549c6b71a2d5",
+      "after_sha256": "86994dd72894a732796637a9fc65b5152b162711784b1fbecd84549c6b71a2d5",
+      "unchanged": true
+    }
+  ],
+  "default_settings_exists": false,
+  "all_protected_unchanged": true
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "test": "chapter2_combat_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.79,
+    "log": "chapter2_combat_test.log"
+  },
+  {
+    "test": "full_story_flow_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 10.77,
+    "log": "full_story_flow_test.log"
+  },
+  {
+    "test": "settings_ui_test",
+    "passed": false,
+    "exit_code": -15,
+    "seconds": 77.98,
+    "log": "settings_ui_test.log"
+  },
+  {
+    "test": "gameplay_audio_routes_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.37,
+    "log": "gameplay_audio_routes_test.log"
+  }
+]

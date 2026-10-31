@@ -45,13 +45,9 @@ func run() -> void:
 	await create_timer(0.12).timeout
 	await capture("parry")
 	await create_timer(0.5).timeout
-	for i in 5:
-		scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-		await create_timer(1).timeout
-	await capture("injury")
-	await create_timer(1.4).timeout
+	scene.player.release_joy()
+	await create_timer(0.25).timeout
 	await capture("joy")
-	while scene.busy: await process_frame
 	scene.slime.stop_attack()
 	scene.player.jump()
 	await create_timer(0.3).timeout
@@ -65,11 +61,14 @@ func run() -> void:
 	await capture("attack")
 	await create_timer(1.0).timeout
 	scene.slime.stop_attack()
-	for i in 5:
+	for i in 24:
+		if scene.slime._dead: break
 		scene.player.position = scene.slime.position + Vector2(0,95)
 		scene.player.face(Vector2.UP)
 		scene.player.attack()
 		await create_timer(0.8).timeout
+	await create_timer(0.6).timeout
+	assert(scene.won)
 	await capture("win")
 	samples.sort()
 	print("CHAPTER2_ADVENTURE_VISUAL_OK frame_ms p50=",samples[samples.size()/2]," p95=",samples[int(samples.size()*0.95)])

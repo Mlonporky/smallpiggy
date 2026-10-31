@@ -37,6 +37,7 @@ var debris: Array[Polygon2D] = []
 var frames: Array[AtlasTexture] = []
 var fall_origin := Vector2.ZERO
 var frame_index := 0
+var gameplay_audio: Node
 # The standalone legacy ending remains available for regression tests.
 @export var continue_underground := true
 var murmur: PanelContainer
@@ -45,6 +46,7 @@ var murmur_count := 0
 const MURMUR_CYCLE := 3.1
 
 func _ready() -> void:
+ gameplay_audio=preload("res://systems/audio/gameplay_audio.gd").attach(self,"dark")
  stage = Control.new()
  stage.size = Vector2(1536,1024)
  stage.clip_contents = true
@@ -92,9 +94,9 @@ func _ready() -> void:
  curtain.mouse_filter = Control.MOUSE_FILTER_IGNORE
  stage.add_child(curtain)
  title = _label("黑暗小径", 36, Vector2(70,68))
- hint = _label("A / D 或 ← / → 移动    ·    Esc 暂停", 21, Vector2(70,952))
+ hint = _label("A / D 或 ← / → 移动    ·    Esc 暂停  ·  F1 设置与操作", 21, Vector2(70,952))
  hint.modulate = Color("b9b4a8")
- pause_label = _label("已暂停\nEsc 继续", 32, Vector2(660,430))
+ pause_label = _label("已暂停\nEsc 继续 · F1 设置与操作", 32, Vector2(660,430))
  pause_label.visible = false
  ending = VBoxContainer.new()
  ending.position = Vector2(568,440)
@@ -162,6 +164,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
  if not event.is_pressed() or event.is_echo(): return
  if event is InputEventKey and event.keycode == KEY_ESCAPE and phase != Phase.END:
   paused = not paused
+  gameplay_audio.set_audio_paused(paused)
   pause_label.visible = paused
   get_viewport().set_input_as_handled()
  elif event is InputEventKey and event.keycode == KEY_R and phase == Phase.END:
@@ -208,23 +211,28 @@ func _physics_process(delta: float) -> void:
     debris[i].position = Vector2(PIT_X-145+i*49,GROUND) + Vector2((i-2.5)*14*phase_time,(20+i*11)*phase_time+(290+i*27)*phase_time*phase_time)
     debris[i].rotation = sin(i*9.0)*phase_time*1.8
    curtain.color.a = smoothstep(1.05,2.15,phase_time)
+   if phase_time>=1.8: gameplay_audio.exiting=true
    if phase_time >= 2.5:
     _set_phase(Phase.END)
     fall_completed.emit()
     if continue_underground:
-     get_tree().call_deferred("change_scene_to_file","res://scenes/chapter2/underground/landing.tscn")
+     SceneRouter.change_scene("res://scenes/finale/story_cave.tscn",.45,true)
     else:
      ending.visible = true
      ending.get_child(1).grab_focus()
   Phase.END:
    curtain.color.a = 1
  _update_visual()
+ gameplay_audio.footsteps(pig_position,phase==Phase.WALK,76.0)
 
 func _set_phase(next: Phase) -> void:
  phase = next
  phase_time = 0
  hint.visible = phase == Phase.WALK
  if phase != Phase.WALK: murmur.visible = false
+ if phase==Phase.CRACK: gameplay_audio.cue("crack")
+ elif phase==Phase.FALL: gameplay_audio.cue("drop")
+ elif phase==Phase.END: gameplay_audio.set_audio_paused(true)
 
 func _update_visual() -> void:
  camera_position.x = lerpf(camera_position.x,clampf(pig_position.x-610,0,864),0.065)

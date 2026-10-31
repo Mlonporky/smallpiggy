@@ -1,0 +1,30 @@
+[
+  {
+    "test": "chapter1_pillow_test",
+    "passed": false,
+    "exit_code": -15,
+    "seconds": 47.4,
+    "log": "chapter1_pillow_test.log"
+  },
+  {
+    "test": "chapter1_navigation_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.11,
+    "log": "chapter1_navigation_test.log"
+  },
+  {
+    "test": "chapter1_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.95,
+    "log": "chapter1_test.log"
+  },
+  {
+    "test": "chapter1_ui_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.68,
+    "log": "chapter1_ui_test.log"
+  }
+]

@@ -13,10 +13,10 @@ corner_radius_top_left = 24
 corner_radius_top_right = 24
 corner_radius_bottom_right = 24
 corner_radius_bottom_left = 24
-content_margin_left = 48.0
-content_margin_top = 38.0
-content_margin_right = 48.0
-content_margin_bottom = 38.0
+content_margin_left = 32.0
+content_margin_top = 24.0
+content_margin_right = 32.0
+content_margin_bottom = 24.0
 
 [node name="Bootstrap" type="Control"]
 layout_mode = 3
@@ -37,88 +37,123 @@ grow_vertical = 2
 color = Color(0.105, 0.145, 0.16, 1)
 mouse_filter = 2
 
-[node name="Glow" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 90.0
-offset_top = 85.0
-offset_right = 1062.0
-offset_bottom = 574.0
-color = Color(0.87, 0.67, 0.35, 0.08)
-mouse_filter = 2
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 273.0
-offset_top = 78.0
-offset_right = 879.0
-offset_bottom = 582.0
+[node name="Panel" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(570, 0)
+layout_mode = 2
 theme_override_styles/panel = SubResource("PanelStyle")
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 14
 
-[node name="Title" type="Label" parent="Panel/VBox"]
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.87, 0.61, 1)
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 36
 text = "猪猪山庄"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Panel/VBox"]
+[node name="Subtitle" type="Label" parent="Center/Panel/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.84, 0.84, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 21
 text = "—— 被遗忘的快乐 ——"
 horizontal_alignment = 1
 
-[node name="Spacer" type="Control" parent="Panel/VBox"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-
-[node name="NewGameButton" type="Button" parent="Panel/VBox"]
+[node name="MainActions" type="VBoxContainer" parent="Center/Panel/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "新游戏 · 从序章开始"
+theme_override_constants/separation = 12
 
-[node name="ChapterOneButton" type="Button" parent="Panel/VBox"]
+[node name="NewGameButton" type="Button" parent="Center/Panel/VBox/MainActions"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "白白菜篇 · 复原双人早餐位"
+text = "新游戏 · 从故事开场开始"
 
-[node name="ChapterTwoButton" type="Button" parent="Panel/VBox"]
+[node name="ContinueButton" type="Button" parent="Center/Panel/VBox/MainActions"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "小呆猪篇 · 森林史莱姆"
+text = "继续游戏"
 
-[node name="ContinueButton" type="Button" parent="Panel/VBox"]
+[node name="SettingsButton" type="Button" parent="Center/Panel/VBox/MainActions"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "继续存档"
+text = "设置与操作"
 
-[node name="SaveNote" type="Label" parent="Panel/VBox"]
+[node name="PreviewsButton" type="Button" parent="Center/Panel/VBox/MainActions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "开发预览与章节测试"
+
+[node name="PreviewActions" type="VBoxContainer" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PreviewNote" type="Label" parent="Center/Panel/VBox/PreviewActions"]
+layout_mode = 2
+text = "开发预览 · 使用独立测试进度，不改正式存档"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+
+[node name="ChapterOneButton" type="Button" parent="Center/Panel/VBox/PreviewActions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "第一幕 · 白菜三房间调查"
+
+[node name="ChapterTwoButton" type="Button" parent="Center/Panel/VBox/PreviewActions"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "森林篇 · 小猪苏醒与史莱姆"
+
+[node name="FinaleButton" type="Button" parent="Center/Panel/VBox/PreviewActions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "最终章 · 独立预览"
+
+[node name="BackButton" type="Button" parent="Center/Panel/VBox/PreviewActions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "返回主菜单 · Esc"
+
+[node name="SaveNote" type="Label" parent="Center/Panel/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.72, 0.72, 0.76, 1)
-theme_override_font_sizes/font_size = 15
-text = "Debug Start"
+theme_override_colors/font_color = Color(0.84, 0.82, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = ""
+autowrap_mode = 3
 horizontal_alignment = 1
 
-[node name="Controls" type="Label" parent="Panel/VBox"]
+[node name="Controls" type="Label" parent="Center/Panel/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.68, 0.78, 0.75, 1)
-theme_override_font_sizes/font_size = 15
-text = "WASD 移动  ·  E 调查  ·  J 攻击  ·  Esc 返回"
+theme_override_colors/font_color = Color(0.74, 0.84, 0.81, 1)
+theme_override_font_sizes/font_size = 16
+text = "WASD / 方向键移动 · E 调查\nF1 设置与操作 · M 静音 / 恢复"
 horizontal_alignment = 1
 
-[connection signal="pressed" from="Panel/VBox/NewGameButton" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="Panel/VBox/ChapterOneButton" to="." method="_on_chapter_one_pressed"]
-[connection signal="pressed" from="Panel/VBox/ChapterTwoButton" to="." method="_on_chapter_two_pressed"]
-[connection signal="pressed" from="Panel/VBox/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/MainActions/NewGameButton" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/MainActions/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/PreviewActions/ChapterOneButton" to="." method="_on_chapter_one_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/PreviewActions/ChapterTwoButton" to="." method="_on_chapter_two_pressed"]

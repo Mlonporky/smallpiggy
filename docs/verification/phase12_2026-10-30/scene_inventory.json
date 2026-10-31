@@ -1,0 +1,150 @@
+[
+  {
+    "path": "scenes/action_test/bestiary_room.tscn",
+    "kind": "action_lab_shared"
+  },
+  {
+    "path": "scenes/action_test/combat_room.tscn",
+    "kind": "action_lab_shared"
+  },
+  {
+    "path": "scenes/action_test/movement_room.tscn",
+    "kind": "action_lab_shared"
+  },
+  {
+    "path": "scenes/action_test/player.tscn",
+    "kind": "action_lab_shared"
+  },
+  {
+    "path": "scenes/action_test/test_level.tscn",
+    "kind": "action_lab_shared"
+  },
+  {
+    "path": "scenes/animation_studies/editable_pig.tscn",
+    "kind": "animation_study"
+  },
+  {
+    "path": "scenes/animation_studies/editable_pig_preview.tscn",
+    "kind": "animation_study"
+  },
+  {
+    "path": "scenes/animation_studies/single_joint_preview.tscn",
+    "kind": "animation_study"
+  },
+  {
+    "path": "scenes/bootstrap/main.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/cabbage_act2/acorn_memory_final.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/cabbage_act2/acorn_memory_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/cabbage_act2/interior.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/cabbage_act2/lock_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/cabbage_act2/mushroom.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/cabbage_act2/path.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/cabbage_act2/table_slide_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/cabbage_act2/villa.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/cabbage_act2/wrapping_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/chapter1/bedroom.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/chapter1/kitchen.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/chapter1/living.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/chapter2/cave.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/chapter2/dark_path/dark_path.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/chapter2/forest_path.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/chapter2/underground/landing.tscn",
+    "kind": "legacy"
+  },
+  {
+    "path": "scenes/chapter_01_hollow_heart/cabbage_home.tscn",
+    "kind": "legacy"
+  },
+  {
+    "path": "scenes/chapter_02_dark_forest/forest_clearing.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/chapter_02_dark_forest/legacy_forest_sample.tscn",
+    "kind": "legacy"
+  },
+  {
+    "path": "scenes/finale/final_chapter.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/finale/final_chapter_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/finale/handhold_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/finale/restoration_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/finale/reunion_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/finale/story_cave.tscn",
+    "kind": "formal"
+  },
+  {
+    "path": "scenes/finale/transformation_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/finale/wizard_preview.tscn",
+    "kind": "preview"
+  },
+  {
+    "path": "scenes/prologue/prologue.tscn",
+    "kind": "formal"
+  }
+]

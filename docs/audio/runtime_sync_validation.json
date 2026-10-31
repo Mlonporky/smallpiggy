@@ -1,0 +1,9 @@
+{
+  "method": "Normal-speed Godot OpenGL playback; internal story clock vs AudioStreamPlayer position, excluding startup and natural endpoint. Includes mixer scheduling, not an acoustic latency measurement.",
+  "recorded_mix_seconds": 90.8016326530612,
+  "clock_difference_max_seconds": 0.20630939245623,
+  "clock_difference_p95_seconds": 0.19963842437741,
+  "mixed_peak_dbfs": -9.085983080623382,
+  "mixed_rms_dbfs": -26.57349054707668,
+  "clipped_samples": 0
+}

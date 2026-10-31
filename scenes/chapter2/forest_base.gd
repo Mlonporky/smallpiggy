@@ -13,6 +13,7 @@ var curtain: ColorRect
 var title: Label
 var busy := false
 var allow_save := true
+var gameplay_audio: Node
 
 func build(background: Texture2D, spawn: Vector2) -> void:
 	var art := Sprite2D.new()
@@ -62,10 +63,11 @@ func build(background: Texture2D, spawn: Vector2) -> void:
 	title.add_theme_font_size_override("font_size", 30)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(title)
-	# TODO: Missing asset — no forest wind, branch crack or impact audio supplied.
-	var ambient := AudioStreamPlayer.new()
-	ambient.name = "ForestAmbient"
-	add_child(ambient)
+	gameplay_audio = preload("res://systems/audio/gameplay_audio.gd").attach(self,"cave" if scene_file_path.ends_with("cave.tscn") else "forest")
+
+func _physics_process(_delta: float) -> void:
+	if not is_instance_valid(player) or gameplay_audio==null: return
+	gameplay_audio.footsteps(player.position,not player.waking and player.jump_time<=0 and player.roll_time<=0)
 
 func fit_camera() -> void:
 	var size := get_viewport_rect().size
@@ -125,10 +127,10 @@ func lock(value: bool) -> void:
 	if not value: player._nearest_interactable = null
 
 func beat(seconds: float) -> void:
-	await get_tree().create_timer(seconds).timeout
+	await AppSettings.story_wait(self,seconds).finished
 
 func fade(alpha: float, duration := 0.6) -> void:
-	var tween := create_tween()
+	var tween := AppSettings.story_tween(self)
 	tween.tween_property(curtain,"color:a",alpha,duration)
 	await tween.finished
 
@@ -166,14 +168,16 @@ func open_pause_menu() -> void:
 	var cancel := InputEventAction.new()
 	cancel.action = "ui_cancel"
 	resume.events = [cancel]
-	var options := {"stay":"继续探索", "save":"保存并回主菜单"}
+	var options := preload("res://ui/control_hints.gd").PAUSE_OPTIONS
 	for key in options:
 		var button := Button.new()
 		button.name = key
 		button.text = options[key]
 		button.custom_minimum_size.y = 56
 		button.add_theme_font_size_override("font_size",20)
-		button.pressed.connect(func(): menu_chosen.emit(key))
+		button.pressed.connect(func():
+			if key == "settings": AppSettings.open_panel()
+			else: menu_chosen.emit(key))
 		if key == "stay":
 			button.shortcut = resume
 			button.shortcut_in_tooltip = false
