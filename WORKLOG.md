@@ -1214,3 +1214,5 @@ STORY_CAVE_CHECKPOINT_OK、action_level/movement/camera/health/weapons/monsters�
 提交前23个适用的headless回归全部通过，各自退出0，使用独立设置与存档路径，覆盖男孩裁切、存档、镜头连续／切场、最终章／路由／声音／装配计算、第一幕抱枕／导航／流程／UI、战斗／防御／预览／暂停／森林流程、声音路由、设置、倍速、开场及连续新游戏至Credits和结局续档。汇总与日志位于/tmp/piggy-day-end-pr-2026-10-31，validated-results.json列出23项有效结果。初始批次误含必须带图形窗口的finale_entry_ready_test，在其DisplayServer断言处中止，主动停止该进程后其余测试继续；原results.json保留该调用错误，不记作通过或游戏缺陷。未重跑正常时间图形／声音或人工手感验收，既有证书与ObjectDB退出警告保留。
 
 回归前后266个原改动文件哈希一致；finale_rig_equivalence_test按既有行为重新写入rig_solver_comparison.json的本次计时，721姿态最大角度误差仍为0.000008881rad。代码、素材与用户装配未因本轮上传整理而修改，未使用正式玩家存档作为测试数据。PR说明将更新为当前完整范围，明确Q主动技能取代旧40%自动觉醒，并保留美术／动作／听感／难度待反馈边界。GitHub连接器只有读取权限，使用已登录浏览器编辑PR；不合并。此处为上传前记录，提交、推送与远端核对结果随后补记。
+
+上传结果：267个文件已提交为7b12875并成功推送到origin/codex/story-audio-gameplay-2026-10-31；本地HEAD、远端跟踪分支与GitHub PR head SHA三者一致。已更新[PR #1](https://github.com/Mlonporky/smallpiggy/pull/1)标题为「完善完整主线、音频与剧情衔接，加入实时战斗和 Q 主动技能」，描述覆盖全部现行改动、23项回归与人工验收边界。PR状态Open、非草稿、未合并，目标main；全量PR差异空白检查通过。除本条上传结果补记外，工作区干净；本条随后作为文档提交一并推送。下一步为PR审阅与既有试玩反馈，没有新增功能任务。
