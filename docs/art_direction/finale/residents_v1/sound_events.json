@@ -1,0 +1,86 @@
+{
+  "events": [
+    {
+      "seconds": 0.360883,
+      "sound": "cast"
+    },
+    {
+      "seconds": 3.519891,
+      "sound": "wave"
+    },
+    {
+      "seconds": 7.52586,
+      "sound": "dissolve"
+    },
+    {
+      "seconds": 32.178342,
+      "sound": "step_2"
+    },
+    {
+      "seconds": 32.301866,
+      "sound": "step_3"
+    },
+    {
+      "seconds": 32.454175,
+      "sound": "step_1"
+    },
+    {
+      "seconds": 32.613171,
+      "sound": "step_2"
+    },
+    {
+      "seconds": 32.73043,
+      "sound": "step_3"
+    },
+    {
+      "seconds": 32.929866,
+      "sound": "step_1"
+    },
+    {
+      "seconds": 33.012863,
+      "sound": "step_2"
+    },
+    {
+      "seconds": 33.247622,
+      "sound": "step_3"
+    },
+    {
+      "seconds": 33.289324,
+      "sound": "step_1"
+    },
+    {
+      "seconds": 33.557962,
+      "sound": "step_2"
+    },
+    {
+      "seconds": 33.571664,
+      "sound": "step_3"
+    },
+    {
+      "seconds": 33.84742,
+      "sound": "step_1"
+    },
+    {
+      "seconds": 33.875509,
+      "sound": "step_2"
+    },
+    {
+      "seconds": 34.130699,
+      "sound": "step_3"
+    },
+    {
+      "seconds": 34.192676,
+      "sound": "step_1"
+    },
+    {
+      "seconds": 34.407107,
+      "sound": "step_2"
+    },
+    {
+      "seconds": 34.503735,
+      "sound": "step_3"
+    }
+  ],
+  "preview_isolation": true,
+  "seconds": 34.5512925170068
+}

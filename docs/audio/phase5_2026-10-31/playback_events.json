@@ -1,0 +1,107 @@
+{
+  "events": [
+    {
+      "kind": "step_1",
+      "seconds": 1.486099
+    },
+    {
+      "kind": "step_2",
+      "seconds": 1.936121
+    },
+    {
+      "kind": "step_3",
+      "seconds": 2.385963
+    },
+    {
+      "kind": "wood_pickup",
+      "seconds": 3.485871
+    },
+    {
+      "kind": "jump",
+      "seconds": 4.985369
+    },
+    {
+      "kind": "land",
+      "seconds": 5.635921
+    },
+    {
+      "kind": "step_2",
+      "seconds": 9.502282
+    },
+    {
+      "kind": "step_1",
+      "seconds": 10.002327
+    },
+    {
+      "kind": "swing",
+      "seconds": 11.002244
+    },
+    {
+      "kind": "hit",
+      "seconds": 11.202314
+    },
+    {
+      "kind": "purify",
+      "seconds": 12.502477
+    },
+    {
+      "kind": "gift",
+      "seconds": 14.102034
+    },
+    {
+      "kind": "jump",
+      "seconds": 17.018803
+    },
+    {
+      "kind": "land",
+      "seconds": 17.718601
+    },
+    {
+      "kind": "bounce",
+      "seconds": 18.418664
+    },
+    {
+      "kind": "chime",
+      "seconds": 19.518844
+    },
+    {
+      "kind": "chime",
+      "seconds": 19.81806
+    },
+    {
+      "kind": "chime",
+      "seconds": 20.118064
+    },
+    {
+      "kind": "crack",
+      "seconds": 21.218658
+    },
+    {
+      "kind": "equip",
+      "seconds": 22.217774
+    },
+    {
+      "kind": "paper",
+      "seconds": 24.835164
+    },
+    {
+      "kind": "paper",
+      "seconds": 26.034977
+    },
+    {
+      "kind": "paper",
+      "seconds": 27.23497
+    },
+    {
+      "kind": "paper",
+      "seconds": 28.434922
+    },
+    {
+      "kind": "complete",
+      "seconds": 29.534339
+    }
+  ],
+  "max_fps": 60,
+  "seconds": 32.043537414966,
+  "state_unchanged": true
+}

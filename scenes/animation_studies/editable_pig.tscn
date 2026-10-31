@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://d2b7hq3tn0dlt"]
+
+[ext_resource type="Texture2D" uid="uid://brlq8fidacy0y" path="res://assets/characters/pig_single_joint/parts_v1.png" id="1_sheet"]
+[ext_resource type="Script" uid="uid://bslw8wthdfrw1" path="res://scenes/animation_studies/pig_edit_guides.gd" id="2_guides"]
+
+[sub_resource type="AtlasTexture" id="Atlas_body"]
+atlas = ExtResource("1_sheet")
+region = Rect2(132, 29, 723, 816)
+
+[sub_resource type="AtlasTexture" id="Atlas_arm_a"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1090, 166, 190, 295)
+
+[sub_resource type="AtlasTexture" id="Atlas_arm_b"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1385, 150, 205, 320)
+
+[sub_resource type="AtlasTexture" id="Atlas_leg_a"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1090, 525, 215, 259)
+
+[sub_resource type="AtlasTexture" id="Atlas_leg_b"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1398, 525, 211, 259)
+
+[node name="EditablePig" type="Node2D" unique_id=401431594]
+editor_description = "小猪静止装配工作台。展开 Pig，选择 Arm_A / Arm_B / Leg_A / Leg_B 调整位置、角度与图层。A/B 仅为部件编号，尚未对应角色自身左右。保存用 Cmd+S；F6 预览。"
+texture_filter = 4
+
+[node name="Pig" type="Node2D" parent="." unique_id=1987054775]
+editor_description = "移动、旋转或等比缩放整只小猪。四肢与头身一起跟随；部件编号不代表解剖左右。"
+position = Vector2(590, 536)
+scale = Vector2(2.4, 2.4)
+
+[node name="BodyPivot" type="Marker2D" parent="Pig" unique_id=1187947701]
+editor_description = "整体身体重心。旋转这里可让完整头、身、披风与四肢一起前倾。"
+position = Vector2(0, -17.3)
+gizmo_extents = 5.0
+
+[node name="Body" type="Sprite2D" parent="Pig/BodyPivot" unique_id=1718460802]
+editor_description = "01 身体：头、领口、躯干、披风保持完整。Z Index 为 2。"
+z_index = 2
+position = Vector2(-3.8010962, 0)
+scale = Vector2(0.21160905, 0.22)
+texture = SubResource("Atlas_body")
+centered = false
+offset = Vector2(-453, -771)
+
+[node name="CollarCover" type="Polygon2D" parent="Pig/BodyPivot/Body" unique_id=1786020917]
+editor_description = "披风领口局部覆盖，与身体同坐标；当前总层级为 4（Body 2 + 本节点 2）。可用眼睛开关比较遮挡。"
+z_index = 2
+texture = ExtResource("1_sheet")
+polygon = PackedVector2Array(-325, -360, 220, -360, 220, -210, 195, -232, 171, -253, 152, -260, 135, -245, 106, -234, 70, -245, 42, -262, -9, -269, -50, -272, -104, -258, -151, -240, -199, -211, -240, -173, -285, -120, -325, -120)
+uv = PackedVector2Array(260, 440, 805, 440, 805, 590, 780, 568, 756, 547, 737, 540, 720, 555, 691, 566, 655, 555, 627, 538, 576, 531, 535, 528, 481, 542, 434, 560, 386, 589, 345, 627, 300, 680, 260, 680)
+
+[node name="Arm_A" type="Marker2D" parent="Pig/BodyPivot" unique_id=1418472641]
+editor_description = "02 A 臂肩点。原图 near_arm，仅作来源记录。Position 改装配肩位，Rotation 绕肩摆臂，Z Index 改遮挡；不改 Scale。"
+z_index = 1
+position = Vector2(-30.8, -54.12)
+rotation = 0.02093364
+gizmo_extents = 5.0
+
+[node name="Artwork" type="Sprite2D" parent="Pig/BodyPivot/Arm_A" unique_id=1589358510]
+position = Vector2(52.03341, -1.3361282)
+scale = Vector2(0.14472216, 0.14774701)
+texture = SubResource("Atlas_arm_a")
+centered = false
+offset = Vector2(-92, -48)
+
+[node name="Tip" type="Marker2D" parent="Pig/BodyPivot/Arm_A/Artwork" unique_id=1194065417]
+editor_description = "素材上的固定蹄尖参考点，跟随部件旋转；不自动解算双手同高。"
+position = Vector2(5, 236)
+gizmo_extents = 12.0
+
+[node name="Arm_B" type="Marker2D" parent="Pig/BodyPivot" unique_id=521901589]
+editor_description = "03 B 臂肩点。原图 far_arm，仅作来源记录。Position 改装配肩位，Rotation 绕肩摆臂，Z Index 改遮挡；不改 Scale。"
+z_index = 3
+position = Vector2(123.75, -55.200005)
+rotation = -0.78148293
+gizmo_extents = 5.0
+
+[node name="Artwork" type="Sprite2D" parent="Pig/BodyPivot/Arm_B" unique_id=758800391]
+position = Vector2(-105.62082, -111.84052)
+scale = Vector2(0.155, 0.155)
+texture = SubResource("Atlas_arm_b")
+centered = false
+offset = Vector2(-97, -61)
+
+[node name="Tip" type="Marker2D" parent="Pig/BodyPivot/Arm_B/Artwork" unique_id=258187576]
+position = Vector2(13, 238)
+gizmo_extents = 12.0
+
+[node name="Leg_A" type="Marker2D" parent="Pig/BodyPivot" unique_id=2018214041]
+editor_description = "04 A 腿髋点。原图 near_leg。旋转此节点即绕固定髋点摆腿；Position 用于校准装配位置。"
+z_index = 1
+position = Vector2(-24.42, -11.36)
+gizmo_extents = 5.0
+
+[node name="Artwork" type="Sprite2D" parent="Pig/BodyPivot/Leg_A" unique_id=1783500989]
+position = Vector2(36.920013, -2.5900013)
+scale = Vector2(0.145, 0.145)
+texture = SubResource("Atlas_leg_a")
+centered = false
+offset = Vector2(-98, -53)
+
+[node name="Tip" type="Marker2D" parent="Pig/BodyPivot/Leg_A/Artwork" unique_id=420964051]
+position = Vector2(8, 194.5)
+gizmo_extents = 12.0
+
+[node name="Leg_B" type="Marker2D" parent="Pig/BodyPivot" unique_id=578696304]
+editor_description = "05 B 腿髋点。原图 far_leg。旋转此节点即绕固定髋点摆腿；Position 用于校准装配位置。"
+z_index = 3
+position = Vector2(24.2, -13.12)
+gizmo_extents = 5.0
+
+[node name="Artwork" type="Sprite2D" parent="Pig/BodyPivot/Leg_B" unique_id=1977409534]
+position = Vector2(-47.11666, -1.2466698)
+scale = Vector2(0.145, 0.145)
+texture = SubResource("Atlas_leg_b")
+centered = false
+offset = Vector2(-99, -53)
+
+[node name="Tip" type="Marker2D" parent="Pig/BodyPivot/Leg_B/Artwork" unique_id=2131810220]
+position = Vector2(-2, 195.5)
+gizmo_extents = 12.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pig" unique_id=797143441]
+editor_description = "空白时间轴，无自动播放或姿势复位。需要时新建动画并给四肢 Rotation 加关键帧。"
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=1034958216]
+z_index = -100
+script = ExtResource("2_guides")
+draw_backdrop = true
+metadata/_edit_lock_ = true
+
+[node name="Guides" type="Node2D" parent="." unique_id=1676393859]
+editor_description = "编号、肩髋点、蹄尖参考线与朝向提示。点场景树眼睛可隐藏；脚本只绘制辅助信息，不修改任何角色节点。"
+z_index = 100
+script = ExtResource("2_guides")
+metadata/_edit_lock_ = true

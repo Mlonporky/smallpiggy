@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-30",
+  "engine": "Godot 4.7.2 ed1daf0bf, macOS Apple M1 OpenGL",
+  "results": [
+    {
+      "test": "tests/full_story_flow_test.gd",
+      "mode": "headless fixed-fps 60",
+      "result": "passed",
+      "log": "full_story_headless.log"
+    },
+    {
+      "test": "tests/full_story_flow_test.gd",
+      "mode": "OpenGL normal speed",
+      "result": "passed",
+      "log": "full_story_graphical.log"
+    },
+    {
+      "test": "tests/all_fireflies_route_test.gd",
+      "mode": "headless fixed-fps 60, standalone",
+      "result": "passed",
+      "log": "all_fireflies_standalone.log",
+      "collected": 60,
+      "total": 60,
+      "deaths": 0,
+      "secrets": 2
+    },
+    {
+      "test": "tests/all_fireflies_route_test.gd",
+      "mode": "headless fixed-fps 60, STORY_FIREFLIES=1",
+      "result": "passed",
+      "log": "all_fireflies_story.log",
+      "collected": 60,
+      "total": 60,
+      "deaths": 0,
+      "secrets": 2,
+      "save_reload_ids": 60,
+      "exit_transition": true
+    },
+    {
+      "test": "tests/all_fireflies_route_test.gd",
+      "mode": "OpenGL normal speed, STORY_FIREFLIES=1",
+      "result": "passed",
+      "exit_code": 0,
+      "log": "all_fireflies_story_graphical.log",
+      "collected": 60,
+      "total": 60,
+      "deaths": 0,
+      "secrets": 2,
+      "save_reload_ids": 60,
+      "exit_transition": true,
+      "screenshot": "all_60_graphical.png"
+    }
+  ],
+  "limits": [
+    "Continuous automated gameplay, not human acceptance. Dialogue auto-advance and some formal interaction/exit handlers are used.",
+    "Physical platform route includes automatic dodge reactions and R campfire return.",
+    "Some full-flow screenshots skipped while window not drawing; not complete render coverage.",
+    "No new production gameplay, art or audio changes; headless certificate and exit resource warnings remain."
+  ],
+  "test_sha256": {
+    "tests/full_story_flow_test.gd": "3f84d22c8e83960083b61a024f8a0805851670354feff77f64d54393deeb1c29",
+    "tests/all_fireflies_route_test.gd": "5e48c4efda61de3444e89072bb5ba4aba81f2f23e60ef681cc22e8f351d17e05"
+  },
+  "diagnostics": [
+    {
+      "log": "attempt_graphical_missed_46.log",
+      "result": "failed route attempt",
+      "resolution": "Walk back to x=6035 after landing on the second canopy ledge; no production change."
+    }
+  ]
+}

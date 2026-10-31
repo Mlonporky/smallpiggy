@@ -20,6 +20,8 @@ boot_splash/bg_color=Color(0.082, 0.071, 0.102, 1)
 GameState="*res://autoload/game_state.gd"
 SceneRouter="*res://autoload/scene_router.gd"
 SaveManager="*res://autoload/save_manager.gd"
+AppSettings="*res://autoload/app_settings.gd"
+MusicDirector="*res://autoload/music_director.gd"
 
 [display]
 

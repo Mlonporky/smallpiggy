@@ -1,0 +1,10 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 91.7 - Compatibility - Using Device: Apple - Apple M1
+
+SPEED_PANEL [P: (0.0, 0.0), S: (1152.0, 648.0)] panel=[P: (266.0, -56.5), S: (620.0, 761.0)] min=(262.0, 227.0)
+SCRIPT ERROR: Assertion failed.
+          at: run (res://tests/story_speed_playback.gd:73)
+          GDScript backtrace (most recent call first):
+              [0] run (res://tests/story_speed_playback.gd:73)
+              [1] capture (res://tests/story_speed_playback.gd:28)
+              [2] frames (res://tests/story_speed_playback.gd:11)

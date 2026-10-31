@@ -83,6 +83,7 @@ func load_dictionary(data: Dictionary) -> void:
 	flags = Dictionary(data.get("flags", {})).duplicate(true)
 	gift_fragments.clear()
 	for fragment_id in data.get("gift_fragments", []):
-		gift_fragments.append(str(fragment_id))
+		if not str(fragment_id) in gift_fragments:
+			gift_fragments.append(str(fragment_id))
 	state_changed.emit()
 	heart_changed.emit(heart_progress)

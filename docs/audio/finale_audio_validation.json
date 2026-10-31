@@ -1,0 +1,74 @@
+{
+  "step_earth_1": {
+    "seconds": 0.29,
+    "channels": 1,
+    "peak_dbfs": -10.46,
+    "rms_dbfs": -27.03,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  },
+  "step_earth_2": {
+    "seconds": 0.29,
+    "channels": 1,
+    "peak_dbfs": -10.46,
+    "rms_dbfs": -28.88,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  },
+  "step_earth_3": {
+    "seconds": 0.29,
+    "channels": 1,
+    "peak_dbfs": -10.46,
+    "rms_dbfs": -27.23,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  },
+  "leaves_v1": {
+    "seconds": 16.0,
+    "channels": 2,
+    "peak_dbfs": -11.06,
+    "rms_dbfs": -28.12,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  },
+  "birds_v1": {
+    "seconds": 24.0,
+    "channels": 2,
+    "peak_dbfs": -10.46,
+    "rms_dbfs": -31.47,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  },
+  "curse_cast_v1": {
+    "seconds": 1.6,
+    "channels": 1,
+    "peak_dbfs": -8.4,
+    "rms_dbfs": -23.3,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  },
+  "joy_wave_v1": {
+    "seconds": 2.2,
+    "channels": 1,
+    "peak_dbfs": -8.4,
+    "rms_dbfs": -23.71,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  },
+  "dissolve_v1": {
+    "seconds": 2.7999773242630384,
+    "channels": 1,
+    "peak_dbfs": -8.4,
+    "rms_dbfs": -21.98,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  },
+  "manor_home_v1": {
+    "seconds": 48.0,
+    "channels": 2,
+    "peak_dbfs": -3.74,
+    "rms_dbfs": -19.7,
+    "clipped_samples": 0,
+    "edge_delta": 0.0
+  }
+}

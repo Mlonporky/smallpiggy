@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 91.7 - Compatibility - Using Device: Apple - Apple M1
+
+SPEED_PANEL [P: (0.0, 0.0), S: (1152.0, 648.0)] panel=[P: (266.0, 44.0), S: (620.0, 560.0)] min=(262.0, 227.0)
+SPEED_PANEL [P: (0.0, 0.0), S: (1152.0, 648.0)] panel=[P: (266.0, 44.0), S: (620.0, 560.0)] min=(262.0, 227.0)
+SPEED_PANEL [P: (0.0, 0.0), S: (1152.0, 648.0)] panel=[P: (266.0, 44.0), S: (620.0, 560.0)] min=(262.0, 227.0)
+SPEED_TIMING 1.5 real=7.000177 story=10.4996295 drift=0.03077279074095 seeks=0
+SPEED_TIMING 1.0 real=5.01647 story=5.01648799999996 drift=0.02063001165772 seeks=0
+SPEED_TIMING 1.5 real=3.016511 story=4.52481899999988 drift=0.03304349080405 seeks=0
+SPEED_TIMING 1.5 real=3.016587 story=4.52481900000001 drift=0.00647061665345 seeks=0
+STORY_SPEED_PLAYBACK_OK [{ "speed": 1.5, "real_seconds": 7.000177, "story_seconds": 10.4996295, "max_audio_drift_seconds": 0.03077279074095, "score_seeks": 0 }, { "speed": 1.0, "real_seconds": 5.01647, "story_seconds": 5.01648799999996, "max_audio_drift_seconds": 0.02063001165772, "score_seeks": 0 }, { "speed": 1.5, "real_seconds": 3.016511, "story_seconds": 4.52481899999988, "max_audio_drift_seconds": 0.03304349080405, "score_seeks": 0 }, { "speed": 1.5, "real_seconds": 3.016587, "story_seconds": 4.52481900000001, "max_audio_drift_seconds": 0.00647061665345, "score_seeks": 0 }]

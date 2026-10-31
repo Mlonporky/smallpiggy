@@ -1,0 +1,119 @@
+[
+  {
+    "test": "wrapping_puzzle_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.12,
+    "log": "logs/wrapping_puzzle_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "wrapping_keyboard_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.38,
+    "log": "logs/wrapping_keyboard_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "platform_guidance_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.05,
+    "log": "logs/platform_guidance_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "chapter2_combat_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.98,
+    "log": "logs/chapter2_combat_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "combination_lock_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.29,
+    "log": "logs/combination_lock_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "mushroom_guidance_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.95,
+    "log": "logs/mushroom_guidance_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "table_slide_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.15,
+    "log": "logs/table_slide_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "story_cave_checkpoint_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.22,
+    "log": "logs/story_cave_checkpoint_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "settings_ui_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.55,
+    "log": "logs/settings_ui_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "finale_routes_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.82,
+    "log": "logs/finale_routes_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "full_story_flow_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 14.07,
+    "log": "logs/full_story_flow_test.log",
+    "mode": "headless-fixed-60",
+    "variant": ""
+  },
+  {
+    "test": "all_fireflies_route_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 6.09,
+    "log": "logs/all_fireflies_route_test-standalone.log",
+    "mode": "headless-fixed-60",
+    "variant": "standalone"
+  },
+  {
+    "test": "all_fireflies_route_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 6.2,
+    "log": "logs/all_fireflies_route_test-story.log",
+    "mode": "headless-fixed-60",
+    "variant": "story"
+  }
+]

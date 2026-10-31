@@ -1,0 +1,93 @@
+[
+  {
+    "test": "gameplay_audio_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.97,
+    "log": "gameplay_audio_test.log"
+  },
+  {
+    "test": "gameplay_audio_routes_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.18,
+    "log": "gameplay_audio_routes_test.log"
+  },
+  {
+    "test": "gameplay_audio_preview_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.61,
+    "log": "gameplay_audio_preview_test.log"
+  },
+  {
+    "test": "chapter2_combat_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.84,
+    "log": "chapter2_combat_test.log"
+  },
+  {
+    "test": "chapter2_pause_menu_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.28,
+    "log": "chapter2_pause_menu_test.log"
+  },
+  {
+    "test": "dark_path_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.38,
+    "log": "dark_path_test.log"
+  },
+  {
+    "test": "action_level_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.85,
+    "log": "action_level_test.log"
+  },
+  {
+    "test": "action_monsters_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.58,
+    "log": "action_monsters_test.log"
+  },
+  {
+    "test": "wrapping_puzzle_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.17,
+    "log": "wrapping_puzzle_test.log"
+  },
+  {
+    "test": "wrapping_keyboard_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.39,
+    "log": "wrapping_keyboard_test.log"
+  },
+  {
+    "test": "music_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.17,
+    "log": "music_test.log"
+  },
+  {
+    "test": "finale_audio_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.06,
+    "log": "finale_audio_test.log"
+  },
+  {
+    "test": "full_story_flow_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 12.11,
+    "log": "full_story_flow_test.log"
+  }
+]

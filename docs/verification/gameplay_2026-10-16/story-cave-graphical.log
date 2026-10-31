@@ -1,0 +1,11 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 91.7 - Compatibility - Using Device: Apple - Apple M1
+
+ERROR: Could not open save file: 7
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://autoload/save_manager.gd:23)
+       [1] complete_exit (res://scenes/finale/story_cave.gd:105)
+       [2] run (res://tests/story_cave_checkpoint_test.gd:68)
+       [3] fresh (res://tests/story_cave_checkpoint_test.gd:11)
+STORY_CAVE_CHECKPOINT_OK: entrance, camp, F5, JSON reload, unique rewards, pause/menu, exit failure retry, invalid checkpoint

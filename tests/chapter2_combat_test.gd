@@ -26,6 +26,12 @@ func run() -> void:
 	while scene.player.health.current_health == 100: await process_frame
 	assert(scene.player.health.current_health == 88 and not scene.awakened)
 	scene.slime.stop_attack()
+	# The explicit 40%-health story rule remains; capped hits now explain why.
+	for i in 12:
+		scene.slime.damage_cooldown = 0
+		scene.slime._on_damaged(scene.player.hit_box)
+	assert(scene.slime.health.current_health == 14 and scene.shell_hint_shown)
+	assert(not scene.awakened and not scene.awakening)
 	await create_timer(1).timeout
 	# Real key mapping, collision-aware travel, and the active dodge window.
 	var before: Vector2 = scene.player.position

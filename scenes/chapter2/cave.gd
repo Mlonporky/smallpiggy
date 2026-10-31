@@ -9,6 +9,7 @@ var slime: ForestSlime
 var fragment: Interactable
 var won := false
 var handing_off := false
+var shell_hint_shown := false
 const CABBAGE_EXTERIOR := "res://scenes/cabbage_act2/villa.tscn"
 
 func _ready() -> void:
@@ -48,6 +49,7 @@ func _ready() -> void:
 		world.add_child(slime)
 		slime.set_target(player)
 		slime.defeated.connect(slime_defeated)
+		slime.shell_resisted.connect(explain_shell)
 		# The stick is picked up beside the wake-up spot; direct debug entry and
 		# saves from before that change arrive here without it, so hand it over.
 		GameState.set_flag("s2_pig_stick_collected")
@@ -117,6 +119,12 @@ func build_combat_hud() -> void:
 	controls.text = "J / Z 挥击   Shift 翻滚   K 朝向敌人招架（减伤75%）   空格跳跃"
 	ui.add_child(controls)
 
+func explain_shell() -> void:
+	if shell_hint_shown or awakened or awakening: return
+	shell_hint_shown = true
+	ui.set_status("保护壳挡住了普通挥击 · 生命降至 40% 时触发快乐力量",8)
+	ui.set_objective("保护壳尚未破除 · 留意生命与扑击预警")
+
 func on_health_changed(current: int, maximum: int) -> void:
 	ui.heart.visible = true
 	ui.heart.text = "生命  %d / %d" % [current,maximum]
@@ -180,6 +188,7 @@ func collect_fragment() -> void:
 	fragment.visible = false
 	fragment.set_enabled(false)
 	GameState.add_gift_fragment("fragment_red_wrap_01")
+	gameplay_audio.cue("gift")
 	GameState.set_flag("forest_slime_defeated")
 	ui.set_objective("已找回红色礼物碎片 · 继续寻找白白菜")
 	return_to_cabbage()

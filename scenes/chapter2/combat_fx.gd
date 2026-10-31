@@ -48,27 +48,5 @@ func _draw() -> void:
 		draw_arc(Vector2.ZERO, maxf(1, radius * t), 0, TAU, 64, Color(color,color.a * 0.5), 3, true)
 
 static func sound(parent: Node, kind: String) -> void:
-	# Gentle synthesized feedback until recorded sound design is available.
-	var rate := 22050
-	var seconds := 0.55 if kind == "joy" else 0.16
-	var data := PackedByteArray()
-	data.resize(int(rate * seconds) * 2)
-	for i in int(rate * seconds):
-		var t := float(i) / rate
-		var envelope := sin(PI * t / seconds) * exp(-t * 9)
-		var frequency := 220.0
-		if kind == "joy": frequency = 523.25 + floor(t * 6) * 130.81
-		elif kind == "swing": frequency = lerpf(700, 180, t / seconds)
-		else: frequency = lerpf(140, 55, t / seconds)
-		var wave := sin(TAU * frequency * t) * envelope * 0.25
-		data.encode_s16(i * 2, int(wave * 32767))
-	var stream := AudioStreamWAV.new()
-	stream.format = AudioStreamWAV.FORMAT_16_BITS
-	stream.mix_rate = rate
-	stream.data = data
-	var audio := AudioStreamPlayer.new()
-	audio.stream = stream
-	audio.volume_db = -12
-	parent.add_child(audio)
-	audio.finished.connect(audio.queue_free)
-	audio.play()
+	var mapped: String = {"impact":"hit", "joy":"purify"}.get(kind,kind)
+	preload("res://systems/audio/gameplay_audio.gd").play_at(parent,mapped)

@@ -1,0 +1,466 @@
+{
+  "entries": [
+    {
+      "beat": "remember_cups",
+      "entry_ms": 0.849,
+      "trial": 0
+    },
+    {
+      "beat": "remember_gift",
+      "entry_ms": 0.582,
+      "trial": 0
+    },
+    {
+      "beat": "remember_you",
+      "entry_ms": 46.718,
+      "trial": 0
+    },
+    {
+      "beat": "reunion_close",
+      "entry_ms": 0.853,
+      "trial": 0
+    },
+    {
+      "beat": "remember_cups",
+      "entry_ms": 1.136,
+      "trial": 1
+    },
+    {
+      "beat": "remember_gift",
+      "entry_ms": 1.005,
+      "trial": 1
+    },
+    {
+      "beat": "remember_you",
+      "entry_ms": 7.267,
+      "trial": 1
+    },
+    {
+      "beat": "reunion_close",
+      "entry_ms": 0.702,
+      "trial": 1
+    },
+    {
+      "beat": "remember_cups",
+      "entry_ms": 0.653,
+      "trial": 2
+    },
+    {
+      "beat": "remember_gift",
+      "entry_ms": 11.353,
+      "trial": 2
+    },
+    {
+      "beat": "remember_you",
+      "entry_ms": 38.251,
+      "trial": 2
+    },
+    {
+      "beat": "reunion_close",
+      "entry_ms": 1.146,
+      "trial": 2
+    },
+    {
+      "beat": "remember_cups",
+      "entry_ms": 1.581,
+      "trial": 3
+    },
+    {
+      "beat": "remember_gift",
+      "entry_ms": 0.777,
+      "trial": 3
+    },
+    {
+      "beat": "remember_you",
+      "entry_ms": 5.254,
+      "trial": 3
+    },
+    {
+      "beat": "reunion_close",
+      "entry_ms": 0.711,
+      "trial": 3
+    },
+    {
+      "beat": "remember_cups",
+      "entry_ms": 0.72,
+      "trial": 4
+    },
+    {
+      "beat": "remember_gift",
+      "entry_ms": 0.789,
+      "trial": 4
+    },
+    {
+      "beat": "remember_you",
+      "entry_ms": 1.321,
+      "trial": 4
+    },
+    {
+      "beat": "reunion_close",
+      "entry_ms": 0.857,
+      "trial": 4
+    }
+  ],
+  "preview_isolation": true,
+  "rendering": {
+    "counters_agree": true,
+    "draw_intervals": {
+      "max_ms": 98.425,
+      "p50_ms": 8.379,
+      "p95_ms": 13.274,
+      "samples": 5379
+    },
+    "draw_submissions_per_second": 119.01357566621,
+    "draw_to_process_ratio": 1.0,
+    "drawable_only_draw_intervals": {
+      "max_ms": 98.425,
+      "p50_ms": 8.379,
+      "p95_ms": 13.274,
+      "samples": 5379
+    },
+    "engine_drawn": 5380,
+    "frame_post_draw_count": 5380,
+    "long_draw_intervals": [
+      {
+        "beat": "remember_gift",
+        "crossed_nondrawable_window": false,
+        "gap_ms": 46.111,
+        "seconds": 4.034263
+      },
+      {
+        "beat": "remember_gift",
+        "crossed_nondrawable_window": false,
+        "gap_ms": 98.425,
+        "seconds": 4.664272
+      },
+      {
+        "beat": "remember_gift",
+        "crossed_nondrawable_window": false,
+        "gap_ms": 43.769,
+        "seconds": 22.709666
+      },
+      {
+        "beat": "remember_gift",
+        "crossed_nondrawable_window": false,
+        "gap_ms": 50.013,
+        "seconds": 39.233301
+      }
+    ],
+    "max_fps": 0,
+    "note": "Render submissions, not monitor presentation FPS; coverage validity is not a smoothness pass.",
+    "per_second": [
+      {
+        "blocked_process": 0,
+        "post_draw": 116,
+        "process": 115,
+        "second": 0
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 121,
+        "second": 1
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 2
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 119,
+        "process": 119,
+        "second": 3
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 105,
+        "process": 104,
+        "second": 4
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 121,
+        "second": 5
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 6
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 7
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 119,
+        "process": 119,
+        "second": 8
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 9
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 10
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 11
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 12
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 13
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 14
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 118,
+        "process": 118,
+        "second": 15
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 16
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 17
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 18
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 117,
+        "process": 117,
+        "second": 19
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 119,
+        "process": 119,
+        "second": 20
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 119,
+        "process": 119,
+        "second": 21
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 116,
+        "process": 116,
+        "second": 22
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 23
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 24
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 25
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 119,
+        "second": 26
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 118,
+        "process": 119,
+        "second": 27
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 28
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 29
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 30
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 31
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 32
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 119,
+        "process": 119,
+        "second": 33
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 34
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 35
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 36
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 37
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 38
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 110,
+        "process": 110,
+        "second": 39
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 40
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 41
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 42
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 119,
+        "second": 43
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 120,
+        "process": 120,
+        "second": 44
+      },
+      {
+        "blocked_process": 0,
+        "post_draw": 25,
+        "process": 26,
+        "second": 45
+      }
+    ],
+    "process_frames": 5380,
+    "process_intervals": {
+      "max_ms": 99.66,
+      "p50_ms": 8.078,
+      "p95_ms": 13.634,
+      "samples": 5380
+    },
+    "render_coverage_valid": true,
+    "rendering_driver": "opengl3",
+    "rendering_method": "gl_compatibility",
+    "screen_hz": 60.0,
+    "seconds": 45.204927,
+    "vsync": 1,
+    "window_drawable_seconds": 45.20486,
+    "window_nondrawable_seconds": 0.0,
+    "window_transitions": [
+      {
+        "beat": "",
+        "can_draw": true,
+        "focused": true,
+        "low_processor": false,
+        "mode": 0,
+        "render_loop": true,
+        "seconds": 0.0
+      },
+      {
+        "beat": "remember_gift",
+        "can_draw": true,
+        "focused": false,
+        "low_processor": false,
+        "mode": 0,
+        "render_loop": true,
+        "seconds": 3.242643
+      }
+    ]
+  },
+  "trials": 5
+}

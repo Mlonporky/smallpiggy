@@ -76,7 +76,7 @@ func _ready() -> void:
  ui = ChapterPresentation.new()
  add_child(ui)
  ui.room_name.text = data.title
- ui.prompt.text = "WASD / 方向键\n移动\n\n走近标记按 E\nF5 保存\nEsc 菜单"
+ ui.prompt.text = "WASD / 方向键\n移动\n\n走近标记按 E\nF5 保存\nEsc 菜单\nF1 设置与操作"
  for item in data.exits:
   var label := Label.new()
   label.position = item[1] + Vector2(-95,30)
@@ -139,7 +139,11 @@ func travel(target: String) -> void:
 func pause_menu() -> void:
  busy = true
  player.set_input_enabled(false)
- var choice := await ui.choose({"stay":"继续探索","save":"保存并回主菜单"})
+ var choice := await ui.choose(ChapterPresentation.HINTS.PAUSE_OPTIONS, {}, "已暂停")
+ while choice == "settings":
+  AppSettings.open_panel()
+  await AppSettings.panel_closed
+  choice = await ui.choose(ChapterPresentation.HINTS.PAUSE_OPTIONS, {}, "已暂停")
  if choice == "save" and SaveManager.save_game(scene_file_path):
   SceneRouter.change_scene("res://scenes/bootstrap/main.tscn")
   return

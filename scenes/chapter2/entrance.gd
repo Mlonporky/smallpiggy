@@ -82,6 +82,7 @@ func take_stick() -> void:
 	player.face(stick.position-player.position)
 	# TODO: Missing asset — no pick-up pose; she switches straight to the armed sheet.
 	hold_stick()
+	gameplay_audio.cue("wood_pickup")
 	GameState.set_flag("s2_pig_stick_collected")
 	await lines("stick")
 	open_path()
@@ -127,7 +128,7 @@ func run_wizard() -> void:
 	await beat(0.5)
 	wizard.visible = true
 	wizard.modulate.a = 0
-	var appear := create_tween()
+	var appear := AppSettings.story_tween(self)
 	appear.tween_property(wizard,"modulate:a",1.0,0.6)
 	await appear.finished
 	await lines(15)
@@ -160,7 +161,7 @@ func run_wizard() -> void:
 	await lines(26)
 	fog()
 	await lines(27)
-	var vanish := create_tween()
+	var vanish := AppSettings.story_tween(self)
 	vanish.tween_property(wizard,"modulate:a",0.0,0.7)
 	await vanish.finished
 	wizard.visible = false
@@ -184,12 +185,12 @@ func memory_flash(warm: bool) -> void:
 	memory.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(memory)
 	memory.modulate = Color(1,0.88,0.75,0) if warm else Color(0.75,0.8,1,0)
-	var tween := create_tween()
+	var tween := AppSettings.story_tween(self)
 	tween.tween_property(memory,"modulate:a",0.85,0.4)
 	await tween.finished
 	if warm: await lines(19)
 	else: await beat(1.2)
-	var out := create_tween()
+	var out := AppSettings.story_tween(self)
 	out.tween_property(memory,"modulate:a",0.0,0.4)
 	await out.finished
 	memory.queue_free()
@@ -223,7 +224,7 @@ func fog() -> void:
 	particles(preload("res://assets/placeholders/fog_particle.svg"),35,8,Color(0.7,0.3,0.9,0.4),wizard.position+Vector2(0,-70))
 
 func recoil(distance: float) -> void:
-	var tween := create_tween()
+	var tween := AppSettings.story_tween(self)
 	tween.tween_property(wizard,"position:x",wizard.position.x-distance,0.45)
 	await tween.finished
 

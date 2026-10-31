@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Compile Error: Identifier not found: AppSettings
+          at: GDScript::reload (res://systems/dialogue/dialogue_ui.gd:48)
+ERROR: Failed to load script "res://systems/dialogue/dialogue_ui.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Compile Error: Identifier not found: AppSettings
+          at: GDScript::reload (res://scenes/cabbage_act2/acorn_memory.gd:213)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+          at: GDScript::reload (res://tests/acorn_memory_test.gd:0)
+ERROR: Failed to load script "res://tests/acorn_memory_test.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+ERROR: Condition "ret != noErr" is true. Returning: ""
+   at: get_system_ca_certificates (platform/macos/os_macos.mm:1035)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+          at: start (res://scenes/cabbage_act2/acorn_memory_preview.gd:13)
+          GDScript backtrace (most recent call first):
+              [0] start (res://scenes/cabbage_act2/acorn_memory_preview.gd:13)
+              [1] _ready (res://scenes/cabbage_act2/acorn_memory_preview.gd:8)
+SCRIPT ERROR: Invalid access to property or key 'dialogue' on a base object of type 'Nil'.
+          at: attach (res://tests/acorn_memory_test.gd:37)
+          GDScript backtrace (most recent call first):
+              [0] attach (res://tests/acorn_memory_test.gd:37)
+              [1] run (res://tests/acorn_memory_test.gd:98)
+              [2] frames (res://tests/acorn_memory_test.gd:11)
+SCRIPT ERROR: Invalid access to property or key 'preview_mode' on a base object of type 'Nil'.
+          at: run (res://tests/acorn_memory_test.gd:99)
+          GDScript backtrace (most recent call first):
+              [0] run (res://tests/acorn_memory_test.gd:99)
+              [1] frames (res://tests/acorn_memory_test.gd:11)

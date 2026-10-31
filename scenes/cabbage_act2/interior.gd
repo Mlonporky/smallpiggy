@@ -7,8 +7,8 @@ const TABLE_STAND := Vector2(800,750)
 const TableModel := preload("res://scenes/cabbage_act2/table_slide_model.gd")
 const TABLE_BODY := Rect2(618,416,335,260)
 const PAPER_TEXTURE := preload("res://assets/cabbage_act2/wrapping/piece_1.png")
-const HELP := "WASD / 方向键\n移动\n\n靠近桌子按 E\n检查包装纸\n\nF5 保存\nEsc 菜单"
-const TABLE_HELP := "桌左侧 E · 包装纸\n桌前 E · 桌面机关\n也可靠近后点击桌面嵌画\n\nF5 保存\nEsc 菜单"
+const HELP := "WASD / 方向键\n移动\n\n靠近桌子按 E\n检查包装纸\n\nF5 保存\nEsc 菜单\nF1 设置与操作"
+const TABLE_HELP := "桌左侧 E · 包装纸\n桌前 E · 桌面机关\n也可靠近后点击桌面嵌画\n\nF5 保存\nEsc 菜单\nF1 设置与操作"
 var player: PiggyPlayer
 var camera: Camera2D
 var ui: ChapterPresentation
@@ -141,7 +141,7 @@ func _ready() -> void:
  table_marker.add_theme_font_size_override("font_size",18)
  GameState.state_changed.connect(refresh_table)
  refresh_table()
- if collectibles.collected_count() == 4: ui.prompt.text = TABLE_HELP
+ ui.prompt.text = objective_text()
 
 func marker(at: Vector2, text: String) -> Label:
  var label := Label.new()
@@ -192,6 +192,7 @@ func refresh_table() -> void:
    for tile in 8:
     var cell: int = normalized.find(tile)
     table_tiles[tile].position = (Vector2(cell%3,cell/3)+Vector2(0.5,0.5))*TABLE_INLAY.size/3.0-TABLE_INLAY.size*0.5
+ table_marker.text = "E · 检查红色纤维" if GameState.has_flag("mushroom_acorn_memory_seen") and not GameState.has_flag("mushroom_red_fiber_seen") else "E · 桌面机关"
  table_marker.visible = available and not busy
  table_marker.modulate.a = 1.0 if player.position.distance_to(TABLE_STAND) < 110 else 0.6
 
@@ -217,7 +218,10 @@ func _unhandled_input(event: InputEvent) -> void:
    inspect_paper()
   elif near_table() and collectibles.collected_count() == 4:
    get_viewport().set_input_as_handled()
-   open_table_puzzle()
+   if GameState.has_flag("mushroom_acorn_memory_seen") and not GameState.has_flag("mushroom_red_fiber_seen"):
+    inspect_red_fiber()
+   else:
+    open_table_puzzle()
   elif player.position.distance_to(Vector2(715,985)) < 115:
    get_viewport().set_input_as_handled()
    leave()
@@ -230,7 +234,10 @@ func _unhandled_input(event: InputEvent) -> void:
    collectibles.collect(nearby)
   elif near_table() and collectibles.collected_count() == 4 and table_hit:
    get_viewport().set_input_as_handled()
-   open_table_puzzle()
+   if GameState.has_flag("mushroom_acorn_memory_seen") and not GameState.has_flag("mushroom_red_fiber_seen"):
+    inspect_red_fiber()
+   else:
+    open_table_puzzle()
   elif near_paper() and click_world.distance_to(PAPER_POSITION) < 95:
    get_viewport().set_input_as_handled()
    inspect_paper()
@@ -256,6 +263,7 @@ func inspect_paper() -> void:
   lift.tween_property(paper,"position",player.position + Vector2(58,-52),0.55)
   lift.tween_property(paper,"rotation",0.12,0.55)
   await lift.finished
+  preload("res://systems/audio/gameplay_audio.gd").play_at(self,"paper")
   await story.say([story.PAPER[0]])
   ui.show_closeup(PAPER_TEXTURE)
   # Leave room for the dialogue box under the paper close-up.
@@ -275,15 +283,25 @@ func inspect_paper() -> void:
   clear_objective_later()
  await story.release()
 
+func objective_text() -> String:
+ if GameState.has_flag("mushroom_house_completed"):
+  return "调查完成\n走到下方门口按 E\n去外面看看\n\nF5 保存\nEsc 菜单\nF1 设置与操作"
+ if GameState.has_flag("mushroom_acorn_memory_seen"):
+  return "桌前按 E\n检查红色纤维\n\nF5 保存\nEsc 菜单\nF1 设置与操作"
+ if collectibles.collected_count() == 4:
+  if GameState.has_flag("wrapping_puzzle_completed"):
+   return "包装纸已拼好\n桌前 E · 桌面机关\n桌左侧 E · 重看包装纸\n\nF5 保存\nEsc 菜单\nF1 设置与操作"
+  return TABLE_HELP
+ if GameState.has_flag("wrapping_piece_1_found"):
+  return "寻找屋内剩余包装纸\n已找到 %d / 4\n靠近纸片按 E 拾取\n\nF5 保存\nEsc 菜单\nF1 设置与操作" % collectibles.collected_count()
+ return HELP
+
 func clear_objective_later() -> void:
  notice_version += 1
  var version := notice_version
- await get_tree().create_timer(5).timeout
+ await get_tree().create_timer(5, false).timeout
  if version != notice_version: return
- if collectibles.collected_count() == 4:
-  ui.prompt.text = TABLE_HELP
- else:
-  ui.prompt.text = HELP
+ ui.prompt.text = objective_text()
 
 func leave() -> void:
  if busy or SceneRouter.is_busy(): return
@@ -291,16 +309,27 @@ func leave() -> void:
  player.set_input_enabled(false)
  GameState.story_phase = GameState.StoryPhase.FOREST_EXPLORATION
  GameState.set_flag("cabbage_left_mushroom_house")
- SceneRouter.change_scene("res://scenes/chapter2/dark_path/dark_path.tscn")
+ if GameState.has_flag("mushroom_house_completed"):
+  GameState.flags.erase("finale_checkpoint")
+  SceneRouter.change_scene("res://scenes/finale/final_chapter.tscn")
+ else:
+  SceneRouter.change_scene("res://scenes/chapter2/dark_path/dark_path.tscn")
 
 func pause_menu() -> void:
  busy = true
  player.set_input_enabled(false)
- var choice := await ui.choose({"stay":"继续探索","save":"保存并回主菜单"})
+ var audio := get_node_or_null("GameplayAudio")
+ if audio!=null: audio.set_audio_paused(true)
+ var choice := await ui.choose(ChapterPresentation.HINTS.PAUSE_OPTIONS, {}, "已暂停")
+ while choice == "settings":
+  AppSettings.open_panel()
+  await AppSettings.panel_closed
+  choice = await ui.choose(ChapterPresentation.HINTS.PAUSE_OPTIONS, {}, "已暂停")
  if choice == "save" and SaveManager.save_game(scene_file_path):
   SceneRouter.change_scene("res://scenes/bootstrap/main.tscn")
   return
  if choice == "save": ui.prompt.text = "保存失败，请重试"
+ if audio!=null: audio.set_audio_paused(false)
  await story.release()
 
 func store_table_progress(board: Array, moves: int) -> void:
@@ -344,7 +373,7 @@ func open_table_puzzle() -> void:
 func play_table_memory() -> void:
  if is_instance_valid(acorn_memory) or not is_instance_valid(table_puzzle): return
  # Let the final picture settle before its two panels open.
- await get_tree().create_timer(0.65).timeout
+ await get_tree().create_timer(0.65, false).timeout
  table_puzzle.visible = false
  acorn_memory = preload("res://scenes/cabbage_act2/acorn_memory.gd").new()
  acorn_memory.release_table = not GameState.has_flag("mushroom_table_acorns_released")
@@ -379,4 +408,20 @@ func open_puzzle() -> void:
  await puzzle.closed
  puzzle.queue_free()
  puzzle = null
+ await story.release()
+ ui.prompt.text = objective_text()
+
+func inspect_red_fiber() -> void:
+ if busy or not GameState.has_flag("mushroom_acorn_memory_seen"): return
+ busy=true
+ player.set_input_enabled(false)
+ var clue:=preload("res://scenes/finale/red_fiber.gd").new()
+ ui.add_child(clue)
+ await story.say(["怎么会有这么多橡子……", "红色的……"])
+ await get_tree().create_timer(1.0 if not story.test_mode else 0.01, false).timeout
+ await story.say(["怎么觉得心里怪怪的。"])
+ clue.queue_free()
+ GameState.set_flag("mushroom_red_fiber_seen")
+ GameState.set_flag("mushroom_house_completed")
+ ui.prompt.text="红色纤维很熟悉……去外面看看。"
  await story.release()

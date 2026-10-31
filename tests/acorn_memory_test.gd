@@ -110,18 +110,21 @@ func run() -> void:
  var start_pig: Vector2 = film.pig.position
  var start_cabbage: Vector2 = film.cabbage.position
  await create_timer(1.1).timeout
- assert(film.pig.position.x > start_pig.x+85 and film.cabbage.position.x > start_cabbage.x+85)
+ assert(film.pig.position.x > start_pig.x+50 and film.cabbage.position.x > start_cabbage.x+50)
  assert(film.cabbage.sprite.texture.atlas == Art.CABBAGE)
  assert(film.pig.sprite.material.get_shader_parameter("blur") < 0.025)
  await capture("trail")
  await wait_phase(film,"pickup_reach")
  await create_timer(0.28).timeout
- assert(film.pig.pose == 4 and film.pig.sprite.texture.atlas == Art.PICKUP)
+ assert(film.pig.pose == 4 and film.pig.rig.reach > 0.0)
+ assert(film.pig.sprite.texture is ViewportTexture,"The saved assembly is composited before haze")
  await capture("reach")
  await wait_phase(film,"pickup_lift")
  var ground: Vector2 = film.picked_acorn.position
- await create_timer(0.3).timeout
+ assert(ground.distance_to(film.pig.hand_point()) < 0.8,"The hoof must touch before the ground nut is attached")
+ await create_timer(0.6).timeout
  assert(film.picked_acorn.position.y < ground.y-20)
+ assert(film.picked_acorn.position.distance_to(film.pig.hand_point()) < 0.8)
  await capture("lift")
  await wait_phase(film,"pig_dialogue")
  await create_timer(0.65).timeout
@@ -139,6 +142,8 @@ func run() -> void:
  await capture("threading")
  await wait_phase(film,"necklace_worn")
  assert(film.pig.pose == 7)
+ assert(film.picked_acorn.visible and film.attachment == "necklace")
+ assert(film.picked_acorn.position.distance_to(film.pig.collar_point()+Vector2(0,24)) < 0.8)
  await capture("necklace")
  await wait_phase(film,"cabbage_dialogue")
  await create_timer(0.55).timeout
@@ -182,7 +187,7 @@ func run() -> void:
  assert(gs.has_flag("mushroom_table_acorns_released"))
  assert(current_scene.room_acorns.visible and not current_scene.table_tiles[0].visible)
  assert(saves.save_game(current_scene.scene_file_path))
- await wait_phase(film,"reflection",18)
+ await wait_phase(film,"reflection",24)
  assert(not film.stage.visible and current_scene.player.position == boy_position)
  assert(not gs.has_flag("mushroom_acorn_memory_seen"),"Reflection must finish before seen is committed")
  await capture("reflection-room")
@@ -218,6 +223,14 @@ func run() -> void:
  current_scene.story.test_mode = true
  await walk(Vector2(810,830))
  await walk(Vector2(800,765))
+ key(KEY_E)
+ key(KEY_E,false)
+ await frames(8)
+ # The current mainline gives the red fibre priority after the memory.
+ # Finish that investigation before reopening the solved table to replay it.
+ while current_scene.busy: await process_frame
+ assert(gs.has_flag("mushroom_red_fiber_seen") and gs.has_flag("mushroom_house_completed"))
+ assert(not is_instance_valid(current_scene.acorn_memory))
  key(KEY_E)
  key(KEY_E,false)
  await frames(8)

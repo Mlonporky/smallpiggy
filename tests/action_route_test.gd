@@ -93,11 +93,16 @@ func capture(name: String) -> void:
 		return
 	# macOS stops drawing a covered window; skip the screenshot instead of waiting forever.
 	var drawn := {"done": false}
-	RenderingServer.frame_post_draw.connect(func(): drawn.done = true, CONNECT_ONE_SHOT)
+	var on_draw := func(): drawn.done = true
+	RenderingServer.frame_post_draw.connect(on_draw, CONNECT_ONE_SHOT)
 	var frames := 0
 	while not drawn.done and frames < 30:
 		await process_frame
 		frames += 1
+	# A timed-out one-shot has not fired. Do not leave its script callback on the
+	# global renderer through SceneTree shutdown (macOS can draw during termination).
+	if RenderingServer.frame_post_draw.is_connected(on_draw):
+		RenderingServer.frame_post_draw.disconnect(on_draw)
 	if drawn.done:
 		root.get_texture().get_image().save_png("/private/tmp/pig-route-%s.png" % name)
 	else:

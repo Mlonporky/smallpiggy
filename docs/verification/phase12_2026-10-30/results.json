@@ -1,0 +1,142 @@
+[
+  {
+    "test": "settings_ui_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.66,
+    "log": "settings_ui_test.log"
+  },
+  {
+    "test": "smoke_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.99,
+    "log": "smoke_test.log"
+  },
+  {
+    "test": "opening_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.92,
+    "log": "opening_test.log"
+  },
+  {
+    "test": "music_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.23,
+    "log": "music_test.log"
+  },
+  {
+    "test": "chapter1_ui_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.71,
+    "log": "chapter1_ui_test.log"
+  },
+  {
+    "test": "chapter1_navigation_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.02,
+    "log": "chapter1_navigation_test.log"
+  },
+  {
+    "test": "boy_atlas_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.82,
+    "log": "boy_atlas_test.log"
+  },
+  {
+    "test": "chapter2_pause_menu_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.24,
+    "log": "chapter2_pause_menu_test.log"
+  },
+  {
+    "test": "chapter2_combat_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.89,
+    "log": "chapter2_combat_test.log"
+  },
+  {
+    "test": "combination_lock_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.27,
+    "log": "combination_lock_test.log"
+  },
+  {
+    "test": "wrapping_puzzle_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.2,
+    "log": "wrapping_puzzle_test.log"
+  },
+  {
+    "test": "table_slide_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.1,
+    "log": "table_slide_test.log"
+  },
+  {
+    "test": "mushroom_guidance_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.91,
+    "log": "mushroom_guidance_test.log"
+  },
+  {
+    "test": "acorn_memory_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 4.18,
+    "log": "acorn_memory_test.log"
+  },
+  {
+    "test": "save_manager_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.31,
+    "log": "save_manager_test.log"
+  },
+  {
+    "test": "story_cave_checkpoint_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.39,
+    "log": "story_cave_checkpoint_test.log"
+  },
+  {
+    "test": "finale_preview_menu_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.19,
+    "log": "finale_preview_menu_test.log"
+  },
+  {
+    "test": "finale_audio_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.09,
+    "log": "finale_audio_test.log"
+  },
+  {
+    "test": "finale_routes_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.43,
+    "log": "finale_routes_test.log"
+  },
+  {
+    "test": "full_story_flow_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 12.46,
+    "log": "full_story_flow_test.log"
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "audio_end" : 18,
+  "audio_peak_dbfs" : -14.342893058754827,
+  "audio_rms_dbfs" : -30.041615284153593,
+  "audio_samples" : 864000,
+  "audio_start" : 0,
+  "decoded_frames" : 540,
+  "duration" : 18,
+  "fps" : 30,
+  "height" : 648,
+  "last_video_timestamp" : 17.966666666666665,
+  "maximum_audio_gap" : 3.5527136788005009e-15,
+  "maximum_video_gap" : 0.033333333333334991,
+  "maximum_video_timing_error" : 0,
+  "review_frames" : [
+    {
+      "actual" : 0.5,
+      "requested" : 0.5
+    },
+    {
+      "actual" : 6.2000000000000002,
+      "requested" : 6.2000000000000002
+    },
+    {
+      "actual" : 7.7999999999999998,
+      "requested" : 7.7999999999999998
+    },
+    {
+      "actual" : 10,
+      "requested" : 10
+    },
+    {
+      "actual" : 14,
+      "requested" : 14
+    },
+    {
+      "actual" : 17.5,
+      "requested" : 17.5
+    }
+  ],
+  "width" : 1152
+}

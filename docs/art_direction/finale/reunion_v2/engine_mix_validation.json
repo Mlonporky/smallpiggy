@@ -1,0 +1,9 @@
+{
+  "seconds": 25.83219954648526,
+  "sample_rate": 44100,
+  "channels": 2,
+  "peak_dbfs": -20.31800618109138,
+  "rms_dbfs": -36.306404608726844,
+  "clipped_samples": 0,
+  "note": "Full recorded mix; capture begins after initial scene startup, not at exact preview t=0."
+}

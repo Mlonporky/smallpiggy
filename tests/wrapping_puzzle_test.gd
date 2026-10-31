@@ -196,6 +196,8 @@ func run() -> void:
   await process_frame
  assert(is_instance_valid(current_scene.puzzle),"Clicking the table must reopen the paper")
  assert(current_scene.puzzle.solved,"Completed paper can be viewed again")
+ for button in current_scene.puzzle.piece_buttons:
+  assert(button.disabled and button.text == "已拼好","Reopened completed paper must not offer unused piece selectors")
  assert(gs.gift_fragments.is_empty() and gs.heart_progress == 0)
  print("WRAPPING_PUZZLE_OK")
  quit()

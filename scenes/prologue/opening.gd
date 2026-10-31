@@ -45,10 +45,13 @@ func _ready() -> void:
 			if shot.has(key) and not textures.has(shot[key]):
 				textures[shot[key]] = load("res://assets/prologue/" + str(shot[key]) + ".png")
 	_build_stage()
+	MusicDirector.mute_changed.connect(_music_mute_changed)
+	_music_mute_changed(MusicDirector.muted)
 	get_viewport().size_changed.connect(_fit_stage)
 	_fit_stage()
 	GameState.story_phase = GameState.StoryPhase.PROLOGUE
 	set_shot(0)
+	MusicDirector.pause_opening(not autoplay)
 	set_process(autoplay)
 
 func _build_stage() -> void:
@@ -103,11 +106,12 @@ func _build_stage() -> void:
 	skip.name = "SkipButton"
 	skip.position = Vector2(984, 20)
 	skip.size = Vector2(138, 36)
-	skip.text = "跳过开场  Esc"
+	skip.text = "跳过开场"
 	skip.pressed.connect(skip_to_chapter)
 	stage.add_child(skip)
-	_label("Hint", Vector2(700, 62), Vector2(425, 22), 13, Color("d7cfdb")).text = "空格 下一句  ·  P 暂停  ·  R 重播  ·  M 静音"
+	_label("Hint", Vector2(630, 62), Vector2(495, 22), 14, Color("d7cfdb")).text = "空格 下一句 · Esc / P 暂停 · R 重播 · F1 设置"
 	audio_player = AudioStreamPlayer.new()
+	audio_player.bus = "Effects"
 	audio_player.name = "AlarmAudio"
 	audio_player.volume_db = -20
 	add_child(audio_player)
@@ -146,7 +150,7 @@ func _fit_stage() -> void:
 
 func _process(delta: float) -> void:
 	if not paused and not finished and not shots.is_empty():
-		advance(delta)
+		advance(delta * AppSettings.story_speed)
 
 func advance(delta: float) -> void:
 	if finished:
@@ -160,6 +164,7 @@ func advance(delta: float) -> void:
 		set_shot(shot_index + 1)
 		shot_time = remainder
 	_render_shot()
+	MusicDirector.opening_at(score_time())
 
 func set_shot(index: int, time := 0.0) -> void:
 	shot_index = clampi(index, 0, shots.size() - 1)
@@ -182,6 +187,17 @@ func set_shot(index: int, time := 0.0) -> void:
 		plate_material.set_shader_parameter("radius2", Vector2(radius2[0], radius2[1]))
 	_render_shot()
 	shot_changed.emit(str(shot["id"]))
+	MusicDirector.opening_at(score_time())
+	MusicDirector.pause_opening(paused)
+
+func score_time() -> float:
+	var total := shot_time
+	for i in shot_index: total += float(shots[i]["duration"])
+	return total
+
+func _music_mute_changed(value: bool) -> void:
+	muted = value
+	audio_player.volume_db = -80 if muted else -20
 
 func _render_shot() -> void:
 	var shot: Dictionary = shots[shot_index]
@@ -244,27 +260,28 @@ func _play_bell(frequency: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		skip_to_chapter()
+		_toggle_pause()
+		get_viewport().set_input_as_handled()
 	elif event is InputEventKey and event.pressed and not event.echo:
 		match event.physical_keycode:
 			KEY_P:
-				paused = not paused
-				audio_player.stream_paused = paused
-				_render_shot()
+				_toggle_pause()
 			KEY_M:
-				muted = not muted
-				audio_player.volume_db = -80 if muted else -20
+				MusicDirector.set_muted(not MusicDirector.muted)
+				get_viewport().set_input_as_handled()
 			KEY_R:
 				if not finished:
 					paused = false
 					audio_player.stop()
 					audio_player.stream_paused = false
 					set_shot(0)
+					MusicDirector.opening_at(0.0,true)
 			KEY_SPACE:
 				# Never skip transformation/teleport visual beats with dialogue input.
 				var cues: Array = shots[shot_index].get("cues", [])
 				if not paused and not shots[shot_index].has("after") and _cue_index + 1 < cues.size():
 					shot_time = float(cues[_cue_index + 1][0])
+					MusicDirector.opening_at(score_time(),true)
 					_render_shot()
 
 func skip_to_chapter() -> void:
@@ -276,6 +293,7 @@ func _finish() -> void:
 	finished = true
 	set_process(false)
 	audio_player.stop()
+	MusicDirector.play_track("morning")
 	GameState.story_phase = GameState.StoryPhase.CABBAGE_HOLLOW_HEART
 	GameState.cabbage_emotional_state = GameState.CabbageEmotionalState.HOLLOW
 	GameState.set_flag("prologue_completed")
@@ -287,3 +305,9 @@ func _finish() -> void:
 	completed.emit()
 	if route_on_finish:
 		SceneRouter.change_scene(CHAPTER, 0.4)
+
+func _toggle_pause() -> void:
+	paused = not paused
+	audio_player.stream_paused = paused
+	MusicDirector.pause_opening(paused)
+	_render_shot()

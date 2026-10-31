@@ -1,0 +1,167 @@
+{
+  "beats": [
+    "cabbage_path",
+    "reunion_walk",
+    "someone",
+    "first_reunion",
+    "first_question",
+    "red_cape",
+    "cape_flash",
+    "hesitate",
+    "secret_name",
+    "secret_question",
+    "secret_pause",
+    "secret_phrase",
+    "memory_house",
+    "memory_together",
+    "memory_gift",
+    "memory_trail",
+    "memory_cape",
+    "memory_cups",
+    "memory_secret",
+    "remember_name",
+    "remember",
+    "remember_house",
+    "remember_cups",
+    "remember_gift",
+    "remember_you",
+    "reunion_close",
+    "close_name",
+    "found",
+    "found_reply",
+    "reunion_rest",
+    "wizard_return",
+    "protect",
+    "things_remain",
+    "memory_objects",
+    "final_curse",
+    "joy_failing",
+    "step_forward",
+    "reach_hand",
+    "hold_hands",
+    "shared_joy",
+    "hearts_return",
+    "joy_burst",
+    "wizard_dissolve",
+    "curse_broken",
+    "light_travels",
+    "manor_restore",
+    "return_home",
+    "home_here",
+    "home_walk",
+    "home_find",
+    "home_promise",
+    "home_seek",
+    "walk_away",
+    "final_secret",
+    "final_question",
+    "final_reply",
+    "leave_frame",
+    "final_shot",
+    "fade_out",
+    "black_pause",
+    "ending_title",
+    "the_end",
+    "credits"
+  ],
+  "frames_over_35ms": [
+    {
+      "beat": "close_name",
+      "beat_time": 0.234464,
+      "draw_calls": 44.0,
+      "engine_process_ms": 2.495,
+      "frame_ms": 87.448
+    },
+    {
+      "beat": "found_reply",
+      "beat_time": 0.827520000000001,
+      "draw_calls": 44.0,
+      "engine_process_ms": 1.768,
+      "frame_ms": 47.96
+    },
+    {
+      "beat": "found_reply",
+      "beat_time": 1.324643,
+      "draw_calls": 44.0,
+      "engine_process_ms": 47.883,
+      "frame_ms": 45.633
+    },
+    {
+      "beat": "wizard_return",
+      "beat_time": 0.0,
+      "draw_calls": 334.0,
+      "engine_process_ms": 13.522,
+      "frame_ms": 40.786
+    },
+    {
+      "beat": "wizard_return",
+      "beat_time": 1.232991,
+      "draw_calls": 334.0,
+      "engine_process_ms": 11.268,
+      "frame_ms": 44.423
+    },
+    {
+      "beat": "joy_failing",
+      "beat_time": 1.076614,
+      "draw_calls": 435.0,
+      "engine_process_ms": 12.723,
+      "frame_ms": 45.049
+    },
+    {
+      "beat": "joy_failing",
+      "beat_time": 1.480849,
+      "draw_calls": 435.0,
+      "engine_process_ms": 12.723,
+      "frame_ms": 57.905
+    },
+    {
+      "beat": "joy_burst",
+      "beat_time": 2.579104,
+      "draw_calls": 476.0,
+      "engine_process_ms": 28.095,
+      "frame_ms": 35.295
+    },
+    {
+      "beat": "joy_burst",
+      "beat_time": 2.613584,
+      "draw_calls": 476.0,
+      "engine_process_ms": 28.095,
+      "frame_ms": 36.821
+    },
+    {
+      "beat": "wizard_dissolve",
+      "beat_time": 1.213719,
+      "draw_calls": 956.0,
+      "engine_process_ms": 42.054,
+      "frame_ms": 42.635
+    },
+    {
+      "beat": "wizard_dissolve",
+      "beat_time": 1.256312,
+      "draw_calls": 956.0,
+      "engine_process_ms": 42.054,
+      "frame_ms": 37.553
+    },
+    {
+      "beat": "wizard_dissolve",
+      "beat_time": 1.293913,
+      "draw_calls": 956.0,
+      "engine_process_ms": 42.054,
+      "frame_ms": 35.655
+    },
+    {
+      "beat": "final_question",
+      "beat_time": 1.565392,
+      "draw_calls": 956.0,
+      "engine_process_ms": 2.62,
+      "frame_ms": 37.575
+    }
+  ],
+  "max_ms": 87.448,
+  "p50_ms": 6.899,
+  "p95_ms": 9.716,
+  "preview_isolation": true,
+  "rendered_frames": 3217,
+  "samples": 31395,
+  "seconds": 222.210176
+}

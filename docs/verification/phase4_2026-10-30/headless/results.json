@@ -1,0 +1,51 @@
+[
+  {
+    "test": "phase4_character_study_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.91,
+    "log": "phase4_character_study_test.log"
+  },
+  {
+    "test": "finale_boy_direction_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.6,
+    "log": "finale_boy_direction_test.log"
+  },
+  {
+    "test": "boy_atlas_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 0.79,
+    "log": "boy_atlas_test.log"
+  },
+  {
+    "test": "finale_reunion_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.61,
+    "log": "finale_reunion_test.log"
+  },
+  {
+    "test": "finale_transformation_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.09,
+    "log": "finale_transformation_test.log"
+  },
+  {
+    "test": "finale_routes_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.52,
+    "log": "finale_routes_test.log"
+  },
+  {
+    "test": "finale_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.53,
+    "log": "finale_test.log"
+  }
+]

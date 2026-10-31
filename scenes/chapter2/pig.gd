@@ -81,6 +81,7 @@ func _physics_process(delta: float) -> void:
 		if jump_time == 0:
 			jump_height = 0
 			FX.spawn(get_parent(), position, "land", Vector2.RIGHT, Color("d4c3ae"), 35)
+			FX.sound(self, "land")
 	hurt_time = maxf(0, hurt_time - delta)
 	if joy_power:
 		aura_time -= delta
@@ -96,6 +97,7 @@ func roll() -> void:
 	face(roll_direction)
 	roll_time = 0.48
 	roll_cooldown = 1.15
+	FX.sound(self, "roll")
 	FX.spawn(get_parent(), position, "land", roll_direction, Color("d4c3ae"), 40)
 
 func parry() -> void:
@@ -108,7 +110,7 @@ func jump() -> void:
 	if not input_enabled or waking or _attacking or jump_cooldown > 0 or roll_time > 0 or parry_time > 0: return
 	jump_time = 0.65
 	jump_cooldown = 0.95
-	FX.sound(self, "swing")
+	FX.sound(self, "jump")
 
 func _update_visual(delta: float) -> void:
 	_animation_clock += delta
@@ -174,12 +176,12 @@ func wake_up() -> void:
 	waking = true
 	for i in 5:
 		wake_frame = i
-		await get_tree().create_timer(0.48).timeout
+		await get_tree().create_timer(0.48, false).timeout
 	# The authored standing pose (wake 5) has a narrower cape and arms than the
 	# walking sheet and still reads smaller; stand up on cape_down_00 instead.
 	waking = false
 	face(Vector2.DOWN)
-	await get_tree().create_timer(0.48).timeout
+	await get_tree().create_timer(0.48, false).timeout
 
 func attack() -> void:
 	if _attacking or not combat_enabled or jump_time > 0 or roll_time > 0 or parry_time > 0: return

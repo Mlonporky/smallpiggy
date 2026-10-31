@@ -1,0 +1,20 @@
+{
+  "opening_story": {
+    "seconds": 88.5,
+    "sample_rate": 44100,
+    "channels": 2,
+    "peak_dbfs": -3.1,
+    "rms_dbfs": -20.54,
+    "clipped_samples": 0,
+    "loop_edge_delta": 0.0
+  },
+  "hollow_morning": {
+    "seconds": 54.0,
+    "sample_rate": 44100,
+    "channels": 2,
+    "peak_dbfs": -4.68,
+    "rms_dbfs": -20.0,
+    "clipped_samples": 0,
+    "loop_edge_delta": 0.0
+  }
+}

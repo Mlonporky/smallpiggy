@@ -100,6 +100,7 @@ func collect(index: int) -> void:
  tween.tween_property(scrap,"modulate:a",0.0,0.25)
  await tween.finished
  GameState.set_flag(flag(index+1))
+ preload("res://systems/audio/gameplay_audio.gd").play_at(host,"paper")
  refresh()
  host.ui.prompt.text = "这些碎片好像可以拼起来。\n\n回到桌边看看。" if collected_count() == 4 else "找到一块包装纸碎片。"
  host.clear_objective_later()

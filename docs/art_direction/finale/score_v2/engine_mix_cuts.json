@@ -1,0 +1,46 @@
+{
+  "cuts": [
+    {
+      "mood": "path",
+      "seconds": 0.000154,
+      "shot": "pig_path"
+    },
+    {
+      "mood": "reunion",
+      "seconds": 6.004473,
+      "shot": "first_reunion"
+    },
+    {
+      "mood": "memory",
+      "seconds": 12.008898,
+      "shot": "memory_house"
+    },
+    {
+      "mood": "curse",
+      "seconds": 18.016112,
+      "shot": "wizard_return"
+    },
+    {
+      "mood": "joy",
+      "seconds": 24.024063,
+      "shot": "shared_joy"
+    },
+    {
+      "mood": "home",
+      "seconds": 30.026149,
+      "shot": "curse_broken"
+    },
+    {
+      "mood": "restored",
+      "seconds": 36.032227,
+      "shot": "home_here"
+    },
+    {
+      "mood": "path",
+      "seconds": 42.035316,
+      "shot": "path_loop_boundary"
+    }
+  ],
+  "preview_isolation": true,
+  "seconds": 46.0451700680272
+}

@@ -1,4 +1,5 @@
 extends ForestSlime
+signal shell_resisted
 const FX = preload("res://scenes/chapter2/combat_fx.gd")
 var art: Sprite2D
 var frames: Array
@@ -93,6 +94,8 @@ func _on_damaged(source: HitBox2D) -> void:
 	if shielded:
 		# Early swings weaken the shell but cannot bypass the story awakening.
 		health.damage(mini(source.damage, maxi(0, health.current_health - 14)))
+		if health.current_health <= 14:
+			shell_resisted.emit()
 		return
 	health.damage(source.damage)
 	if not _dead:

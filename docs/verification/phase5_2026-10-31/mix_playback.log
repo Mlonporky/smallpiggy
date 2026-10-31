@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 91.7 - Compatibility - Using Device: Apple - Apple M1
+
+AUDIO_MIX_CAPTURE mix_ambience seconds=0.80108843537415
+AUDIO_MIX_CAPTURE mix_ambience_off seconds=0.59210884353741
+AUDIO_MIX_CAPTURE mix_effect seconds=0.61532879818594
+AUDIO_MIX_CAPTURE mix_effects_off seconds=0.61532879818594
+AUDIO_MIX_CAPTURE mix_muted seconds=0.61532879818594
+AUDIO_MIX_CAPTURE mix_local_paused seconds=0.61532879818594
+AUDIO_MIX_CAPTURE mix_settings_paused seconds=0.61532879818594
+AUDIO_MIX_CAPTURE mix_resumed seconds=0.61532879818594
+AUDIO_MIX_CAPTURE mix_menu seconds=0.61532879818594
+GAMEPLAY_AUDIO_MIX_OK sample_seconds=32.043537414966 events=25

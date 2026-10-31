@@ -143,11 +143,13 @@ func _ready() -> void:
 	player.health.died.connect(_died)
 	player.health.healed.connect(_healed)
 	audio_fx = Sound.new()
+	audio_fx.name = "GameplayAudio"
+	audio_fx.profile = "platform"
 	add_child(audio_fx)
 	player.combat.swung.connect(func(): audio_fx.cue("swing"))
 	player.movement_fx.connect(func(kind: String, _at: Vector2, _amount: float):
-		if kind == "bounce":
-			audio_fx.cue("bounce"))
+		if kind in ["bounce","jump","land"]:
+			audio_fx.cue(kind))
 	props = Node2D.new()
 	props.name = "Props"
 	props.z_index = -1
@@ -330,6 +332,7 @@ func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	if hit_stop > 0:
 		return
+	audio_fx.footsteps(player.position,player.is_on_floor() and player.alive(),90.0)
 	elapsed += delta
 	for mover in movers:
 		mover.tick(delta)
@@ -349,7 +352,7 @@ func _physics_process(delta: float) -> void:
 	weapon_icon.queue_redraw()
 	var name: String = player.combat.weapon.display_name if player.combat.weapon else "空手"
 	hud.text = hud_text()
-	prompt.text = "E 拾取 %s（替换当前武器）" % nearby.weapon.display_name if nearby else (notice if notice_time > 0 else "寻找出口 · 高处和坑底都有东西")
+	prompt.text = "E 拾取 %s（替换当前武器）" % nearby.weapon.display_name if nearby else (notice if notice_time > 0 else exploration_hint())
 	status.text = ""
 	debug_label.text = "Player %s | Velocity %s | Grounded %s\nHP %d | Weapon %s | Attack %s\nDodge %.2f / CD %.2f | Invincible %.2f\nEnemy HP %s" % ["GROUND" if player.is_on_floor() else "AIR", player.velocity, player.is_on_floor(), player.health.hp, name, player.combat.state, player.roll_time, player.roll_cooldown, player.health.invulnerable, str(enemies.map(func(e): return e.hp))]
 	props.queue_redraw()
@@ -360,7 +363,19 @@ func _physics_process(delta: float) -> void:
 
 func hud_text() -> String:
 	var name: String = player.combat.weapon.display_name if player.combat.weapon else "空手"
-	return "苔根小径  ·  萤火 %d / %d  ·  生命 %d / 100  ·  武器：%s  ·  营火：%s\nA/D 移动  空格跳  J 攻击  Shift 翻滚  E 拾取  S+空格 穿下树枝  Esc 暂停  R 营火重来  F3 调试" % [firefly_count, fireflies.size(), player.health.hp, name, "已点亮 %d" % lit_campfires.size() if checkpoint_active else "起点"]
+	return "苔根小径  ·  萤火 %d / %d  ·  生命 %d / 100  ·  武器：%s  ·  营火：%s\nA/D 移动  空格跳  J 攻击  E 拾取  Esc 暂停  R 营火重来  F1 完整操作  F3 调试" % [firefly_count, fireflies.size(), player.health.hp, name, "已点亮 %d" % lit_campfires.size() if checkpoint_active else "起点"]
+
+func exploration_hint() -> String:
+	var at := player.position
+	if at.x >= 6950:
+		return "前方是出口 · 想补收集可先按 R 折返，萤火与秘密保留"
+	if at.x >= 4800 and at.x < 5300 and at.y < 800:
+		return "岔路：↑ 乘升降台去树冠　↓ 落向林下小路 · 两条路都能到出口"
+	if at.x >= 2440 and at.x < 3450:
+		return "上方石板通往主路 · 坑底也能探索，沿右侧蘑菇弹回上层"
+	if checkpoint_active:
+		return "寻找出口 · R 返回最近点亮的营火，已收集的萤火与秘密保留"
+	return "沿小路寻找出口 · 萤火是可选收集，不必集齐也能继续"
 
 
 func _player_box() -> Rect2:
@@ -414,8 +429,8 @@ func _tick_places(delta: float) -> void:
 		checkpoint_active = true
 		checkpoint_weapon = player.combat.weapon
 		player.health.heal(100)
-		notice = "营火已点亮 · 倒下后从这里继续"
-		notice_time = 3
+		notice = "营火已点亮 · R 可返回这里，已收集的萤火与秘密保留"
+		notice_time = 5
 		audio_fx.cue("heal")
 	if CAVERN.has_point(player.position) and not secrets.has("cavern"):
 		_found_secret("cavern", "发现坑底萤穴")
@@ -472,12 +487,13 @@ func swap_weapon(item: Node2D) -> void:
 		drop.lock_time = 0.45
 	notice = "装备了" + player.combat.weapon.display_name
 	notice_time = 1.5
-	audio_fx.cue("heal")
+	audio_fx.cue("equip")
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed() and not event.is_echo() and event.keycode == KEY_R:
-		respawn()
+		if not paused: respawn()
+		get_viewport().set_input_as_handled()
 		return
 	super._unhandled_key_input(event)
 

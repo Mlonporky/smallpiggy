@@ -1,0 +1,262 @@
+{
+  "forest_air": {
+    "seconds": 24.0,
+    "channels": 2,
+    "rate": 22050,
+    "loop": true,
+    "peak_dbfs": -11.05687724071182,
+    "rms_dbfs": -26.832508512086342,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "forest_leaves": {
+    "seconds": 24.0,
+    "channels": 2,
+    "rate": 22050,
+    "loop": true,
+    "peak_dbfs": -11.05687724071182,
+    "rms_dbfs": -26.62965730786147,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "cave_air": {
+    "seconds": 20.0,
+    "channels": 2,
+    "rate": 22050,
+    "loop": true,
+    "peak_dbfs": -11.05687724071182,
+    "rms_dbfs": -26.766312433592397,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "step_1": {
+    "seconds": 0.28,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -24.211165322652132,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "step_2": {
+    "seconds": 0.3,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -25.728516417094628,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "step_3": {
+    "seconds": 0.26997732426303855,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -25.426163316051337,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "land": {
+    "seconds": 0.36,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -24.398727432870558,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "hit": {
+    "seconds": 0.24997732426303854,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -25.661908157126806,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "swing": {
+    "seconds": 0.26,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -19.937160448962235,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "wood_pickup": {
+    "seconds": 0.32,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -26.378813793765303,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "paper": {
+    "seconds": 0.36,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -23.660477398920627,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "gift": {
+    "seconds": 0.8,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -22.61545984286521,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "equip": {
+    "seconds": 0.32997732426303855,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -26.759647065051038,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "crack": {
+    "seconds": 0.42997732426303853,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -28.143540152868173,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "bounce": {
+    "seconds": 0.38,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -17.195739206227636,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "chime": {
+    "seconds": 0.52,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -19.198551272652917,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "heal": {
+    "seconds": 0.86,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -19.58411832487576,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "purify": {
+    "seconds": 0.92,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -19.87682389663113,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "complete": {
+    "seconds": 1.0499773242630386,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -19.944136895007922,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "alert": {
+    "seconds": 0.3,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -18.419490007680952,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "roll": {
+    "seconds": 0.42,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -21.294220897222704,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "puff": {
+    "seconds": 0.32,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -19.87555727138466,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "swoop": {
+    "seconds": 0.42,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -20.341294196605215,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "drop": {
+    "seconds": 0.3,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -20.404199099085304,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "clang": {
+    "seconds": 0.48,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -23.52344754014903,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  },
+  "jump": {
+    "seconds": 0.24,
+    "channels": 1,
+    "rate": 22050,
+    "loop": false,
+    "peak_dbfs": -6.375528689433151,
+    "rms_dbfs": -20.955851112725764,
+    "clipped_samples": 0,
+    "edge_delta_pcm": 0
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "path_v2": {
+    "seconds": 48.0,
+    "sample_rate": 44100,
+    "channels": 2,
+    "peak_dbfs": -5.367,
+    "rms_dbfs": -20,
+    "clipped_samples": 0,
+    "loop_edge_delta": 0.002903569635711498,
+    "notes": 168
+  },
+  "reunion_v2": {
+    "seconds": 48.0,
+    "sample_rate": 44100,
+    "channels": 2,
+    "peak_dbfs": -5.499,
+    "rms_dbfs": -20,
+    "clipped_samples": 0,
+    "loop_edge_delta": 0.0007478306207301154,
+    "notes": 186
+  },
+  "memory_v2": {
+    "seconds": 32.0,
+    "sample_rate": 44100,
+    "channels": 2,
+    "peak_dbfs": -3.098,
+    "rms_dbfs": -20,
+    "clipped_samples": 0,
+    "loop_edge_delta": 0.0,
+    "notes": 44
+  },
+  "curse_v2": {
+    "seconds": 24.0,
+    "sample_rate": 44100,
+    "channels": 2,
+    "peak_dbfs": -6.566,
+    "rms_dbfs": -20,
+    "clipped_samples": 0,
+    "loop_edge_delta": 0.0027541591749490266,
+    "notes": 76
+  },
+  "joy_v2": {
+    "seconds": 32.0,
+    "sample_rate": 44100,
+    "channels": 2,
+    "peak_dbfs": -6.395,
+    "rms_dbfs": -20,
+    "clipped_samples": 0,
+    "loop_edge_delta": 0.0010925869049115081,
+    "notes": 138
+  },
+  "afterglow_v2": {
+    "seconds": 32.0,
+    "sample_rate": 44100,
+    "channels": 2,
+    "peak_dbfs": -6.001,
+    "rms_dbfs": -20,
+    "clipped_samples": 0,
+    "loop_edge_delta": 0.0014546907447216487,
+    "notes": 80
+  }
+}

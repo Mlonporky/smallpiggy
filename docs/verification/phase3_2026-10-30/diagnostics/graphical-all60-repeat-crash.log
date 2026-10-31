@@ -1,0 +1,56 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 91.7 - Compatibility - Using Device: Apple - Apple M1
+
+  capture gap skipped: window not drawing
+  capture cliff skipped: window not drawing
+  capture ferry skipped: window not drawing
+  capture canopy skipped: window not drawing
+  capture nook skipped: window not drawing
+  capture cavern skipped: window not drawing
+  capture all-60 skipped: window not drawing
+ALL_FIREFLIES_OK fireflies=60/60 secrets=2 deaths=0 game_time=93.1s
+STORY_ALL_FIREFLIES_EXIT_OK
+
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.7.2.stable.official (ed1daf0bf001b61586d9930840f2f1394092c079)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+Load address: 1007f4000
+
+[1] 18779c144 (libsystem_platform.dylib+4144) - _sigtramp + 56
+[2] 1876a32d8 (libc++.1.dylib+72d8) - std::__1::recursive_mutex::lock()
+[3] 1876a32d8 (libc++.1.dylib+72d8) - std::__1::recursive_mutex::lock()
+[4] 1013cc9b4 (main+bd89b4) - main + 4767424
+[5] 1013ccde4 (main+bd8de4) - main + 4768496
+[6] 101469bd0 (main+c75bd0) - main + 5411036
+[7] 1052a5cb8 (main+4ab1cb8) - ZSTD_decompressStream_simpleArgs + 3546196
+[8] 105597828 (main+4da3828) - ZSTD_decompressStream_simpleArgs + 6633412
+[9] 105588510 (main+4d94510) - ZSTD_decompressStream_simpleArgs + 6571180
+[10] 1055944c0 (main+4da04c0) - ZSTD_decompressStream_simpleArgs + 6620252
+[11] 100f41cf8 (main+74dcf8) - main + 4612
+[12] 100f66c00 (main+772c00) - main + 155916
+[13] 100ede104 (main+6ea104) - mvk::SPIRVToMSLConverter::convert(mvk::SPIRVToMSLConversionConfiguration&, mvk::SPIRVToMSLConversionResult&, bool, bool, bool)
+[14] 100ee3be4 (main+6efbe4) - mvk::SPIRVToMSLConverter::convert(mvk::SPIRVToMSLConversionConfiguration&, mvk::SPIRVToMSLConversionResult&, bool, bool, bool)
+[15] 1878471a0 (CoreFoundation+761a0) - __CFNOTIFICATIONCENTER_IS_CALLING_OUT_TO_AN_OBSERVER__ + 148
+[16] 1878d6394 (CoreFoundation+105394) - ___CFXRegistrationPost_block_invoke + 92
+[17] 1878d62d8 (CoreFoundation+1052d8) - _CFXRegistrationPost + 440
+[18] 1878133d0 (CoreFoundation+423d0) - _CFXNotificationPost + 688
+[19] 188f0438c (Foundation+938c) - -[NSNotificationCenter postNotificationName:object:userInfo:] + 88
+[20] 18c00d864 (AppKit+23e864) - -[NSApplication terminate:] + 1592
+[21] 100eddf50 (main+6e9f50) - mvk::SPIRVToMSLConverter::convert(mvk::SPIRVToMSLConversionConfiguration&, mvk::SPIRVToMSLConversionResult&, bool, bool, bool)
+[22] 187851cc4 (CoreFoundation+80cc4) - __CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__ + 36
+[23] 187851bbc (CoreFoundation+80bbc) - __CFRunLoopDoObservers + 648
+[24] 18785122c (CoreFoundation+8022c) - __CFRunLoopRun + 908
+[25] 18792b82c (CoreFoundation+15a82c) - _CFRunLoopRunSpecificWithOptions + 536
+[26] 194c84590 (HIToolbox+bb590) - RunCurrentEventLoopInMode + 320
+[27] 194c8791c (HIToolbox+be91c) - ReceiveNextEventCommon + 492
+[28] 194e0a380 (HIToolbox+241380) - _BlockUntilNextEventMatchingListInMode + 48
+[29] 18c14b29c (AppKit+37c29c) - _DPSBlockUntilNextEventMatchingListInMode + 292
+[30] 18be084fc (AppKit+394fc) - _DPSNextEvent + 580
+[31] 18c680748 (AppKit+8b1748) - -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:] + 780
+[32] 18c68026c (AppKit+8b126c) - -[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:] + 292
+[33] 18bdfb90c (AppKit+2c90c) - -[NSApplication run] + 396
+[34] 100f40ea4 (main+74cea4) - main (in Godot) + 944
+[35] 1873bbe80 (dyld+31e80) - start + 6688
+-- END OF C++ BACKTRACE --
+================================================================

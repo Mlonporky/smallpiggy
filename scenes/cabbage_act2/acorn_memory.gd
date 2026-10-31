@@ -1,10 +1,12 @@
 extends Control
+@onready var story_settings: Node = get_node("/root/AppSettings")
 signal phase_changed(phase_name: String)
 signal acorns_released
 signal reflection_started
 signal finished
 const Art := preload("res://scenes/cabbage_act2/acorn_memory_art.gd")
 const Actor := preload("res://scenes/cabbage_act2/acorn_memory_actor.gd")
+const MemoryPig := preload("res://scenes/cabbage_act2/acorn_memory_character.gd")
 const Table := preload("res://scenes/cabbage_act2/table_slide_puzzle.gd")
 const DESIGN := Vector2(1536,864)
 const HATCH := Rect2(425,174,650,402)
@@ -33,6 +35,17 @@ var acorns: Array[Dictionary] = []
 var started := false
 var walking := false
 var settled := 0
+var walk_progress := 0.0
+var camera_progress := 0.0
+var attachment := "ground"
+var cord: Line2D
+var cord_progress := 0.0
+var pendant_drop := 0.0
+var pendant_origin := Vector2.ZERO
+var cord_origin := Vector2.ZERO
+var ground_acorn := Vector2.ZERO
+var walk_start := Vector2(680,622)
+const WALK_DISTANCE := 315.0
 
 func _ready() -> void:
  set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -53,6 +66,20 @@ func _ready() -> void:
  dialogue = preload("res://systems/dialogue/dialogue_ui.tscn").instantiate()
  dialogue.layer = 36
  add_child(dialogue)
+ var paper := StyleBoxFlat.new()
+ paper.bg_color = Color(0.16,0.115,0.10,0.93)
+ paper.border_color = Color(0.75,0.61,0.42,0.6)
+ paper.set_border_width_all(1)
+ paper.set_corner_radius_all(12)
+ paper.content_margin_left = 24
+ paper.content_margin_right = 24
+ paper.content_margin_top = 12
+ paper.content_margin_bottom = 10
+ dialogue.panel.add_theme_stylebox_override("panel",paper)
+ dialogue.text_label.custom_minimum_size.y = 42
+ dialogue.speaker_label.add_theme_font_size_override("font_size",17)
+ dialogue.hint_label.add_theme_font_size_override("font_size",12)
+ dialogue.hint_label.text = "" if auto_advance else "E / 空格 继续"
  get_viewport().size_changed.connect(layout)
  layout()
  call_deferred("play")
@@ -64,9 +91,9 @@ func layout() -> void:
  stage.position = (viewport-DESIGN*factor)*0.5
  # Keep text in viewport pixels: its readability does not depend on stage scale.
  if dialogue:
-  dialogue.panel.position = Vector2(viewport.x*0.10,viewport.y-186)
-  dialogue.panel.size = Vector2(viewport.x*0.80,164)
-  dialogue.text_label.add_theme_font_size_override("font_size",22 if viewport.x >= 900 else 18)
+  dialogue.panel.position = Vector2(viewport.x*0.13,viewport.y-142)
+  dialogue.panel.size = Vector2(viewport.x*0.74,122)
+  dialogue.text_label.add_theme_font_size_override("font_size",21 if viewport.x >= 900 else 18)
 
 func background(texture: Texture2D, parent: Node2D) -> Sprite2D:
  var node := Sprite2D.new()
@@ -144,23 +171,71 @@ func make_trail() -> void:
  trail_layer.visible = false
  stage.add_child(trail_layer)
  background(preload("res://assets/cabbage_act2/acorn_memory/trail_v1.png"),trail_layer)
- caption("回忆",trail_layer)
+ var atmosphere := preload("res://scenes/cabbage_act2/acorn_memory_atmosphere.gd").new()
+ trail_layer.add_child(atmosphere)
  cabbage = Actor.new()
  cabbage.visible_height = 175
  cabbage.position = Vector2(495,618)
  trail_layer.add_child(cabbage)
- pig = Actor.new()
- pig.is_pig = true
- pig.visible_height = 190
- pig.position = Vector2(680,622)
+ pig = MemoryPig.new()
+ pig.position = walk_start
  trail_layer.add_child(pig)
+ atmosphere.pig = pig
+ atmosphere.cabbage = cabbage
+ cord = Line2D.new()
+ cord.width = 1.6
+ cord.default_color = Color("ae8660")
+ cord.antialiased = true
+ trail_layer.add_child(cord)
  picked_acorn = Sprite2D.new()
  picked_acorn.texture = Art.acorn()
- picked_acorn.scale = Vector2.ONE*(25.0/Art.ACORN_REGION.size.y)
- picked_acorn.position = Vector2(1086,612)
- picked_acorn.rotation = 0.30
+ picked_acorn.scale = Vector2.ONE*(22.0/Art.ACORN_REGION.size.y)
+ picked_acorn.offset.y = 140
+ pig.rig.reach = 1.0
+ pig.rig.update_pose()
+ ground_acorn = walk_start+Vector2(WALK_DISTANCE,0)+pig.rig.near_hand
+ pig.rig.reach = 0.0
+ pig.rig.update_pose()
+ picked_acorn.position = ground_acorn
  picked_acorn.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
  trail_layer.add_child(picked_acorn)
+ var vignette := ColorRect.new()
+ vignette.size = DESIGN
+ vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ var material := ShaderMaterial.new()
+ material.shader = preload("res://scenes/cabbage_act2/acorn_memory_vignette.gdshader")
+ vignette.material = material
+ # Screen framing stays still while the landscape gently approaches.
+ stage.add_child(vignette)
+ trail_layer.visibility_changed.connect(func(): vignette.visible=trail_layer.visible)
+ vignette.visible = false
+
+func pose_to(values: Dictionary, duration: float) -> void:
+ var tween: Tween = story_settings.story_tween(self).set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+ for key in values: tween.tween_property(pig.rig,key,values[key],duration)
+ await tween.finished
+
+func update_props() -> void:
+ if attachment == "hand":
+  picked_acorn.position = pig.hand_point()
+ elif attachment == "necklace":
+  var target: Vector2 = pig.collar_point()+Vector2(0,24)
+  picked_acorn.position = pendant_origin.lerp(target,pendant_drop)
+  picked_acorn.rotation = sin(phase_time*4.0)*0.10*(1.0-pendant_drop)
+ cord.clear_points()
+ if cord_progress <= 0: return
+ var left: Vector2 = pig.other_hand_point()
+ var right: Vector2 = picked_acorn.position
+ if attachment == "necklace":
+  left = cord_origin.lerp(pig.collar_point()+Vector2(-19,-9),pendant_drop)
+ var collar: Vector2 = pig.collar_point()+Vector2(5,-11)
+ for i in 33:
+  var t := float(i)/32.0*cord_progress
+  var point := left.lerp(right,t)+Vector2(0,sin(t*PI)*10)
+  if attachment == "necklace":
+   var neck_point := left.lerp(right,t*2) if t < .5 else right.lerp(collar,(t-.5)*2)
+   point = point.lerp(neck_point,pendant_drop)
+  cord.add_point(point)
 
 func set_phase(value: String) -> void:
  phase = value
@@ -168,7 +243,7 @@ func set_phase(value: String) -> void:
  phase_changed.emit(value)
 
 func fade(alpha: float, duration: float) -> void:
- var tween := create_tween()
+ var tween: Tween = story_settings.story_tween(self)
  tween.tween_property(curtain,"color:a",alpha,duration)
  await tween.finished
 
@@ -177,9 +252,9 @@ func play() -> void:
  started = true
  if release_table:
   set_phase("table_closed")
-  await get_tree().create_timer(0.45).timeout
+  await story_settings.story_wait(self,0.45).finished
   set_phase("table_opening")
-  var opening := create_tween().set_parallel(true)
+  var opening: Tween = story_settings.story_tween(self).set_parallel(true)
   opening.tween_property(lid_left,"scale:x",0.14,0.9).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
   opening.tween_property(lid_right,"scale:x",0.14,0.9).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
   await opening.finished
@@ -187,7 +262,7 @@ func play() -> void:
   spawn_acorns()
   set_phase("acorn_spill")
   acorns_released.emit()
-  await get_tree().create_timer(3.4).timeout
+  await story_settings.story_wait(self,3.4).finished
  set_phase("enter_memory")
  await fade(1.0,0.55)
  table_layer.visible = false
@@ -195,34 +270,50 @@ func play() -> void:
  await fade(0.0,0.55)
  set_phase("trail_walk")
  walking = true
- await get_tree().create_timer(3.25).timeout
+ var camera: Tween = story_settings.story_tween(self).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+ camera.tween_property(self,"camera_progress",1.0,8.5)
+ var stroll: Tween = story_settings.story_tween(self)
+ stroll.tween_property(self,"walk_progress",1.0,3.5)
+ await stroll.finished
  walking = false
- pig.rotation = 0
+ pig.rig.movement = 0
  cabbage.rotation = 0
+ cabbage.set_pose(0,true)
+ await story_settings.story_wait(self,0.35).finished
  # The ground acorn is reached, touched, then raised toward the front hoof.
  set_phase("pickup_reach")
- pig.set_pose(4,true)
- await get_tree().create_timer(0.55).timeout
+ pig.pose = 4
+ await pose_to({"reach":1.0},1.15)
+ pig.rig.update_pose()
+ update_props()
+ await story_settings.story_wait(self,0.22).finished
  set_phase("pickup_lift")
- var lift := create_tween().set_parallel(true)
- lift.tween_property(picked_acorn,"position",pig.position+Vector2(65,-95),0.5).set_trans(Tween.TRANS_SINE)
- lift.tween_property(picked_acorn,"rotation",-0.1,0.5)
- await lift.finished
- pig.set_pose(5,true)
- await get_tree().create_timer(0.16).timeout
- picked_acorn.visible = false
+ attachment = "hand"
+ await pose_to({"reach":0.0,"hold":1.0},1.1)
+ pig.pose = 5
+ await story_settings.story_wait(self,0.3).finished
  set_phase("pig_dialogue")
  await dialogue.say("粉嘟嘟的身影",PIG_LINE,0,0,auto_advance,auto_duration)
  set_phase("necklace_threading")
- pig.set_pose(6,true)
- var motion := create_tween()
- motion.tween_property(pig,"rotation",-0.035,0.4).set_trans(Tween.TRANS_SINE)
- motion.tween_property(pig,"rotation",0.02,0.45).set_trans(Tween.TRANS_SINE)
- motion.tween_property(pig,"rotation",0.0,0.4).set_trans(Tween.TRANS_SINE)
- await motion.finished
- pig.set_pose(7,true)
+ pig.pose = 6
+ await pose_to({"craft":1.0},0.55)
+ var threading: Tween = story_settings.story_tween(self).set_trans(Tween.TRANS_SINE)
+ threading.tween_property(self,"cord_progress",1.0,0.9)
+ await threading.finished
+ await story_settings.story_wait(self,0.35).finished
+ await pose_to({"fasten":1.0},0.95)
+ await story_settings.story_wait(self,0.3).finished
+ # The open cord is fastened at the collar; the same acorn is then released.
+ pendant_origin = pig.hand_point()
+ cord_origin = pig.other_hand_point()
+ attachment = "necklace"
+ var drop: Tween = story_settings.story_tween(self).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+ drop.tween_property(self,"pendant_drop",1.0,0.55)
+ await drop.finished
+ await pose_to({"release":1.0},0.7)
+ pig.pose = 7
  set_phase("necklace_worn")
- await get_tree().create_timer(0.8).timeout
+ await story_settings.story_wait(self,0.8).finished
  set_phase("cabbage_dialogue")
  await dialogue.say("白白菜",CABBAGE_LINE,0,0,auto_advance,auto_duration)
  set_phase("return_reality")
@@ -239,13 +330,14 @@ func play() -> void:
   screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
   add_child(screen)
   stage.visible = false
-  var restore := create_tween()
+  var restore: Tween = story_settings.story_tween(self)
   restore.tween_property(screen,"color:a",0.0,0.65)
   await restore.finished
   screen.queue_free()
  set_phase("reflection")
  reflection_started.emit()
- await dialogue.say("白白菜",REFLECTION,0,0,auto_advance,auto_duration)
+ var reflection_duration := maxf(auto_duration,5.5) if auto_duration >= 2.0 else auto_duration
+ await dialogue.say("白白菜",REFLECTION,0,0,auto_advance,reflection_duration)
  set_phase("finished")
  finished.emit()
 
@@ -265,14 +357,27 @@ func spawn_acorns() -> void:
   acorns.append({"node":node,"velocity":Vector2(rng.randf_range(-100,100),rng.randf_range(-100,-20)),"floor":rng.randf_range(700,794),"delay":i*0.025,"spin":rng.randf_range(-2.5,2.5),"bounces":0,"settled":false})
 
 func _process(delta: float) -> void:
+ delta *= story_settings.story_speed
  elapsed += delta
  phase_time += delta
+ if is_instance_valid(dialogue) and dialogue.panel.visible:
+  # Containers may grow after the Chinese text wraps; anchor the actual height.
+  dialogue.panel.position.y = get_viewport().get_visible_rect().size.y-dialogue.panel.size.y-22
+ if is_instance_valid(pig):
+  var zoom := lerpf(1.0,1.16,camera_progress)
+  trail_layer.scale = Vector2.ONE*zoom
+  trail_layer.position = -Vector2(910,660)*(zoom-1.0)
  if walking:
-  var travel := 100.0*delta
-  pig.position.x += travel
-  cabbage.position.x += travel
+  var next_x := walk_start.x+WALK_DISTANCE*smoothstep(0.0,1.0,walk_progress)
+  var travel := next_x-pig.position.x
+  pig.position.x = next_x
+  cabbage.position.x = next_x-185
+  pig.rig.movement = pow(maxf(sin(walk_progress*PI),0.0),0.45)
   pig.walk(travel)
   cabbage.walk(travel)
+ if is_instance_valid(pig):
+  pig.rig.update_pose()
+  update_props()
  if phase == "acorn_spill":
   for item in acorns:
    if phase_time < item.delay or item.settled: continue

@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Condition "ret != noErr" is true. Returning: ""
+   at: get_system_ca_certificates (platform/macos/os_macos.mm:1035)
+WINDOW_CHECK window=(1152, 648) logical=(1152.0, 648.0)
+ERROR: Could not open save file: 7
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _write_game (res://autoload/save_manager.gd:57)
+       [1] save_game (res://autoload/save_manager.gd:41)
+       [2] _physics_process (res://actors/shared/player_controller.gd:109)
+ERROR: Could not open save file: 7
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _write_game (res://autoload/save_manager.gd:57)
+       [1] save_game (res://autoload/save_manager.gd:41)
+       [2] _unhandled_input (res://scenes/chapter1/chapter_room.gd:140)
+       [3] choose (res://scenes/chapter1/chapter_presentation.gd:197)
+SETTINGS_UI_OK responsive_menu=1 settings=1 persistence mute nested_pause dialogue_freeze closeup_escape preview_isolation save_failure_retry

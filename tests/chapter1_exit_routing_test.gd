@@ -5,6 +5,7 @@ func _initialize() -> void:
 
 func _run() -> void:
  await process_frame
+ root.get_node("SaveManager").save_path = "/tmp/piggy-chapter1-routing.json"
  var state = root.get_node("GameState")
  state.reset()
  for flag in ["ch1_opening_done","bedroom_memory_complete","bedroom_exit_intro_done","kitchen_memory_complete","ch1_can_leave_home"]:
