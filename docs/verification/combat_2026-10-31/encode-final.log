@@ -1,0 +1,42 @@
+tools/encode_png_video.swift:20:7: warning: 'expectsMediaDataInRealTime' was deprecated in macOS 27.0: Use the input receiver's appendImmediately(...) method instead [#DeprecatedDeclaration]
+18 | let settings: [String: Any] = [AVVideoCodecKey: AVVideoCodecType.h264, AVVideoWidthKey: first.width, AVVideoHeightKey: first.height, AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: 3000000]]
+19 | let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+20 | input.expectsMediaDataInRealTime = false
+   |       `- warning: 'expectsMediaDataInRealTime' was deprecated in macOS 27.0: Use the input receiver's appendImmediately(...) method instead [#DeprecatedDeclaration]
+21 | let attrs: [String: Any] = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB, kCVPixelBufferWidthKey as String: first.width, kCVPixelBufferHeightKey as String: first.height, kCVPixelBufferCGImageCompatibilityKey as String: true, kCVPixelBufferCGBitmapContextCompatibilityKey as String: true]
+22 | let adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: input, sourcePixelBufferAttributes: attrs)
+
+tools/encode_png_video.swift:22:15: warning: 'AVAssetWriterInputPixelBufferAdaptor' was deprecated in macOS 27.0: Use AVAssetWriter.inputPixelBufferReceiver(for:pixelBufferAttributes:) instead [#DeprecatedDeclaration]
+20 | input.expectsMediaDataInRealTime = false
+21 | let attrs: [String: Any] = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB, kCVPixelBufferWidthKey as String: first.width, kCVPixelBufferHeightKey as String: first.height, kCVPixelBufferCGImageCompatibilityKey as String: true, kCVPixelBufferCGBitmapContextCompatibilityKey as String: true]
+22 | let adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: input, sourcePixelBufferAttributes: attrs)
+   |               `- warning: 'AVAssetWriterInputPixelBufferAdaptor' was deprecated in macOS 27.0: Use AVAssetWriter.inputPixelBufferReceiver(for:pixelBufferAttributes:) instead [#DeprecatedDeclaration]
+23 | writer.add(input)
+24 | guard writer.startWriting() else { print("Encoder start failed: \(String(describing: writer.error))"); exit(1) }
+
+tools/encode_png_video.swift:23:8: warning: 'add' was deprecated in macOS 27.0: Use the appropriate AVAssetWriter.inputReceiver(for:...) overload for your input and optional adaptor instead [#DeprecatedDeclaration]
+21 | let attrs: [String: Any] = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB, kCVPixelBufferWidthKey as String: first.width, kCVPixelBufferHeightKey as String: first.height, kCVPixelBufferCGImageCompatibilityKey as String: true, kCVPixelBufferCGBitmapContextCompatibilityKey as String: true]
+22 | let adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: input, sourcePixelBufferAttributes: attrs)
+23 | writer.add(input)
+   |        `- warning: 'add' was deprecated in macOS 27.0: Use the appropriate AVAssetWriter.inputReceiver(for:...) overload for your input and optional adaptor instead [#DeprecatedDeclaration]
+24 | guard writer.startWriting() else { print("Encoder start failed: \(String(describing: writer.error))"); exit(1) }
+25 | writer.startSession(atSourceTime: .zero)
+
+tools/encode_png_video.swift:24:14: warning: 'startWriting()' was deprecated in macOS 27.0: Use start() instead [#DeprecatedDeclaration]
+22 | let adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: input, sourcePixelBufferAttributes: attrs)
+23 | writer.add(input)
+24 | guard writer.startWriting() else { print("Encoder start failed: \(String(describing: writer.error))"); exit(1) }
+   |              `- warning: 'startWriting()' was deprecated in macOS 27.0: Use start() instead [#DeprecatedDeclaration]
+25 | writer.startSession(atSourceTime: .zero)
+26 | for (index, url) in frames.enumerated() {
+
+tools/encode_png_video.swift:27:15: warning: 'isReadyForMoreMediaData' was deprecated in macOS 27.0: Use the input receiver's async append(...) method instead [#DeprecatedDeclaration]
+25 | writer.startSession(atSourceTime: .zero)
+26 | for (index, url) in frames.enumerated() {
+27 |  while !input.isReadyForMoreMediaData { Thread.sleep(forTimeInterval: 0.002) }
+   |               `- warning: 'isReadyForMoreMediaData' was deprecated in macOS 27.0: Use the input receiver's async append(...) method instead [#DeprecatedDeclaration]
+28 |  try autoreleasepool {
+29 |   var buffer: CVPixelBuffer?
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+PNG_VIDEO_OK frames=423 size=1152x648

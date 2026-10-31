@@ -105,22 +105,16 @@ func run() -> void:
 	scene.start_encounter()
 	await until_idle()
 	scene.slime.stop_attack()
-	for i in 5:
-		scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-		await create_timer(1).timeout
-	while not scene.awakened: await process_frame
-	assert(scene.player.health.current_health == 40)
-	scene.slime.stop_attack()
-	scene.player.position = scene.slime.position + Vector2(0,95)
-	scene.player.face(Vector2.UP)
-	await create_timer(2.2).timeout
-	scene.slime.stop_attack()
-	for i in 6:
+	assert(scene.player.release_joy())
+	assert(scene.player.health.current_health == 100 and scene.player.joy_power)
+	for i in 24:
+		if scene.slime._dead: break
 		scene.player.position = scene.slime.position + Vector2(0,95)
 		scene.player.face(Vector2.UP)
 		scene.player.attack()
-		await create_timer(0.8).timeout
-	assert(scene.won,"Six enhanced attacks finish the slime after the joy burst")
+		await create_timer(0.4).timeout
+	await create_timer(0.6).timeout
+	assert(scene.won,"Voluntary skill plus ordinary attacks finishes the encounter")
 	assert(scene.fragment.enabled)
 	scene.lock(false)
 	scene.fragment.interact(scene.player)
@@ -148,7 +142,7 @@ func run() -> void:
 	scene = current_scene
 	scene.allow_save = false
 	await create_timer(0.6).timeout
-	assert(scene.player.health.current_health == 40 and scene.player.input_enabled)
+	assert(scene.player.health.current_health == 100 and scene.player.input_enabled)
 	assert(scene.player.armed and state.has_flag("s2_pig_intro_complete"))
 	for suffix in ["", ".tmp", ".bak"]:
 		DirAccess.remove_absolute(root.get_node("SaveManager").save_path + suffix)

@@ -62,7 +62,7 @@ func _draw_markers(canvas: Node2D) -> void:
   draw_spark(canvas,pos+Vector2(0,sin(elapsed*1.2+i)*4),pulse)
   # A small floor glimmer tells players where the object can be reached.
   var foot: Vector2 = room.hotspots[clue[0]].position
-  if clue[0] not in ["cup","tableware"]:
+  if clue[0] not in ["cup","tableware","pillow"]:
    canvas.draw_arc(foot,18,0,TAU,40,Color(1.0,0.80,0.46,0.36*pulse),2,true)
  if room.room_id == "kitchen" and not GameState.has_flag("trash_checked"):
   draw_spark(canvas,Vector2(1225,405),0.7+0.3*sin(elapsed*1.65+2.0))

@@ -10,7 +10,10 @@ func run() -> void:
  for i in 721:
   for rig in [reference,fast]:
    rig.travel=i*.73
-   rig.movement=.7
+   # Full gait retains the historical reference pose. Reduced movement now
+   # intentionally blends fingertip sway to rest; motion_transition_test covers
+   # that continuity and must not be compared to the old unweighted sway.
+   rig.movement=1.0
    rig.reach=sin(i*.02)*.4+.4
    rig.hold=maxf(0,sin(i*.04))
    rig.craft=maxf(0,cos(i*.03))
@@ -36,8 +39,8 @@ func run() -> void:
    rig.travel=i*.73
    rig.update_pose()
   timings.append((Time.get_ticks_usec()-start)/1000.0)
- print("FINALE_RIG_EQUIVALENT samples=721 max_radians=",maximum," 1000_pose_ms=",timings)
- var out:=FileAccess.open("res://docs/art_direction/finale/residents_v1/rig_solver_comparison.json",FileAccess.WRITE)
+ print("FINALE_RIG_EQUIVALENT_OK samples=721 max_radians=",maximum," 1000_pose_ms=",timings)
+ var out:=FileAccess.open("res://docs/verification/entry_2026-10-31/rig_solver_comparison.json",FileAccess.WRITE)
  out.store_string(JSON.stringify({"samples":721,"max_radians":maximum,"reference_1000_ms":timings[0],"cached_1000_ms":timings[1]},"  "))
  out.close()
  reference.queue_free()

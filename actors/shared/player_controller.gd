@@ -80,11 +80,11 @@ func _physics_process(delta: float) -> void:
 			_script_walking = false
 			direction = Vector2.ZERO
 			velocity = Vector2.ZERO
-	elif input_enabled and not _attacking:
+	elif input_enabled and _movement_allowed():
 		direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction.length_squared() > 0.0:
-		_facing = _cardinal_facing(direction)
-		var speed := move_speed * WALK_SPEED_MULTIPLIER
+		if _turning_allowed(): _facing = _cardinal_facing(direction)
+		var speed := move_speed * WALK_SPEED_MULTIPLIER * _movement_multiplier()
 		if scripted_step:
 			# Brake before the destination; a fast scripted walk must not orbit
 			# its target and time out even on an unobstructed floor.
@@ -108,6 +108,15 @@ func _physics_process(delta: float) -> void:
 		if save_manager:
 			save_manager.save_game("", true)
 
+
+func _movement_allowed() -> bool:
+	return not _attacking
+
+func _turning_allowed() -> bool:
+	return true
+
+func _movement_multiplier() -> float:
+	return 1.0
 
 func _wants_interaction() -> bool:
 	return Input.is_action_just_pressed("interact")

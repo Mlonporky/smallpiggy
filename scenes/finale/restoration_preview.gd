@@ -9,7 +9,7 @@ func _process(delta: float) -> void:
   _layout()
   return
  _layout()
- if paused: return
+ if not rendering_ready or paused: return
  delta *= playback_speed()
  elapsed+=delta
  beat_time=minf(18.0,beat_time+delta)

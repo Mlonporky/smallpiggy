@@ -216,7 +216,7 @@ func _physics_process(delta: float) -> void:
     _set_phase(Phase.END)
     fall_completed.emit()
     if continue_underground:
-     get_tree().call_deferred("change_scene_to_file","res://scenes/finale/story_cave.tscn")
+     SceneRouter.change_scene("res://scenes/finale/story_cave.tscn",.45,true)
     else:
      ending.visible = true
      ending.get_child(1).grab_focus()

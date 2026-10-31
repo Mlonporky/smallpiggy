@@ -6,6 +6,7 @@ func _ready() -> void:
  super._ready()
  enter_beat(Story.index_of("remember_you"))
 func _process(delta: float) -> void:
+ if not rendering_ready: return
  if finished:
   _layout()
   return

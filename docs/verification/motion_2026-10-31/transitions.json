@@ -1,0 +1,104 @@
+[
+  {
+    "boundary": "[\"someone\", \"reunion_silence\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"reunion_silence\", \"first_reunion\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"reunion_close\", \"close_name\"]",
+    "maximum_step": 0.000030517578125
+  },
+  {
+    "boundary": "[\"reunion_rest\", \"wizard_return\"]",
+    "maximum_step": 0.000030517578125
+  },
+  {
+    "boundary": "[\"wizard_return\", \"protect\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"joy_failing\", \"step_forward\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"step_forward\", \"reach_hand\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"reach_hand\", \"hold_hands\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"hold_hands\", \"shared_joy\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"wizard_dissolve\", \"curse_broken\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"home_seek\", \"walk_away\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"walk_away\", \"final_secret\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "boundary": "[\"final_reply\", \"leave_frame\"]",
+    "maximum_step": 0.0
+  },
+  {
+    "max_screen_root_step_60fps": 0.463477939367294,
+    "motion": "first_reunion",
+    "speed": 1.0
+  },
+  {
+    "max_screen_root_step_60fps": 0.52484130859375,
+    "motion": "wizard_return",
+    "speed": 1.0
+  },
+  {
+    "max_screen_root_step_60fps": 1.15023732185364,
+    "motion": "walk_away",
+    "speed": 1.0
+  },
+  {
+    "max_screen_root_step_60fps": 4.00768327713013,
+    "motion": "leave_frame",
+    "speed": 1.0
+  },
+  {
+    "maximum_step": 0.0,
+    "motion": "return_home_to_dialogue",
+    "speed": 1.0
+  },
+  {
+    "max_screen_root_step_60fps": 0.694508194923401,
+    "motion": "first_reunion",
+    "speed": 1.5
+  },
+  {
+    "max_screen_root_step_60fps": 0.786865234375,
+    "motion": "wizard_return",
+    "speed": 1.5
+  },
+  {
+    "max_screen_root_step_60fps": 1.72523152828217,
+    "motion": "walk_away",
+    "speed": 1.5
+  },
+  {
+    "max_screen_root_step_60fps": 6.01121616363525,
+    "motion": "leave_frame",
+    "speed": 1.5
+  },
+  {
+    "maximum_step": 0.0,
+    "motion": "return_home_to_dialogue",
+    "speed": 1.5
+  }
+]

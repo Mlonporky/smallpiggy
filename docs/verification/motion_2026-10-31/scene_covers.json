@@ -1,0 +1,14 @@
+[
+  {
+    "cover_alpha": 1.0,
+    "scene": "res://scenes/chapter1/bedroom.tscn"
+  },
+  {
+    "cover_alpha": 1.0,
+    "scene": "res://scenes/finale/story_cave.tscn"
+  },
+  {
+    "cover_alpha": 1.0,
+    "scene": "res://scenes/chapter1/bedroom.tscn"
+  }
+]

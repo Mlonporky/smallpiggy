@@ -221,10 +221,13 @@ func _render_shot() -> void:
 	effects.scale = picture.scale
 	effects.set("shot_id", str(shot["id"]))
 	effects.set("clock", shot_time)
+	effects.set("particle_clock", shot_time + (float(shots[shot_index-1].duration) if _continues_plate(shot_index-1,shot_index) else 0.0))
 	effects.set("change", transition_progress)
 	effects.queue_redraw()
-	var fade_in := 1.0 - smoothstep(0.0, 0.65, shot_time)
-	var fade_out := smoothstep(duration - 0.55, duration, shot_time)
+	# A continuing camera setup (bedroom -> curse, panic -> teleport) is one
+	# shot. A black dip here interrupted the action even though its plate/zoom match.
+	var fade_in := 0.0 if _continues_plate(shot_index - 1, shot_index) else 1.0 - smoothstep(0.0, 0.65, shot_time)
+	var fade_out := 0.0 if _continues_plate(shot_index, shot_index + 1) else smoothstep(duration - 0.55, duration, shot_time)
 	shade.color = Color(0.025, 0.02, 0.04, maxf(fade_in, fade_out))
 	location_label.text = str(shot.get("location", "")) + ("  ·  已暂停" if paused else "")
 	title_label.text = "猪 猪 山 庄\n—— 被遗忘的快乐 ——" if shot["id"] == "title" else ""
@@ -243,6 +246,12 @@ func _render_shot() -> void:
 		if bell != _last_bell:
 			_last_bell = bell
 			_play_bell(660.0 + bell * 55.0)
+
+func _continues_plate(previous_index: int, next_index: int) -> bool:
+	if previous_index < 0 or next_index >= shots.size(): return false
+	var previous: Dictionary = shots[previous_index]
+	var next: Dictionary = shots[next_index]
+	return previous.get("after", previous["image"]) == next["image"] and previous.get("anchor", [0.5, 0.5]) == next.get("anchor", [0.5, 0.5]) and is_equal_approx(float(previous.get("zoom_end", 1.035)), float(next.get("zoom_start", 1.0)))
 
 func _play_bell(frequency: float) -> void:
 	var bytes := PackedByteArray()
@@ -304,7 +313,7 @@ func _finish() -> void:
 	GameState.set_flag("gift_fragments_scattered")
 	completed.emit()
 	if route_on_finish:
-		SceneRouter.change_scene(CHAPTER, 0.4)
+		SceneRouter.change_scene(CHAPTER, 0.4, shade.color.a>=0.999)
 
 func _toggle_pause() -> void:
 	paused = not paused

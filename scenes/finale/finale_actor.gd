@@ -12,6 +12,7 @@ var sheet: Texture2D
 var rig: Node2D
 var prepared_rigs: Dictionary = {}
 var walking := false
+var move_blend := 0.0
 var frame := -1
 var expression: Node2D
 var transformation: Node2D
@@ -88,11 +89,17 @@ func sample_transformation(seconds: float) -> void:
 
 func move_to_point(at: Vector2, delta: float, speed := 170.0) -> void:
  var old := position
- position = position.move_toward(at,delta*speed)
+ var remaining := position.distance_to(at)
+ var approach_speed := minf(speed,remaining*6.0)
+ position = position.move_toward(at,delta*approach_speed)
+ if position.distance_to(at)<0.02: position=at
  var dx := position.x-old.x
  if absf(dx)>0.01: facing = signf(dx)
- distance += position.distance_to(old)
- pose(position.distance_to(old)>0.01)
+ var travelled := position.distance_to(old)
+ distance += travelled
+ var amount := clampf(travelled/maxf(delta*speed,0.001),0,1)
+ move_blend=move_toward(move_blend,amount,delta*6.0)
+ pose(move_blend>0.001,move_blend)
 func pose(moving: bool, amount := 1.0) -> void:
  walking = moving
  if rig != null:

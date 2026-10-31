@@ -38,7 +38,7 @@ func level_fingers() -> void:
     joints[limb].rotation=-1.5+float(i)/48.0*1.9
     maximum=maxf(maximum,finger_height(limb))
    height_maxima.append(maximum)
- var target: float=minf(height_maxima[0],height_maxima[1])-2.0-2.0*absf(sin(travel/STRIDE*TAU))
+ var target: float=minf(height_maxima[0],height_maxima[1])-2.0-2.0*absf(sin(travel/STRIDE*TAU))*movement
  for limb in ["Arm_A","Arm_B"]:
   var low:=-1.5
   var high:=-.15

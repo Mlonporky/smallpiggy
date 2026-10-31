@@ -1,98 +1,117 @@
 extends SceneTree
 var scene
-func _initialize() -> void: call_deferred("run")
+func _initialize() -> void:
+	create_timer(80).timeout.connect(func(): push_error("COMBAT_TIMEOUT");quit(1))
+	call_deferred("run")
 func _process(_delta: float) -> bool:
 	if is_instance_valid(scene): scene.dialogue._advance_requested = true
 	return false
-func press(key: int) -> void:
+func key(code: int, down: bool) -> void:
 	var event := InputEventKey.new()
-	event.physical_keycode = key
-	event.pressed = true
+	event.physical_keycode = code
+	event.pressed = down
 	Input.parse_input_event(event)
+func press(code: int) -> void:
+	key(code,true)
 	await physics_frame
 	await physics_frame
-	event.pressed = false
-	Input.parse_input_event(event)
-func run() -> void:
-	await process_frame
+	key(code,false)
+func fresh() -> void:
+	if is_instance_valid(scene):
+		scene.queue_free()
+		await process_frame
 	root.get_node("GameState").reset()
 	scene = load("res://scenes/chapter2/cave.tscn").instantiate()
 	scene.allow_save = false
 	root.add_child(scene)
 	await process_frame
 	scene.start_encounter()
-	while not scene.encounter_started or scene.busy: await process_frame
-	assert(scene.player.input_enabled and scene.player.combat_enabled)
-	while scene.player.health.current_health == 100: await process_frame
-	assert(scene.player.health.current_health == 88 and not scene.awakened)
+	while scene.busy: await process_frame
 	scene.slime.stop_attack()
-	# The explicit 40%-health story rule remains; capped hits now explain why.
-	for i in 12:
-		scene.slime.damage_cooldown = 0
-		scene.slime._on_damaged(scene.player.hit_box)
-	assert(scene.slime.health.current_health == 14 and scene.shell_hint_shown)
-	assert(not scene.awakened and not scene.awakening)
-	await create_timer(1).timeout
-	# Real key mapping, collision-aware travel, and the active dodge window.
-	var before: Vector2 = scene.player.position
+func run() -> void:
+	await process_frame
+	await fresh()
+	var p = scene.player
+	var s = scene.slime
+	p.position = Vector2(735,640)
+	s.position = Vector2(735,480)
+	# Full health active skill, no dialogue/lock, nearby enemy stagger and bounded hit.
+	await press(KEY_Q)
+	assert(p.health.current_health == 100 and p.joy_power and not scene.busy)
+	assert(s.health.current_health == 22 and s.state == "stagger")
+	await press(KEY_Q)
+	assert(s.health.current_health == 22,"Cooldown rejects repeated damage")
+	var cooldown: float = p.joy_cooldown
+	var buff: float = p.joy_time
+	scene.open_pause_menu()
+	await process_frame
+	await create_timer(0.3).timeout
+	assert(p.joy_cooldown == cooldown and p.joy_time == buff,"Pause freezes skill timers")
+	scene.menu_chosen.emit("stay")
+	await process_frame
+	# Movement continues during a real attack; one buffered press produces one follow-up.
+	p.face(Vector2.RIGHT)
+	var before: Vector2 = p.position
+	key(KEY_D,true)
+	await press(KEY_J)
+	await create_timer(0.19).timeout
+	assert(p._attacking and p.position.x > before.x+20,"Attack must allow movement")
+	var serial: int = p.attack_serial
+	await press(KEY_J)
+	await create_timer(0.16).timeout
+	assert(p.attack_serial == serial+1,"Recovery input is buffered")
+	key(KEY_D,false)
+	# Shift buffered before recovery cancels the recovery without a ghost hitbox.
 	await press(KEY_SHIFT)
-	await create_timer(0.12).timeout
-	assert(scene.player.roll_time > 0.1)
-	assert(scene.player.position.distance_to(before) > 10)
-	scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-	assert(scene.player.health.current_health == 88)
+	await create_timer(0.18).timeout
+	assert(p.roll_time > 0 and not p._attacking and not p.hit_box.monitoring, "Evade state %s %s %s %s" % [p.roll_time,p._attacking,p.attack_time,p.dodge_buffer])
+	assert(p.visual_root.scale == Vector2.ONE and absf(p.visual_root.rotation)<0.15)
+	await create_timer(0.07).timeout
+	p.hurt_box.receive_hit(s.hit_box)
+	assert(p.health.current_health == 100,"Middle of evade is invulnerable")
 	await create_timer(0.5).timeout
-	assert(scene.player.visual_root.rotation == 0)
+	# One ordinary swing can only damage an enemy once while overlapping it.
+	p.position = Vector2(735,575)
+	s.position = Vector2(735,480)
+	p.face(Vector2.UP)
+	var hp: int = s.health.current_health
+	await press(KEY_J)
+	await create_timer(0.35).timeout
+	assert(s.health.current_health == hp-2,"One enhanced strike, not per-frame damage")
+	# No automatic low-health awakening. Timer expiry truly ends the enhancement.
+	await create_timer(4.0).timeout
+	assert(not p.joy_power)
+	p.health.current_health = 40
+	scene.on_health_changed(40,100)
+	await create_timer(0.1).timeout
+	assert(not scene.busy and not p.joy_power)
+	await create_timer(4.0).timeout
+	s.position = p.position + Vector2(0,-150)
+	hp = s.health.current_health
+	await press(KEY_Q)
+	assert(p.joy_power and s.health.current_health == hp-2,"Skill is repeatable")
+	# Old awakening saves are valid but no longer force low HP or a permanent buff.
+	root.get_node("GameState").set_flag("s2_joy_awakened")
+	scene.queue_free()
+	await process_frame
+	scene = load("res://scenes/chapter2/cave.tscn").instantiate()
+	scene.allow_save = false
+	root.add_child(scene)
+	await process_frame
+	assert(scene.player.health.current_health == 100 and not scene.player.joy_power)
+	assert(scene.player.joy_cooldown == 0 and scene.slime.health.current_health == 24)
+	# Ordinary attacks alone now finish the encounter without taking any damage.
+	await fresh()
+	p = scene.player
+	s = scene.slime
+	for i in 24:
+		p.position = Vector2(735,575)
+		s.position = Vector2(735,480)
+		p.face(Vector2.UP)
+		await press(KEY_J)
+		await create_timer(0.37).timeout
+		assert(s.health.current_health == 23-i,"Every ordinary swing registers")
 	await create_timer(0.6).timeout
-	var return_position: Vector2 = scene.player.position
-	scene.player.position = Vector2(650,900)
-	scene.player.face(Vector2.LEFT)
-	await press(KEY_SHIFT)
-	await create_timer(0.5).timeout
-	assert(scene.player.position.x >= 629, "Roll cannot pass through the entrance wall")
-	scene.player.position = return_position
-	# Face the source: the branch parry still costs 3 HP, not zero.
-	scene.slime.position = scene.player.position + Vector2(0,-90)
-	scene.player.face(Vector2.UP)
-	await press(KEY_K)
-	scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-	assert(scene.player.health.current_health == 85)
-	scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-	assert(scene.player.health.current_health == 85)
-	await create_timer(1).timeout
-	# Facing away and late parries take the full 12 damage.
-	scene.player.face(Vector2.DOWN)
-	await press(KEY_K)
-	scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-	assert(scene.player.health.current_health == 73)
-	await create_timer(1).timeout
-	scene.player.face(Vector2.UP)
-	await press(KEY_K)
-	await create_timer(0.34).timeout
-	scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-	assert(scene.player.health.current_health == 61)
-	await create_timer(1).timeout
-	await press(KEY_SPACE)
-	await create_timer(0.2).timeout
-	assert(scene.player.jump_height > 40)
-	scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-	assert(scene.player.health.current_health == 61)
-	await create_timer(0.8).timeout
-	# Multiple ordinary hits cross the threshold once; no forced one-hit injury.
-	for i in 2:
-		scene.player.hurt_box.receive_hit(scene.slime.hit_box)
-		await create_timer(1).timeout
-	while not scene.awakened: await process_frame
-	assert(scene.player.health.current_health == 37 and scene.player.joy_power)
-	assert(scene.slime.health.current_health == 12)
-	await create_timer(2.2).timeout
-	scene.slime.stop_attack()
-	for i in 6:
-		scene.player.position = scene.slime.position + Vector2(0,95)
-		scene.player.face(Vector2.UP)
-		scene.player.attack()
-		await create_timer(0.8).timeout
-		if i == 0: assert(not scene.won and scene.slime.health.current_health == 10)
-	assert(scene.won and scene.fragment.enabled)
-	print("CHAPTER2_COMBAT_OK: multi-hit injury, roll input and dodge, directional timed partial parry, jump, six enhanced hits")
+	assert(scene.won and scene.fragment.enabled and p.health.current_health == 100)
+	print("CHAPTER2_COMBAT_OK: full-HP Q, cooldown/reuse, pause, movement, buffer, recovery evade, one hit per swing, legacy save, ordinary no-damage victory")
 	quit()

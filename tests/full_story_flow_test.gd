@@ -119,9 +119,7 @@ func run() -> void:
  Input.action_release("move_up")
  await idle()
  note("real slime combat")
- # Let the actual lunges trigger the authored 40% awakening, then fight via inputs.
- while not current_scene.awakened: await physics_frame
- await idle()
+ # Use the voluntary skill while fighting; no deliberate low-health gate.
  for i in 18000:
   if current_scene.won or not is_instance_valid(current_scene.slime) or current_scene.slime._dead: break
   var actor = current_scene.player
@@ -131,11 +129,14 @@ func run() -> void:
    if pair[1]: Input.action_press(pair[0])
    else: Input.action_release(pair[0])
   actor.face(gap)
+  if i%480==0: press(KEY_Q,true)
+  if i%480==2: press(KEY_Q,false)
   if i%24==0: press(KEY_J,true)
   if i%24==2: press(KEY_J,false)
   await physics_frame
  for action in ["move_left","move_right","move_up","move_down"]: Input.action_release(action)
  press(KEY_J,false)
+ press(KEY_Q,false)
  await idle()
  for i in 240:
   if current_scene.fragment.enabled: break

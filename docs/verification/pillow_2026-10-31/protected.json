@@ -1,0 +1,28 @@
+{
+  "assets/chapter1/living_v2.png": {
+    "before": "493c6655fdc60e4f3ee5368ac28d4eb759776b6aecabe6e79110cf6e21a37971",
+    "after": "493c6655fdc60e4f3ee5368ac28d4eb759776b6aecabe6e79110cf6e21a37971",
+    "unchanged": true
+  },
+  "assets/chapter1/pillow_plush_hd.png": {
+    "before": "2324c1222366670226dfcafde7682d3ae25ce89afcfc467911563b3c9510572e",
+    "after": "2324c1222366670226dfcafde7682d3ae25ce89afcfc467911563b3c9510572e",
+    "unchanged": true
+  },
+  "scenes/animation_studies/editable_pig.tscn": {
+    "before": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54",
+    "after": "3cfcc3932ced83f66c833d9942efa5a24a8300d1c0c6c26d541a5ef317cc5b54",
+    "unchanged": true
+  },
+  "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json": {
+    "before": "2279003eb76722da1395d8035fbaac741bf16fa14e9b295ba90469dc0d202077",
+    "after": "20de6aba2fdee21c0a393581e8d86a62cb60fae9bbe8d61d6a7bbb3e4c84f0bb",
+    "unchanged": false
+  },
+  "/Users/missdaidai/Library/Application Support/Godot/app_userdata/猪猪山庄——被遗忘的快乐——/piggy_manor_save.json.bak": {
+    "before": "4473b24cda3d06eef0df574a365c4dcbf4a8465f64755ed86b2aa5e1a92cf2c9",
+    "after": "4ee29e42b57d0136a61f1c2a84b97599fa67878293988228b126ee5933d5ba0a",
+    "unchanged": false
+  },
+  "save_note": "Independent editor-launched game was running (PID 71381, started 17:18:44). Formal save advanced to cabbage_act2/villa and backup chapter2/cave. All tests use separate PIGGY_SAVE_PATH. No formal save restored or overwritten."
+}

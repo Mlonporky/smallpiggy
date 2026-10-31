@@ -65,7 +65,8 @@ func run() -> void:
    scene.fx.queue_redraw()
    await capture(id)
   if id=="return_home":
-   scene.pig.position=Vector2(898,626)
+   scene.pig.position=scene.HOME_PIG
+   scene.cabbage.position=scene.HOME_CABBAGE
    scene._animate(0.016)
   elif id!="credits":
    scene.beat_time=float(Story.BEATS[i][1])+0.02

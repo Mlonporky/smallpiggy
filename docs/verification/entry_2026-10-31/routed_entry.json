@@ -1,0 +1,87 @@
+{
+  "counters_agree": true,
+  "draw_intervals": {
+    "max_ms": 35.809,
+    "p50_ms": 16.714,
+    "p95_ms": 29.381,
+    "samples": 180
+  },
+  "draw_submissions_per_second": 59.7176050139033,
+  "draw_to_process_ratio": 1.0,
+  "drawable_only_draw_intervals": {
+    "max_ms": 35.809,
+    "p50_ms": 16.714,
+    "p95_ms": 29.381,
+    "samples": 180
+  },
+  "engine_drawn": 182,
+  "frame_post_draw_count": 181,
+  "long_draw_intervals": [
+    {
+      "beat": "first_reunion",
+      "crossed_nondrawable_window": false,
+      "gap_ms": 35.809,
+      "seconds": 2.274366
+    }
+  ],
+  "max_fps": 60,
+  "note": "Render submissions, not monitor presentation FPS; coverage validity is not a smoothness pass.",
+  "per_second": [
+    {
+      "blocked_process": 0,
+      "post_draw": 59,
+      "process": 60,
+      "second": 0
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 1
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 2
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 2,
+      "process": 1,
+      "second": 3
+    }
+  ],
+  "preparation": {
+    "draw_resources": 21,
+    "wall_ms": 64.351
+  },
+  "prepared_under_cover": true,
+  "process_frames": 181,
+  "process_intervals": {
+    "max_ms": 27.166,
+    "p50_ms": 16.661,
+    "p95_ms": 20.296,
+    "samples": 181
+  },
+  "render_coverage_valid": true,
+  "rendering_driver": "opengl3",
+  "rendering_method": "gl_compatibility",
+  "screen_hz": 60.0,
+  "seconds": 3.030932,
+  "story_frozen_frames": 1,
+  "vsync": 1,
+  "window_drawable_seconds": 3.013965,
+  "window_nondrawable_seconds": 0.0,
+  "window_transitions": [
+    {
+      "beat": "",
+      "can_draw": true,
+      "focused": true,
+      "low_processor": false,
+      "mode": 0,
+      "render_loop": true,
+      "seconds": 0.0
+    }
+  ]
+}

@@ -204,10 +204,10 @@ func _opening() -> void:
 		if index == 0:
 			await ui.fade_from_black(test_mode)
 		await pause(1.1 if index == 0 else 0.8)
-	ui.hide_closeup()
 	player.position = Vector2(600,565)
 	player.reset_physics_interpolation()
 	player.visible = true
+	await ui.reveal_room(test_mode)
 	await say("opening")
 	ui.heart.visible = true
 	GameState.set_flag("ch1_opening_done")
@@ -386,6 +386,9 @@ func can_reach(id: String, feet: Vector2) -> bool:
 	if id == "cup": return Rect2(900,480,215,145).has_point(feet)
 	if id == "coffee": return Rect2(1070,480,215,145).has_point(feet)
 	if id == "tableware": return Rect2(345,500,740,470).has_point(feet)
+	# The pillow is on the sofa centre, not beside its left arm. Accept the
+	# front aisle and left approach; furniture collision still limits walking.
+	if id == "pillow": return Rect2(350,535,595,155).has_point(feet)
 	return feet.distance_to(hotspots[id].position) <= 155.0
 
 func nearest_reachable(feet: Vector2) -> Interactable:

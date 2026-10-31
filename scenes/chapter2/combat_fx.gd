@@ -32,6 +32,12 @@ func _draw() -> void:
 		var angle := direction.angle()
 		for i in 4:
 			draw_arc(Vector2.ZERO, radius - i * 6, angle - 1.05 + t * 0.6, angle + 0.65 + t * 0.6, 28, Color(color, color.a * (1.0 - i * 0.22)), 5.0 - i, true)
+	elif kind == "lane":
+		var side := direction.orthogonal() * 36
+		var end := direction * radius
+		draw_colored_polygon(PackedVector2Array([-side,side,end+side,end-side]),Color(color,color.a*0.16))
+		draw_line(Vector2.ZERO,end,color,3,true)
+		draw_polyline(PackedVector2Array([end-direction*20+side*0.5,end,end-direction*20-side*0.5]),color,3,true)
 	elif kind == "warning":
 		draw_arc(Vector2.ZERO, radius, 0, TAU, 64, color, 4, true)
 		draw_circle(Vector2.ZERO, radius, Color(color, color.a * 0.10))

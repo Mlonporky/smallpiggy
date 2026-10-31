@@ -139,6 +139,17 @@ func hide_closeup() -> void:
 	closeup.visible = false
 	close_hint.visible = false
 
+func reveal_room(fast: bool) -> void:
+	# Let the wide view emerge under the last waking close-up instead of cutting
+	# from the pictured bed straight to a standing actor in one frame.
+	var dissolve := AppSettings.story_tween(self).set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	for item in [closeup,shade]:
+		dissolve.tween_property(item,"modulate:a",0.0,0.01 if fast else .45)
+	await dissolve.finished
+	hide_closeup()
+	closeup.modulate.a=1.0
+	shade.modulate.a=1.0
+
 func flash(fast: bool, peak := 0.65) -> void:
 	var light := ColorRect.new()
 	light.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

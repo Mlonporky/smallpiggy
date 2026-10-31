@@ -1,0 +1,9 @@
+[
+  {
+    "test": "chapter2_combat_test",
+    "passed": false,
+    "exit_code": 1,
+    "seconds": 0.99,
+    "log": "chapter2_combat_test.log"
+  }
+]

@@ -2,10 +2,13 @@ extends Node2D
 ## One resumable cinematic with authored beats and two quiet playable approach paths.
 ## Preview uses a private state copy and never saves or mutates GameState.
 signal beat_changed(id: String)
+signal presentation_ready
 const Story = preload("res://scenes/finale/finale_story.gd")
 const Handhold = preload("res://scenes/finale/handhold_motion.gd")
 const Actor = preload("res://scenes/finale/finale_actor.gd")
 const SIZE := Vector2(1536,864)
+const HOME_PIG := Vector2(900,625.5)
+const HOME_CABBAGE := HOME_PIG+Vector2(-85,17)
 const SAVE_SCENE := "res://scenes/finale/final_chapter.tscn"
 const FOREST := preload("res://assets/finale/reunion_forest_v1.png")
 const MANOR := preload("res://assets/backgrounds/piggy_manor.png")
@@ -27,6 +30,8 @@ var beat_time := 0.0
 var beat_read_time := 0.0
 var elapsed := 0.0
 var path_distance := 0.0
+var path_exiting := false
+var home_arriving := false
 var paused := false
 # Short previews hold their last frame until an explicit replay.
 var finished := false
@@ -44,6 +49,9 @@ var hand_point := Vector2.ZERO
 var fx: Node2D
 var trail_memory: SubViewport
 var memory: TextureRect
+var previous_memory: TextureRect
+var memory_from_alpha := 0.0
+var memory_shade_from := 0.0
 var memory_shade: ColorRect
 var curtain: ColorRect
 var dialogue: Panel
@@ -58,6 +66,8 @@ var credits: VBoxContainer
 var save_error := false
 var _pending_route := false
 var audio: Node
+var rendering_ready := false
+var rendering_preparation: Dictionary = {}
 
 func _ready() -> void:
  flags = GameState.flags.duplicate(true)
@@ -83,6 +93,35 @@ func _ready() -> void:
   hint.text = "两条路还没有走到终点。"
   chapter_label.text = "最终章 · 尚未抵达"
   _show_menu()
+ _prepare_presentation()
+
+func _prepare_presentation() -> void:
+ if DisplayServer.get_name()=="headless" or not RenderingServer.render_loop_enabled:
+  rendering_ready=true
+  presentation_ready.emit()
+  return
+ var cover:=CanvasLayer.new()
+ cover.layer=90
+ var black:=ColorRect.new()
+ black.color=Color(0.035,0.027,0.055,1)
+ black.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+ cover.add_child(black)
+ add_child(cover)
+ audio.pause(true)
+ var textures: Array[Texture2D]=[FOREST,MANOR]
+ for texture in MEMORIES.values(): textures.append(texture)
+ rendering_preparation=await preload("res://scenes/finale/render_warmup.gd").prepare(self,textures)
+ # The next process delta includes the expensive preparation draw. Keep the
+ # story/audio frozen through that frame instead of jumping ahead on reveal.
+ await get_tree().process_frame
+ await RenderingServer.frame_post_draw
+ cover.queue_free()
+ rendering_ready=true
+ audio.pause(paused or finished)
+ presentation_ready.emit()
+
+func wait_for_presentation() -> void:
+ if not rendering_ready: await presentation_ready
 
 func has(key: String) -> bool:
  return bool(flags.get(key,false))
@@ -106,7 +145,7 @@ func _build() -> void:
  add_child(stage)
  world = Node2D.new()
  # Keep the whole layered character world below memory cards and dialogue.
- world.z_index = -10
+ world.z_index = -64
  stage.add_child(world)
  background = Sprite2D.new()
  background.centered = false
@@ -141,7 +180,7 @@ func _build() -> void:
   elif name_value=="boy": cabbage=actor
   else: wizard=actor
  fx = Node2D.new()
- fx.z_index = 8
+ fx.z_index = 56
  world.add_child(fx)
  fx.draw.connect(_draw_fx)
  trail_memory=preload("res://scenes/finale/trail_memory.gd").new()
@@ -154,6 +193,10 @@ func _build() -> void:
  memory.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
  memory.mouse_filter = Control.MOUSE_FILTER_IGNORE
  stage.add_child(memory)
+ previous_memory=memory.duplicate()
+ stage.add_child(previous_memory)
+ stage.move_child(previous_memory,memory.get_index())
+ previous_memory.visible=false
  dialogue = _panel(Vector2(240,687),Vector2(1056,145))
  speaker = _label("",Vector2(270,705),24,Vector2(980,34))
  speaker.modulate = Color("eed6a5")
@@ -243,6 +286,7 @@ func enter_path(value: String) -> void:
  beat=-1
  beat_time=0
  path_distance=0
+ path_exiting=false
  _reset_visuals(false)
  background.visible=value=="reunion_walk"
  path_tiles.visible=value!="reunion_walk"
@@ -257,6 +301,8 @@ func enter_path(value: String) -> void:
  if not preview: checkpoint(value)
  audio.set_mood("path")
  audio.begin_scene(value)
+ curtain.color.a=1.0
+ _sort_actors()
  beat_changed.emit(value)
 
 func _reset_visuals(at_manor: bool) -> void:
@@ -273,6 +319,7 @@ func _reset_visuals(at_manor: bool) -> void:
  world.position=Vector2.ZERO
  trail_memory.render_target_update_mode=SubViewport.UPDATE_DISABLED
  memory.visible=false
+ previous_memory.visible=false
  memory_shade.visible=false
  hand_contact=false
  pig.rig.attention=0.0
@@ -305,6 +352,11 @@ func between(first: String,last: String) -> bool:
 
 func enter_beat(index: int) -> void:
  if index<0 or index>=Story.BEATS.size(): return
+ # Carry the outgoing memory plate over the cut, including when returning to
+ # the actors. The beat clock owns the dissolve, so pause/seek create no tweens.
+ var old_texture: Texture2D=memory.texture if memory.visible else previous_memory.texture
+ var old_alpha: float=memory.modulate.a if memory.visible else (previous_memory.modulate.a if previous_memory.visible else 0.0)
+ var old_shade: float=memory_shade.modulate.a if memory_shade.visible else 0.0
  mode="cinematic"
  beat=index
  beat_time=0
@@ -313,6 +365,10 @@ func enter_beat(index: int) -> void:
  var id: String=data[0]
  var at_manor := after("manor_restore")
  _reset_visuals(at_manor)
+ previous_memory.texture=old_texture
+ previous_memory.visible=old_texture!=null and old_alpha>0
+ memory_from_alpha=old_alpha
+ memory_shade_from=old_shade
  var restored := after("remember_you")
  cabbage.configure("cabbage" if restored and id!="remember_you" else "boy")
  cabbage.facing=-1
@@ -325,16 +381,19 @@ func enter_beat(index: int) -> void:
  wizard.position=Vector2(275,582)
  wizard.visible=between("wizard_return","wizard_dissolve")
  if at_manor:
-  pig.position=Vector2(760,625)
-  cabbage.position=Vector2(675,645)
+  pig.position=HOME_PIG
+  cabbage.position=HOME_CABBAGE
   cabbage.facing=1
   cabbage.pose(false)
  if id=="manor_restore":
   pig.visible=false
   cabbage.visible=false
  if id=="return_home":
+  home_arriving=false
+  pig.move_blend=0.0
+  cabbage.move_blend=0.0
   pig.position=Vector2(450,765)
-  cabbage.position=Vector2(370,782)
+  cabbage.position=pig.position+Vector2(-85,17)
  if after("walk_away"):
   pig.position=Vector2(1070,555)
   cabbage.position=Vector2(990,572)
@@ -385,7 +444,7 @@ func advance() -> void:
 
 func _process(delta: float) -> void:
  _layout()
- if paused or _pending_route: return
+ if not rendering_ready or paused or _pending_route: return
  beat_read_time += delta
  delta *= playback_speed()
  elapsed+=delta
@@ -427,12 +486,20 @@ func _walk_path(delta: float) -> void:
  var actor: Node2D=cabbage if mode=="cabbage_path" else pig
  var old := path_distance
  var length := 560.0 if mode=="reunion_walk" else (2700.0 if mode=="cabbage_path" else 5100.0)
+ # Once the departure fade begins, finish the last short step. Releasing the
+ # key must not strand the player in a nearly black transition.
+ if direction>0 and path_distance>=length-55: path_exiting=true
+ if path_exiting: direction=1.0
  path_distance=clampf(path_distance+direction*170*delta,0,length)
  actor.position.x=280+path_distance
  if mode=="reunion_walk": actor.position.x=lerpf(280,470,path_distance/length)
  actor.distance+=absf(path_distance-old)*(190.0/length if mode=="reunion_walk" else 1.0)
  if absf(path_distance-old)>0.01: actor.facing=signf(path_distance-old)
  actor.pose(absf(path_distance-old)>0.01)
+ _sort_actors()
+ # These paths are separate setups with different characters/camera origins.
+ # Reach black before swapping them, then reveal the next setup on its clock.
+ curtain.color.a=maxf(1.0-smoothstep(0,.35,beat_time),smoothstep(length-55,length,path_distance))
  # Slow pan and foreground motes convey travel without stretching the artwork.
  world.position.x=-maxf(0,actor.position.x-520) if mode!="reunion_walk" else 0.0
  tint.set_shader_parameter("warmth",lerpf(0.35,0.63,path_distance/length))
@@ -470,11 +537,14 @@ func _arrival_pose(seconds: float) -> void:
 
 func _animate(delta: float) -> void:
  var id:=current_id()
+ _sample_camera(id)
+ _sample_memory()
  pig.rig.sample_cape(elapsed,sin(clampf(beat_time/2.0,0,1)*PI) if id=="red_cape" else 0.0)
  var p:=clampf(beat_time/maxf(0.1,float(Story.BEATS[beat][1])),0,1)
  if id=="memory_trail": trail_memory.sample(beat_time)
  if id=="remember_you": cabbage.sample_transformation(beat_time)
  if id=="someone":
+  curtain.color.a=1.0-smoothstep(0,.35,beat_time)
   var arrival:=smoothstep(.8,4.3,beat_time)
   cabbage.position=Vector2(lerpf(1640,1000,arrival),616)
   cabbage.distance=640*arrival
@@ -484,9 +554,6 @@ func _animate(delta: float) -> void:
  if between("remember_name","remember_pause"):
   cabbage.expression.tear=smoothstep(.15,.8,beat_time) if id=="remember_name" else .8
   cabbage.expression.queue_redraw()
- if between("first_reunion","reunion_rest"):
-  world.scale=Vector2.ONE*1.06
-  world.position=-SIZE*0.03
  if id=="reunion_close":
   pig.position.x=lerpf(470,630,smoothstep(0,1,p))
   cabbage.position.x=lerpf(1000,810,smoothstep(0,1,p))
@@ -508,10 +575,9 @@ func _animate(delta: float) -> void:
   var gesture: Dictionary = Handhold.sample(pig,cabbage,id,beat_time)
   hand_contact=gesture.contact
   hand_point=world.to_local(gesture.point) if hand_contact else Vector2.ZERO
- if between("final_curse","reach_hand"):
-  world.position=Vector2(sin(elapsed*8),cos(elapsed*6))*1.1
  if after("curse_broken") and not after("manor_restore"): tint.set_shader_parameter("warmth",1.0)
  if id=="manor_restore":
+  curtain.color.a=1.0-smoothstep(0,.65,beat_time)
   tint.set_shader_parameter("warmth",smoothstep(0,1,p))
   tint.set_shader_parameter("restoration_time",beat_time)
   residents.sample(beat_time)
@@ -521,32 +587,64 @@ func _animate(delta: float) -> void:
   curtain.color.a=smoothstep(0.7,1,p)
  if id=="return_home":
   residents.sample(10.0+beat_time)
+  pig.modulate.a=smoothstep(0,.45,beat_time)
+  cabbage.modulate.a=pig.modulate.a
   hint.text="A / D 或 ← / → · 一起回家    Esc · 暂停"
   var direction:=Input.get_axis("move_left","move_right")
-  var x:=clampf(pig.position.x+direction*135*delta,450,900)
-  pig.move_to_point(Vector2(x,765-(x-450)*0.31),delta,160)
+  if pig.position.x>=898: home_arriving=true
+  # Use a look-ahead target so the actor can accelerate and brake without
+  # multiplying a one-frame displacement by a second damping factor.
+  var x:=900.0 if home_arriving else clampf(pig.position.x+direction*40,450,900)
+  pig.move_to_point(Vector2(x,765-(x-450)*.31),delta,135)
   var target:=pig.position+Vector2(-85,17)
-  if cabbage.position.distance_to(target)>8: cabbage.move_to_point(target,delta,155)
-  else: cabbage.pose(false)
-  if pig.position.x>=898: enter_beat(beat+1)
+  cabbage.move_to_point(target,delta,155)
+  if home_arriving and pig.position.distance_to(HOME_PIG)<.02 and cabbage.position.distance_to(HOME_CABBAGE)<.02 and maxf(pig.move_blend,cabbage.move_blend)<.001:
+   enter_beat(beat+1)
  if id=="walk_away":
-  pig.position=Vector2(lerpf(760,1070,p),lerpf(625,555,p))
-  cabbage.position=Vector2(lerpf(675,990,p),lerpf(645,572,p))
-  pig.distance+=delta*110
-  cabbage.distance+=delta*110
-  pig.pose(true)
-  cabbage.pose(true)
+  _sample_walk(pig,HOME_PIG,Vector2(1070,555),p)
+  _sample_walk(cabbage,HOME_CABBAGE,Vector2(990,572),p)
  if id=="leave_frame":
-  pig.position=Vector2(lerpf(1070,1710,p),555-40*p)
-  cabbage.position=Vector2(lerpf(990,1610,p),572-40*p)
-  pig.distance+=delta*210
-  cabbage.distance+=delta*210
-  pig.pose(true)
-  cabbage.facing=1
-  cabbage.pose(true)
+  _sample_walk(pig,Vector2(1070,555),Vector2(1710,515),p)
+  _sample_walk(cabbage,Vector2(990,572),Vector2(1610,532),p)
  if id=="fade_out": curtain.color.a=p
  if id=="final_secret": cabbage.facing=1; cabbage.pose(false)
+ _sort_actors()
  audio.timeline(id,beat_time,delta)
+
+func _sort_actors() -> void:
+ # A rig's internal z values are relative to its actor, not an independent
+ # cross-character layer. Give each complete actor a separate band by feet depth.
+ # In particular the pig's collar (body + 2) must not cut across the nearer face.
+ var actors: Array[Node2D]=[pig,cabbage,wizard]
+ actors.sort_custom(func(a: Node2D,b: Node2D):
+  return a.position.y<b.position.y if not is_equal_approx(a.position.y,b.position.y) else a.get_index()<b.get_index())
+ for i in actors.size(): actors[i].z_index=8+i*12
+
+func _sample_memory() -> void:
+ var blend:=smoothstep(0,.24,beat_time)
+ memory.modulate.a=blend
+ previous_memory.modulate.a=memory_from_alpha*(1.0-blend)
+ previous_memory.visible=previous_memory.texture!=null and previous_memory.modulate.a>0
+ memory_shade.modulate.a=lerpf(memory_shade_from,1.0 if memory.visible else 0.0,blend)
+ memory_shade.visible=memory_shade.modulate.a>0
+
+func _sample_camera(id: String) -> void:
+ var close:=1.0 if between("first_reunion","reunion_rest") else 0.0
+ if id=="first_reunion": close=smoothstep(0,.85,beat_time)
+ if id=="wizard_return": close=1.0-smoothstep(0,.85,beat_time)
+ world.scale=Vector2.ONE*(1.0+.06*close)
+ world.position=-SIZE*.03*close
+ if between("final_curse","reach_hand"):
+  var weight:=smoothstep(0,.35,beat_time) if id=="final_curse" else 1.0
+  if id=="reach_hand": weight=1.0-smoothstep(.8,1.2,beat_time)
+  world.position+=Vector2(sin(elapsed*8),cos(elapsed*6))*1.1*weight
+
+func _sample_walk(actor: Node2D, start: Vector2, finish: Vector2, progress: float) -> void:
+ var u:=smoothstep(0,1,progress)
+ actor.position=start.lerp(finish,u)
+ actor.facing=1
+ actor.distance=start.distance_to(finish)*u
+ actor.pose(progress>0 and progress<1,sin(progress*PI))
 
 func _protect_pose(id: String, seconds: float) -> void:
  var approach:=smoothstep(0.85,1.85,seconds) if id=="wizard_return" else 1.0
@@ -556,7 +654,8 @@ func _protect_pose(id: String, seconds: float) -> void:
  if id=="joy_failing" and seconds>=2.92: pig.facing=1
  pig.distance=28*approach+28*retreat
  var moving: bool=(id=="wizard_return" and seconds>0.85 and seconds<1.85) or (id=="joy_failing" and seconds>1.8 and seconds<3.0)
- pig.pose(moving,0.55)
+ var stride:=sin(clampf((seconds-.85),0,1)*PI) if id=="wizard_return" else sin(clampf((seconds-1.8)/1.2,0,1)*PI)
+ pig.pose(moving,0.55*stride)
  pig.rig.guard_weight=(smoothstep(1.3,2.3,seconds) if id=="wizard_return" else 1.0)*(1.0-smoothstep(2.2,2.92,seconds) if id=="joy_failing" else 1.0)
  pig.rig.update_pose()
 
@@ -591,6 +690,7 @@ func _draw_curse(id: String, origin: Vector2) -> void:
    fx.draw_arc(origin+shift,radius,angle,angle+TAU/14.0*(0.98-cracks*.45),12,Color(0.49,0.26,0.7,0.30*strength*(1.0-cracks*.8)),2.2,true)
 
 func _unhandled_key_input(event: InputEvent) -> void:
+ if not rendering_ready: return
  if not event is InputEventKey or not event.pressed or event.echo: return
  if event.keycode==KEY_ESCAPE:
   if paused: _resume()

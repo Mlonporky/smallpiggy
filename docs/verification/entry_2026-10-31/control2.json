@@ -1,0 +1,287 @@
+{
+  "clip_entry_cpu": [
+    {
+      "clip": 0,
+      "cpu_ms": 7.997
+    },
+    {
+      "clip": 1,
+      "cpu_ms": 0.219
+    },
+    {
+      "clip": 2,
+      "cpu_ms": 1.192
+    },
+    {
+      "clip": 3,
+      "cpu_ms": 2.192
+    },
+    {
+      "clip": 4,
+      "cpu_ms": 2.348
+    },
+    {
+      "clip": 5,
+      "cpu_ms": 2.113
+    }
+  ],
+  "counters_agree": true,
+  "draw_intervals": {
+    "max_ms": 63.955,
+    "p50_ms": 16.682,
+    "p95_ms": 29.047,
+    "samples": 1321
+  },
+  "draw_submissions_per_second": 59.94082815554,
+  "draw_to_process_ratio": 1.0,
+  "drawable_only_draw_intervals": {
+    "max_ms": 63.955,
+    "p50_ms": 16.682,
+    "p95_ms": 29.047,
+    "samples": 1321
+  },
+  "engine_drawn": 1322,
+  "first_600ms_after_cut": {
+    "0": {
+      "max_ms": 40.905,
+      "p50_ms": 16.534,
+      "p95_ms": 17.992,
+      "samples": 31
+    },
+    "1": {
+      "max_ms": 26.667,
+      "p50_ms": 16.786,
+      "p95_ms": 17.61,
+      "samples": 36
+    },
+    "2": {
+      "max_ms": 63.947,
+      "p50_ms": 16.677,
+      "p95_ms": 33.593,
+      "samples": 34
+    },
+    "3": {
+      "max_ms": 29.452,
+      "p50_ms": 16.65,
+      "p95_ms": 29.247,
+      "samples": 36
+    },
+    "4": {
+      "max_ms": 28.548,
+      "p50_ms": 16.647,
+      "p95_ms": 17.684,
+      "samples": 36
+    },
+    "5": {
+      "max_ms": 29.4,
+      "p50_ms": 16.878,
+      "p95_ms": 29.25,
+      "samples": 36
+    }
+  },
+  "frame_post_draw_count": 1322,
+  "long_draw_intervals": [
+    {
+      "beat": "0",
+      "crossed_nondrawable_window": false,
+      "gap_ms": 40.904,
+      "seconds": 0.048386
+    },
+    {
+      "beat": "0",
+      "crossed_nondrawable_window": false,
+      "gap_ms": 43.671,
+      "seconds": 0.88053
+    },
+    {
+      "beat": "2",
+      "crossed_nondrawable_window": false,
+      "gap_ms": 63.955,
+      "seconds": 6.103243
+    }
+  ],
+  "max_fps": 60,
+  "note": "Render submissions, not monitor presentation FPS; coverage validity is not a smoothness pass.",
+  "per_second": [
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 59,
+      "second": 0
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 1
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 2
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 3
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 4
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 61,
+      "second": 5
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 59,
+      "process": 58,
+      "second": 6
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 59,
+      "process": 60,
+      "second": 7
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 61,
+      "process": 60,
+      "second": 8
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 9
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 10
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 11
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 12
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 13
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 59,
+      "process": 60,
+      "second": 14
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 61,
+      "process": 60,
+      "second": 15
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 59,
+      "process": 60,
+      "second": 16
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 17
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 18
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 19
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 61,
+      "process": 60,
+      "second": 20
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 60,
+      "process": 60,
+      "second": 21
+    },
+    {
+      "blocked_process": 0,
+      "post_draw": 3,
+      "process": 4,
+      "second": 22
+    }
+  ],
+  "preparation": {},
+  "process_frames": 1322,
+  "process_intervals": {
+    "max_ms": 51.785,
+    "p50_ms": 16.665,
+    "p95_ms": 20.435,
+    "samples": 1322
+  },
+  "render_coverage_valid": true,
+  "rendering_driver": "opengl3",
+  "rendering_method": "gl_compatibility",
+  "sample_cpu": {
+    "max_ms": 8.028,
+    "p50_ms": 0.175,
+    "p95_ms": 0.628,
+    "samples": 1323
+  },
+  "screen_hz": 60.0,
+  "seconds": 22.055084,
+  "vsync": 1,
+  "window_drawable_seconds": 22.054956,
+  "window_nondrawable_seconds": 0.0,
+  "window_transitions": [
+    {
+      "beat": "",
+      "can_draw": true,
+      "focused": false,
+      "low_processor": false,
+      "mode": 0,
+      "render_loop": true,
+      "seconds": 0.0
+    },
+    {
+      "beat": "0",
+      "can_draw": true,
+      "focused": true,
+      "low_processor": false,
+      "mode": 0,
+      "render_loop": true,
+      "seconds": 0.043337
+    }
+  ]
+}

@@ -17,7 +17,7 @@ func _enter_shot(index: int) -> void:
  chapter_label.text="重逢动作 · 剪选样片（省略回忆蒙太奇）"
 func _process(delta: float) -> void:
  _layout()
- if finished or paused: return
+ if not rendering_ready or finished or paused: return
  delta *= playback_speed()
  elapsed+=delta
  beat_time+=delta

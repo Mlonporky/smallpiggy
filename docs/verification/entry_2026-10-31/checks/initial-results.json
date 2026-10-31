@@ -1,0 +1,121 @@
+[
+  {
+    "test": "motion_transition_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.93,
+    "log": "motion_transition_test.log"
+  },
+  {
+    "test": "scene_transition_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.02,
+    "log": "scene_transition_test.log"
+  },
+  {
+    "test": "finale_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.48,
+    "log": "finale_test.log"
+  },
+  {
+    "test": "finale_handhold_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.41,
+    "log": "finale_handhold_test.log"
+  },
+  {
+    "test": "finale_reunion_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.47,
+    "log": "finale_reunion_test.log"
+  },
+  {
+    "test": "finale_transformation_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.11,
+    "log": "finale_transformation_test.log"
+  },
+  {
+    "test": "finale_wizard_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.71,
+    "log": "finale_wizard_test.log"
+  },
+  {
+    "test": "finale_routes_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 2.58,
+    "log": "finale_routes_test.log"
+  },
+  {
+    "test": "finale_audio_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.11,
+    "log": "finale_audio_test.log"
+  },
+  {
+    "test": "finale_preview_menu_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.18,
+    "log": "finale_preview_menu_test.log"
+  },
+  {
+    "test": "finale_residents_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.11,
+    "log": "finale_residents_test.log"
+  },
+  {
+    "test": "finale_restoration_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.12,
+    "log": "finale_restoration_test.log"
+  },
+  {
+    "test": "finale_trail_memory_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.58,
+    "log": "finale_trail_memory_test.log"
+  },
+  {
+    "test": "finale_rig_equivalence_test",
+    "passed": false,
+    "exit_code": -15,
+    "seconds": 144.96,
+    "log": "finale_rig_equivalence_test.log"
+  },
+  {
+    "test": "boy_atlas_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.43,
+    "log": "boy_atlas_test.log"
+  },
+  {
+    "test": "story_speed_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 1.68,
+    "log": "story_speed_test.log"
+  },
+  {
+    "test": "full_story_flow_test",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 11.12,
+    "log": "full_story_flow_test.log"
+  }
+]

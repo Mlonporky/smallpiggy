@@ -255,7 +255,7 @@ func enter_forest() -> void:
 		await fade(1)
 		GameState.set_flag("s2_pig_intro_complete")
 		checkpoint()
-	SceneRouter.change_scene(FOREST_PATH)
+	SceneRouter.change_scene(FOREST_PATH,0.28,curtain.color.a>=0.999)
 
 func reveal_manor_distance() -> void:
 	distance_shot_count += 1
