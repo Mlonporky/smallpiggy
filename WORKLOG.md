@@ -1139,3 +1139,5 @@ STORY_CAVE_CHECKPOINT_OK、action_level/movement/camera/health/weapons/monsters�
 本条记录上传前验证，不将后续提交、推送或 PR 创建提前宣称成功；远端结果以实际 GitHub PR 为准。本次未重做正常时间图形或试听验收，角色专用动画、人工玩法/观感/听感反馈及第六阶段性能待办仍保留，正式男孩继续用原素材，小猪装配与 A/B 对应不变。
 
 暂存全量新增文件后，git diff --cached --check 发现 scenes/finale/manor_residents.gd 与 tests/full_story_flow_test.gd 各多一个文件末尾空行；仅删除这两个末尾空行，不改代码逻辑，随后重新执行暂存检查。
+
+上传结果：1020 个文件已提交为 70e079d，并成功推送到 origin/codex/story-audio-gameplay-2026-10-31；GitHub 远端引用与本地提交 SHA 一致。GitHub 连接器创建 PR 返回 403 Resource not accessible by integration，浏览器备用方案中的内置浏览器与 Chrome 均未登录，因此 PR 尚未创建、未合并。已在 Chrome 保留登录页并请用户完成登录；PR 标题、描述及验证命令已准备，描述副本位于 /tmp/piggy-github-pr-2026-10-31/pr-body.md。下一步在用户登录后创建以 main 为基分支的 PR，并核对实际地址。
